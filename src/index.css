@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #202020;
+    background-color: #FFFDF8;
+  }
+
+  body {
+    background-color: #FFFDF8;
+    color: #202020;
+    overflow-x: hidden;
+  }
+}
+
+/* Typography Utility Classes */
+.font-serif-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-sans-body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.font-button {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-weight: 600;
+}
+
+/* Custom Color Tokens */
+.bg-cream { background-color: #FFFDF8; }
+.bg-warm-beige { background-color: #F6F1E7; }
+.bg-forest-green { background-color: #1D4F2B; }
+.bg-dark-green { background-color: #12351D; }
+.bg-muted-gold { background-color: #D8A43A; }
+
+.text-forest-green { color: #1D4F2B; }
+.text-dark-green { color: #12351D; }
+.text-muted-gold { color: #D8A43A; }
+.text-primary-dark { color: #202020; }
+.text-secondary-muted { color: #666666; }
+
+.border-custom { border-color: #E8E2D6; }
+
+/* Apple & Airbnb Inspired Soft Premium Shadow System */
+.shadow-premium-soft {
+  box-shadow: 0 10px 30px -5px rgba(29, 79, 43, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+}
+
+.shadow-premium-hover {
+  box-shadow: 0 20px 40px -10px rgba(29, 79, 43, 0.12), 0 8px 16px -4px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-nav-scroll {
+  box-shadow: 0 4px 20px -2px rgba(18, 53, 29, 0.06);
+}
+
+/* Wave divider curve animation/styling */
+.wave-divider {
+  fill: #FFFDF8;
+}
+
+/* Smooth transition defaults */
+.transition-premium {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFDF8;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8A43A;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1D4F2B;
+}
