@@ -12,10 +12,10 @@ import realMillImg from '../assets/images/pks_mill_real.png';
 import chilly from '../assets/images/Chillipowder.png';
 import termeric from '../assets/images/Termeric.png';
 import coconutoil from '../assets/images/cocnutoil.jpeg';
-import coriander from '../assets/images/corrindor.png';
+import coriander from '../assets/images/Corrindor.png';
 import pepper from '../assets/images/pepper.png';
 import Raggi from '../assets/images/Raggi.jpg';
-import Puttu from '../assets/images/puttu.png';
+import Puttu from '../assets/images/Puttu.png';
 
 const Products = ({ lang }) => {
   const t = translations[lang] || translations.en;
