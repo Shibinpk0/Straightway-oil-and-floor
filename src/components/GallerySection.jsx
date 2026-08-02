@@ -78,12 +78,12 @@ const GallerySection = ({ lang }) => {
     : galleryItems.filter((i) => i.category === activeCategory);
 
   return (
-    <section id="gallery" className="bg-[#FFFDF8] py-20 md:py-28 relative">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 space-y-12">
+    <section id="gallery" className="bg-[#FFFDF8] py-8 sm:py-20 md:py-28 relative">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-6 sm:space-y-12">
         
         {/* Header */}
-        <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-3 text-[#D8A43A]">
+        <div className="text-center space-y-2 sm:space-y-4 max-w-2xl mx-auto">
+          <div className="hidden sm:flex items-center justify-center gap-3 text-[#D8A43A]">
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
             <span className="font-serif-heading font-semibold text-xs sm:text-sm tracking-wider uppercase">
               {t?.gallery?.tag || "✦ GALLERY & PHOTOS ✦"}
@@ -91,17 +91,17 @@ const GallerySection = ({ lang }) => {
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
           </div>
 
-          <h2 className="font-serif-heading text-3xl sm:text-4xl md:text-[42px] font-bold text-[#12351D]">
+          <h2 className="font-serif-heading text-xl sm:text-3xl md:text-[42px] font-bold text-[#12351D]">
             {t?.gallery?.heading || "A Glimpse of Our Mill & Products"}
           </h2>
 
-          <p className="font-sans-body text-sm sm:text-base text-[#666666]">
+          <p className="hidden sm:block font-sans-body text-sm sm:text-base text-[#666666]">
             {t?.gallery?.subtitle || "Explore our storefront, traditional chakki milling, washed spices, and custom products."}
           </p>
         </div>
 
         {/* Filter Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-2">
+        <div className="hidden sm:flex flex-wrap items-center justify-center gap-2">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -118,7 +118,7 @@ const GallerySection = ({ lang }) => {
         </div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {filteredItems.map((item) => {
             const itemTitle = lang === 'ml' && item.titleMl ? item.titleMl : item.title;
             const itemDesc = lang === 'ml' && item.descMl ? item.descMl : item.desc;
@@ -129,7 +129,7 @@ const GallerySection = ({ lang }) => {
                 onClick={() => setActiveImage(item)}
                 className="bg-white rounded-[20px] overflow-hidden border border-[#E8E2D6] shadow-premium-soft hover:shadow-premium-hover transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer group text-left"
               >
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative h-36 sm:h-64 overflow-hidden">
                   <img
                     src={item.src}
                     alt={itemTitle}
@@ -145,8 +145,8 @@ const GallerySection = ({ lang }) => {
                   </div>
                 </div>
 
-                <div className="p-5 space-y-1">
-                  <h3 className="font-serif-heading text-lg font-bold text-[#12351D] group-hover:text-[#1D4F2B] transition-colors">
+                <div className="p-3 sm:p-5 space-y-1">
+                  <h3 className="font-serif-heading text-xs sm:text-lg font-bold text-[#12351D] group-hover:text-[#1D4F2B] transition-colors leading-tight line-clamp-2">
                     {itemTitle}
                   </h3>
                   <p className="font-sans-body text-xs text-[#666666]">

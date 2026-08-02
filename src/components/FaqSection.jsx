@@ -18,12 +18,12 @@ const FaqSection = ({ lang }) => {
   };
 
   return (
-    <section id="faq" className="bg-[#FFFDF8] py-16 md:py-24 border-b border-[#E8E2D6] relative">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 space-y-12">
+    <section id="faq" className="bg-[#FFFDF8] py-8 sm:py-16 md:py-24 border-b border-[#E8E2D6] relative">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-6 sm:space-y-12">
         
         {/* Header */}
-        <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-3 text-[#D8A43A]">
+        <div className="text-center space-y-2 sm:space-y-4 max-w-2xl mx-auto">
+          <div className="hidden sm:flex items-center justify-center gap-3 text-[#D8A43A]">
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
             <span className="font-serif-heading font-semibold text-xs sm:text-sm tracking-wider uppercase">
               {t?.faq?.tag || "✦ FREQUENTLY ASKED QUESTIONS ✦"}
@@ -31,17 +31,17 @@ const FaqSection = ({ lang }) => {
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
           </div>
 
-          <h2 className="font-serif-heading text-3xl sm:text-4xl font-bold text-[#12351D]">
+          <h2 className="font-serif-heading text-xl sm:text-3xl sm:text-4xl font-bold text-[#12351D]">
             {t?.faq?.heading || "Got Questions? We Have Answers."}
           </h2>
 
-          <p className="font-sans-body text-sm sm:text-base text-[#666666]">
+          <p className="hidden sm:block font-sans-body text-sm sm:text-base text-[#666666]">
             {t?.faq?.subtitle || "Common inquiries about our home delivery, custom milling, and bulk services."}
           </p>
         </div>
 
         {/* FAQ Accordion Grid */}
-        <div className="max-w-3xl mx-auto space-y-4 text-left">
+        <div className="max-w-3xl mx-auto space-y-3 sm:space-y-4 text-left">
           {faqs.map((item, idx) => {
             const isOpen = openIdx === idx;
             return (
@@ -51,7 +51,7 @@ const FaqSection = ({ lang }) => {
               >
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full p-5 sm:p-6 text-left font-serif-heading font-bold text-base sm:text-lg text-[#12351D] flex items-center justify-between gap-4 focus:outline-none"
+                  className="w-full p-4 sm:p-5 sm:p-6 text-left font-serif-heading font-bold text-sm sm:text-base sm:text-lg text-[#12351D] flex items-center justify-between gap-3 sm:gap-4 focus:outline-none"
                 >
                   <div className="flex items-center gap-3">
                     <HelpCircle className="w-5 h-5 text-[#D8A43A] shrink-0" />

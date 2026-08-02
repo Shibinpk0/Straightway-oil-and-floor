@@ -18,12 +18,12 @@ const ContactSection = ({ lang }) => {
   };
 
   return (
-    <section id="contact" className="bg-[#FFFDF8] py-20 md:py-28 relative">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 space-y-16">
+    <section id="contact" className="bg-[#FFFDF8] py-8 sm:py-20 md:py-28 relative">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-8 sm:space-y-16">
         
         {/* Header */}
-        <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-3 text-[#D8A43A]">
+        <div className="text-center space-y-2 sm:space-y-4 max-w-2xl mx-auto">
+          <div className="hidden sm:flex items-center justify-center gap-3 text-[#D8A43A]">
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
             <span className="font-serif-heading font-semibold text-xs sm:text-sm tracking-wider uppercase">
               {t?.contact?.tag || "✦ CONTACT US ✦"}
@@ -31,11 +31,11 @@ const ContactSection = ({ lang }) => {
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
           </div>
 
-          <h2 className="font-serif-heading text-3xl sm:text-4xl md:text-[42px] font-bold text-[#12351D]">
+          <h2 className="font-serif-heading text-xl sm:text-3xl md:text-[42px] font-bold text-[#12351D]">
             {t?.contact?.heading || "Get in Touch With Us"}
           </h2>
 
-          <p className="font-sans-body text-sm sm:text-base text-[#666666]">
+          <p className="hidden sm:block font-sans-body text-sm sm:text-base text-[#666666]">
             {t?.contact?.subtitle || "We are here to answer your queries and take your orders."}
           </p>
         </div>
@@ -43,7 +43,7 @@ const ContactSection = ({ lang }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           
           {/* Contact Details & Google Maps Card (5 cols) */}
-          <div className="lg:col-span-5 bg-[#F6F1E7] rounded-[24px] p-6 sm:p-8 border border-[#E8E2D6] space-y-6 text-left shadow-sm">
+          <div className="lg:col-span-5 bg-[#F6F1E7] rounded-2xl sm:rounded-[24px] p-4 sm:p-6 sm:p-8 border border-[#E8E2D6] space-y-4 sm:space-y-6 text-left shadow-sm">
             <div className="flex items-center justify-between">
               <h3 className="font-serif-heading text-2xl font-bold text-[#12351D]">
                 {t?.contact?.getInTouch || "Contact Details"}
@@ -135,9 +135,9 @@ const ContactSection = ({ lang }) => {
 
             </div>
 
-            {/* Google Map Frame & Link Button */}
+            {/* Google Map Frame & Link Button — hidden map on mobile */}
             <div className="space-y-3">
-              <div className="rounded-2xl overflow-hidden border border-[#E8E2D6] h-48 sm:h-56 relative bg-white shadow-sm">
+              <div className="hidden sm:block rounded-2xl overflow-hidden border border-[#E8E2D6] h-48 sm:h-56 relative bg-white shadow-sm">
                 <iframe
                   title="Straight Way Oil & Flour Mill Location Karulai"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3913.8051759628045!2d76.2840269!3d11.288094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba6356770e286bb%3A0xb3551522851cf57a!2sStraight%20Way%20Oil%20%26%20Flour%20Mill!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
@@ -161,7 +161,7 @@ const ContactSection = ({ lang }) => {
           </div>
 
           {/* Form Card (7 cols) */}
-          <div className="lg:col-span-7 bg-white rounded-[24px] p-6 sm:p-8 border border-[#E8E2D6] shadow-premium-soft text-left space-y-6">
+          <div className="lg:col-span-7 bg-white rounded-2xl sm:rounded-[24px] p-4 sm:p-6 sm:p-8 border border-[#E8E2D6] shadow-premium-soft text-left space-y-4 sm:space-y-6">
             <h3 className="font-serif-heading text-2xl font-bold text-[#12351D]">
               {t?.contact?.sendMessage || "Send Us a Message"}
             </h3>

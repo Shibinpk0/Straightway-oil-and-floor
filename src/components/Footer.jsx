@@ -17,8 +17,8 @@ const Footer = ({ setActiveTab, lang }) => {
   };
 
   return (
-    <footer className="bg-[#12351D] text-white pt-16 pb-12 border-t border-[#D8A43A]/20">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 space-y-12">
+    <footer className="bg-[#12351D] text-white pt-10 sm:pt-16 pb-20 sm:pb-12 border-t border-[#D8A43A]/20">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-8 sm:space-y-12">
         
         {/* Main 4-column footer */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 text-left">

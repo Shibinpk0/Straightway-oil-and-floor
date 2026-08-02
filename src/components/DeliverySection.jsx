@@ -6,12 +6,12 @@ const DeliverySection = ({ lang }) => {
   const t = translations[lang] || translations.en;
 
   return (
-    <section id="delivery" className="bg-[#FFFDF8] py-16 md:py-24 border-b border-[#E8E2D6] relative">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 space-y-12">
+    <section id="delivery" className="bg-[#FFFDF8] py-8 sm:py-16 md:py-24 border-b border-[#E8E2D6] relative">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-6 sm:space-y-12">
         
         {/* Header */}
-        <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-3 text-[#D8A43A]">
+        <div className="text-center space-y-2 sm:space-y-4 max-w-2xl mx-auto">
+          <div className="hidden sm:flex items-center justify-center gap-3 text-[#D8A43A]">
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
             <span className="font-serif-heading font-semibold text-xs sm:text-sm tracking-wider uppercase">
               {t?.delivery?.tag || "✦ DOORSTEP CONVENIENCE ✦"}
@@ -19,29 +19,29 @@ const DeliverySection = ({ lang }) => {
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
           </div>
 
-          <h2 className="font-serif-heading text-3xl sm:text-4xl font-bold text-[#12351D]">
+          <h2 className="font-serif-heading text-xl sm:text-3xl sm:text-4xl font-bold text-[#12351D]">
             {t?.delivery?.heading || "Fresh Products Delivered to Your Doorstep"}
           </h2>
 
-          <p className="font-sans-body text-sm sm:text-base text-[#666666]">
+          <p className="hidden sm:block font-sans-body text-sm sm:text-base text-[#666666]">
             {t?.delivery?.subtitle || "Enjoy freshly ground purity delivered directly to your home or business location."}
           </p>
         </div>
 
         {/* Delivery Options Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 text-left">
           {(t?.delivery?.options || []).map((opt, idx) => (
             <div
               key={idx}
-              className="bg-[#F6F1E7] p-6 rounded-[24px] border border-[#E8E2D6] space-y-3 hover:border-[#1D4F2B] transition-colors"
+              className="bg-[#F6F1E7] p-4 sm:p-6 rounded-2xl sm:rounded-[24px] border border-[#E8E2D6] space-y-2 sm:space-y-3 hover:border-[#1D4F2B] transition-colors"
             >
-              <div className="w-10 h-10 rounded-xl bg-[#1D4F2B] text-[#D8A43A] flex items-center justify-center font-bold text-sm">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#1D4F2B] text-[#D8A43A] flex items-center justify-center font-bold text-xs sm:text-sm">
                 0{idx + 1}
               </div>
-              <h3 className="font-serif-heading text-base font-bold text-[#12351D]">
+              <h3 className="font-serif-heading text-sm sm:text-base font-bold text-[#12351D] leading-tight">
                 {opt.title}
               </h3>
-              <p className="font-sans-body text-xs sm:text-sm text-[#666666]">
+              <p className="hidden sm:block font-sans-body text-xs sm:text-sm text-[#666666]">
                 {opt.desc}
               </p>
             </div>
@@ -49,7 +49,7 @@ const DeliverySection = ({ lang }) => {
         </div>
 
         {/* Coverage Note Card */}
-        <div className="bg-[#12351D] text-white p-6 sm:p-8 rounded-[24px] border border-[#D8A43A]/30 flex flex-col md:flex-row items-center justify-between gap-6 text-left">
+        <div className="bg-[#12351D] text-white p-4 sm:p-6 sm:p-8 rounded-2xl sm:rounded-[24px] border border-[#D8A43A]/30 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 text-left">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-2xl bg-[#D8A43A]/20 text-[#D8A43A] flex items-center justify-center shrink-0">
               <Truck className="w-6 h-6" />

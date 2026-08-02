@@ -81,3 +81,19 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #1D4F2B;
 }
+
+/* Hide scrollbar for horizontal scroll carousels */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile body padding for sticky bottom bar */
+@media (max-width: 639px) {
+  body {
+    padding-bottom: 60px;
+  }
+}

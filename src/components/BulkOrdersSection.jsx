@@ -40,15 +40,15 @@ const BulkOrdersSection = ({ lang }) => {
   ];
 
   return (
-    <section id="bulk" className="bg-[#12351D] text-white py-20 md:py-28 relative overflow-hidden">
+    <section id="bulk" className="bg-[#12351D] text-white py-10 sm:py-20 md:py-28 relative overflow-hidden">
       {/* Decorative Blur */}
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#D8A43A]/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 space-y-16 relative z-10">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-8 sm:space-y-16 relative z-10">
         
         {/* Header */}
-        <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-3 text-[#D8A43A]">
+        <div className="text-center space-y-2 sm:space-y-4 max-w-2xl mx-auto">
+          <div className="hidden sm:flex items-center justify-center gap-3 text-[#D8A43A]">
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
             <span className="font-serif-heading font-semibold text-xs sm:text-sm tracking-wider uppercase">
               {t?.bulk?.tag || "✦ WHOLESALE & COMMERCIAL ✦"}
@@ -56,31 +56,31 @@ const BulkOrdersSection = ({ lang }) => {
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
           </div>
 
-          <h2 className="font-serif-heading text-3xl sm:text-4xl md:text-[42px] font-bold text-white leading-tight">
+          <h2 className="font-serif-heading text-xl sm:text-3xl md:text-[42px] font-bold text-white leading-tight">
             {t?.bulk?.heading || "We Accept Bulk Orders For"}
           </h2>
 
-          <p className="font-sans-body text-sm sm:text-base text-[#FFFDF8]/80">
+          <p className="hidden sm:block font-sans-body text-sm sm:text-base text-[#FFFDF8]/80">
             {t?.bulk?.subtitle || "Serving commercial clients, eateries, caterers, and retail stores with custom batch sizes."}
           </p>
         </div>
 
         {/* Sectors Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 text-left">
           {sectors.map((sector, idx) => {
             const Icon = sector.icon;
             return (
               <div
                 key={idx}
-                className="bg-white/5 border border-white/10 p-6 rounded-[24px] space-y-3 hover:bg-white/10 transition-colors backdrop-blur-sm"
+                className="bg-white/5 border border-white/10 p-4 sm:p-6 rounded-2xl sm:rounded-[24px] space-y-2 sm:space-y-3 hover:bg-white/10 transition-colors backdrop-blur-sm"
               >
-                <div className="w-12 h-12 rounded-2xl bg-[#D8A43A]/20 text-[#D8A43A] flex items-center justify-center">
-                  <Icon className="w-6 h-6" />
+                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#D8A43A]/20 text-[#D8A43A] flex items-center justify-center">
+                  <Icon className="w-4 h-4 sm:w-6 sm:h-6" />
                 </div>
-                <h3 className="font-serif-heading text-lg font-bold text-white">
+                <h3 className="font-serif-heading text-sm sm:text-lg font-bold text-white leading-tight">
                   {sector.title}
                 </h3>
-                <p className="font-sans-body text-xs sm:text-sm text-[#FFFDF8]/70 leading-relaxed">
+                <p className="hidden sm:block font-sans-body text-xs sm:text-sm text-[#FFFDF8]/70 leading-relaxed">
                   {sector.desc}
                 </p>
               </div>

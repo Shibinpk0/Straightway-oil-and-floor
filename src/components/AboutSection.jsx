@@ -8,12 +8,12 @@ const AboutSection = ({ lang }) => {
   const t = translations[lang] || translations.en;
 
   return (
-    <section id="about" className="bg-[#F6F1E7] py-20 md:py-28 relative">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 space-y-16">
+    <section id="about" className="bg-[#F6F1E7] py-10 sm:py-20 md:py-28 relative">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-8 sm:space-y-16">
         
         {/* Header */}
-        <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-3 text-[#D8A43A]">
+        <div className="text-center space-y-2 sm:space-y-4 max-w-2xl mx-auto">
+          <div className="hidden sm:flex items-center justify-center gap-3 text-[#D8A43A]">
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
             <span className="font-serif-heading font-semibold text-xs sm:text-sm tracking-wider uppercase">
               {t?.about?.tag || "✦ OUR STORY & TRADITION ✦"}
@@ -21,11 +21,11 @@ const AboutSection = ({ lang }) => {
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
           </div>
 
-          <h2 className="font-serif-heading text-3xl sm:text-4xl md:text-[42px] font-bold text-[#12351D]">
+          <h2 className="font-serif-heading text-xl sm:text-3xl md:text-[42px] font-bold text-[#12351D]">
             {t?.about?.heading || "Crafted With Care, For Every Home"}
           </h2>
 
-          <p className="font-sans-body text-sm sm:text-base text-[#666666]">
+          <p className="hidden sm:block font-sans-body text-sm sm:text-base text-[#666666]">
             {t?.about?.subtitle || "Straight Way Oil & Flour Mill is a trusted local flour and spice mill dedicated to providing freshly ground food products."}
           </p>
         </div>

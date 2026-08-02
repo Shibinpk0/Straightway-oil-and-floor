@@ -9,6 +9,13 @@ import flourImg from '../assets/images/flour.png';
 import riceImg from '../assets/images/rice.png';
 import grainsImg from '../assets/images/grains.png';
 import realMillImg from '../assets/images/pks_mill_real.png';
+import chilly from '../assets/images/Chillipowder.png';
+import termeric from '../assets/images/Termeric.png';
+import coconutoil from '../assets/images/cocnutoil.jpeg';
+import coriander from '../assets/images/corrindor.png';
+import pepper from '../assets/images/pepper.png';
+import Raggi from '../assets/images/Raggi.jpg';
+import Puttu from '../assets/images/puttu.png';
 
 const Products = ({ lang }) => {
   const t = translations[lang] || translations.en;
@@ -25,7 +32,7 @@ const Products = ({ lang }) => {
       desc: lang === 'ml' ? 'ഉണക്ക തേങ്ങ ഹൈജീനിക് ഡ്രയറിൽ ഉണക്കി ആട്ടിയെടുത്ത 100% മായമില്ലാത്ത നാടൻ വെളിച്ചെണ്ണ.' : '100% pure country coconut oil extracted from sun-dried coconuts using hygienic hot-air dryers.',
       price: '₹220',
       unit: '/ Ltr',
-      image: realMillImg,
+      image: coconutoil,
       badge: lang === 'ml' ? 'ഫ്രഷ് ബാച്ച്' : 'Best Seller',
       rating: '5.0',
       isCustom: false,
@@ -39,7 +46,7 @@ const Products = ({ lang }) => {
       desc: lang === 'ml' ? 'കഴുകി ഉണക്കിയ ഉത്തമമായ ചുവന്ന മുളക് സാവധാനം പൊടിച്ചത്. മായമില്ലാത്ത നിറവും എരിവും.' : 'Rich red chilli powder slow-milled from thoroughly washed and dried red chillies.',
       price: '₹140',
       unit: '/ 500g',
-      image: spicesImg,
+      image: chilly,
       badge: lang === 'ml' ? 'ശുചിത്വ ഗ്യാരന്റി' : 'Washed & Dried',
       rating: '5.0',
       isCustom: false,
@@ -52,7 +59,7 @@ const Products = ({ lang }) => {
       desc: lang === 'ml' ? 'നാടൻ മഞ്ഞൾ കഴുകി ഉണക്കി പൊടിച്ചത്. പ്രകൃതിദത്ത നിറവും ഉത്തമ രോഗപ്രതിരോധ ശേഷിയും.' : 'High-curcumin golden turmeric powder washed & milled from natural turmeric roots.',
       price: '₹120',
       unit: '/ 500g',
-      image: spicesImg,
+      image: termeric,
       badge: lang === 'ml' ? 'ഹെൽത്തി' : 'High Curcumin',
       rating: '4.9',
       isCustom: false,
@@ -65,7 +72,7 @@ const Products = ({ lang }) => {
       desc: lang === 'ml' ? 'വൃത്തിയാക്കി കഴുകിയ മല്ലി മിതമായ ചൂടിൽ പൊടിച്ചത്. കറികൾക്ക് മികച്ച സുഗന്ധം.' : 'Pure aromatic coriander powder slow-ground to preserve essential spice oils.',
       price: '₹110',
       unit: '/ 500g',
-      image: spicesImg,
+      image: coriander ,
       badge: lang === 'ml' ? 'ഫ്രഷ് സുഗന്ധം' : 'Aromatic',
       rating: '4.9',
       isCustom: false,
@@ -78,24 +85,12 @@ const Products = ({ lang }) => {
       desc: lang === 'ml' ? 'മികച്ച കറുത്ത കുരുമുളക് ഫ്രഷായി പൊടിച്ചത്. നല്ല എരിവും മണവും.' : 'Freshly ground premium black pepper powder with authentic spice punch.',
       price: '₹180',
       unit: '/ 250g',
-      image: spicesImg,
+      image: pepper,
       badge: lang === 'ml' ? 'പ്രീമിയം' : 'Premium',
       rating: '5.0',
       isCustom: false,
     },
-    {
-      id: 6,
-      category: 'spices',
-      title: lang === 'ml' ? 'ജീരകപ്പൊടി & പെരുംജീരകപ്പൊടി' : 'Cumin & Fennel Powder',
-      subtitle: lang === 'ml' ? 'നല്ല ജീരകം ഫ്രഷായി പൊടിച്ചത്' : 'Pure Cumin & Fennel Blends',
-      desc: lang === 'ml' ? 'ജീരകവും പെരുംജീരകവും ആവശ്യമനുസരിച്ച് ഫ്രഷായി പൊടിച്ചു നൽകുന്നു.' : 'Freshly milled cumin and fennel powder for digestive health and flavor.',
-      price: '₹95',
-      unit: '/ 250g',
-      image: spicesImg,
-      badge: lang === 'ml' ? 'ഫ്രഷ്' : 'Fresh',
-      rating: '4.8',
-      isCustom: false,
-    },
+  
     // Flours
     {
       id: 7,
@@ -105,7 +100,7 @@ const Products = ({ lang }) => {
       desc: lang === 'ml' ? 'അരി കഴുകി ഉണക്കി പാകത്തിന് വറുത്തു പൊടിച്ച ഫ്രഷ് പുട്ടുപൊടിയും പത്തിരിപ്പൊടിയും.' : 'Finely ground roasted rice flour for soft puttu, idiyappam, and pathiri.',
       price: '₹70',
       unit: '/ 1kg',
-      image: riceImg,
+      image: Puttu,
       badge: lang === 'ml' ? 'ട്രഡീഷണൽ' : 'Breakfast Special',
       rating: '4.9',
       isCustom: false,
@@ -123,19 +118,7 @@ const Products = ({ lang }) => {
       rating: '5.0',
       isCustom: false,
     },
-    {
-      id: 9,
-      category: 'flour',
-      title: lang === 'ml' ? 'മൈദ (Maida Flour)' : 'Maida Flour (ഹൈജീനിക്)',
-      subtitle: lang === 'ml' ? 'ബേക്കിംഗ് & വിഭവങ്ങൾക്ക്' : 'Premium All-Purpose Baking Flour',
-      desc: lang === 'ml' ? 'ബേക്കിംഗിനും പലഹാരങ്ങൾക്കുമായി ഫ്രഷായി ലഭ്യമാക്കുന്ന മൈദ.' : 'Hygienically packed premium all-purpose flour for baking and dishes.',
-      price: '₹55',
-      unit: '/ 1kg',
-      image: flourImg,
-      badge: lang === 'ml' ? 'ബേക്കിംഗ്' : 'Baking Grade',
-      rating: '4.8',
-      isCustom: false,
-    },
+   
     // Grains
     {
       id: 10,
@@ -158,7 +141,7 @@ const Products = ({ lang }) => {
       desc: lang === 'ml' ? 'കാൽസ്യം സമൃദ്ധമായ റാഗിയും മില്ലറ്റുകളും ശുചിത്വത്തോടെ പൊടിച്ചെടുത്തത്.' : 'Pure calcium-rich ragi and finger millet flour for healthy porridge & rotis.',
       price: '₹90',
       unit: '/ 500g',
-      image: grainsImg,
+      image: Raggi,
       badge: lang === 'ml' ? 'കാൽസ്യം' : 'Rich Calcium',
       rating: '4.9',
       isCustom: false,
@@ -193,12 +176,12 @@ const Products = ({ lang }) => {
     : productList.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="products" className="bg-[#FFFDF8] py-20 md:py-28 relative">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 space-y-12">
+    <section id="products" className="bg-[#FFFDF8] py-8 sm:py-20 md:py-28 relative">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-6 sm:space-y-12">
         
         {/* Section Header */}
-        <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-3 text-[#D8A43A]">
+        <div className="text-center space-y-2 sm:space-y-4 max-w-2xl mx-auto">
+          <div className="hidden sm:flex items-center justify-center gap-3 text-[#D8A43A]">
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
             <span className="font-serif-heading font-semibold text-xs sm:text-sm tracking-wider uppercase">
               {t?.products?.tag || "✦ OUR PRODUCTS & SERVICES ✦"}
@@ -206,22 +189,22 @@ const Products = ({ lang }) => {
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
           </div>
 
-          <h2 className="font-serif-heading text-3xl sm:text-4xl md:text-[42px] font-bold text-[#12351D] leading-tight">
+          <h2 className="font-serif-heading text-xl sm:text-3xl md:text-[42px] font-bold text-[#12351D] leading-tight">
             {t?.products?.heading || "Pure & Fresh Products"}
           </h2>
 
-          <p className="font-sans-body text-sm sm:text-base text-[#666666] leading-relaxed">
+          <p className="hidden sm:block font-sans-body text-sm sm:text-base text-[#666666] leading-relaxed">
             {t?.products?.subtitle || "Freshly pressed pure oils, ground spices, and custom grain processing for your family."}
           </p>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+        <div className="flex items-center sm:justify-center gap-2 sm:gap-3 overflow-x-auto pb-2 sm:pb-0 sm:flex-wrap scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`font-button text-xs sm:text-sm px-5 py-2.5 rounded-full transition-all duration-300 ${
+              className={`font-button text-[11px] sm:text-sm px-4 sm:px-5 py-2 sm:py-2.5 rounded-full transition-all duration-300 whitespace-nowrap shrink-0 ${
                 activeCategory === cat.id
                   ? 'bg-[#1D4F2B] text-white shadow-md font-bold'
                   : 'bg-[#F6F1E7] text-[#12351D] hover:bg-[#E8E2D6] border border-[#E8E2D6]'
@@ -233,33 +216,59 @@ const Products = ({ lang }) => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 text-left">
+        {/* Products — horizontal scroll on mobile, grid on desktop */}
+        <div className="flex sm:hidden gap-3 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
+          {filteredProducts.map((product) => (
+            <div
+              key={product.id}
+              onClick={() => setSelectedProduct(product)}
+              className="bg-white rounded-2xl border border-[#E8E2D6] overflow-hidden shadow-sm flex-none w-[72vw] max-w-[280px] snap-start cursor-pointer active:scale-[0.98] transition-transform"
+            >
+              <div className="relative h-36 bg-[#F6F1E7] overflow-hidden">
+                <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
+                <div className="absolute top-2 left-2 bg-[#12351D]/90 text-[#D8A43A] text-[9px] font-button font-bold px-2.5 py-0.5 rounded-full uppercase border border-[#D8A43A]/30">
+                  {product.badge}
+                </div>
+              </div>
+              <div className="p-3.5 space-y-1.5">
+                <h3 className="font-serif-heading text-sm font-bold text-[#12351D] leading-tight line-clamp-2">
+                  {product.title}
+                </h3>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="font-serif-heading text-base font-bold text-[#12351D]">{product.price}</span>
+                    <span className="text-[10px] text-[#666666] ml-1">{product.unit}</span>
+                  </div>
+                  <span className="text-[10px] font-bold text-[#1D4F2B] bg-[#F6F1E7] px-2 py-1 rounded-full">
+                    {t?.products?.btnViewDetails || "Details"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop grid */}
+        <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 text-left">
           {filteredProducts.map((product) => (
             <div
               key={product.id}
               className="bg-white rounded-[24px] border border-[#E8E2D6] overflow-hidden shadow-premium-soft hover:shadow-xl transition-all duration-300 group flex flex-col justify-between"
             >
-              {/* Product Image Box */}
               <div className="relative h-48 sm:h-52 bg-[#F6F1E7] overflow-hidden">
                 <img
                   src={product.image}
                   alt={product.title}
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                 />
-                
-                {/* Badge */}
                 <div className="absolute top-3 left-3 bg-[#12351D]/90 backdrop-blur-sm text-[#D8A43A] text-[10px] font-button font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-[#D8A43A]/30">
                   {product.badge}
                 </div>
-
-                {/* Rating */}
                 <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-[#12351D] flex items-center gap-1 shadow-sm">
                   <Star className="w-3.5 h-3.5 fill-[#D8A43A] text-[#D8A43A]" />
                   <span>{product.rating}</span>
                 </div>
               </div>
-
-              {/* Product Info */}
               <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
                 <div>
                   <h3 className="font-serif-heading text-base sm:text-lg font-bold text-[#12351D] leading-snug">
@@ -272,18 +281,11 @@ const Products = ({ lang }) => {
                     {product.desc}
                   </p>
                 </div>
-
-                {/* Price & Action */}
                 <div className="pt-3 border-t border-[#E8E2D6] flex items-center justify-between gap-2">
                   <div>
-                    <span className="font-serif-heading text-lg font-bold text-[#12351D]">
-                      {product.price}
-                    </span>
-                    <span className="text-[11px] text-[#666666] ml-1">
-                      {product.unit}
-                    </span>
+                    <span className="font-serif-heading text-lg font-bold text-[#12351D]">{product.price}</span>
+                    <span className="text-[11px] text-[#666666] ml-1">{product.unit}</span>
                   </div>
-
                   <button
                     onClick={() => setSelectedProduct(product)}
                     className="font-button text-xs bg-[#1D4F2B] hover:bg-[#12351D] text-white px-4 py-2 rounded-full flex items-center gap-1.5 transition-colors shadow-sm"
@@ -293,7 +295,6 @@ const Products = ({ lang }) => {
                   </button>
                 </div>
               </div>
-
             </div>
           ))}
         </div>
