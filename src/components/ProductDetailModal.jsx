@@ -3,14 +3,13 @@ import { X, CheckCircle, MessageCircle, Phone, ShieldCheck } from 'lucide-react'
 import { translations } from '../translations';
 
 const ProductDetailModal = ({ product, onClose, lang }) => {
-  // Default selected weight is 500g
   const [selectedWeight, setSelectedWeight] = useState('500g');
   const t = translations[lang] || translations.en;
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling when modal is open
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
     return () => {
-      document.body.style.overflow = 'auto'; // Restore scrolling when modal is closed
+      document.body.style.overflow = 'auto'; // Restore scrolling
     };
   }, []);
 
@@ -23,8 +22,6 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
 
   const phoneUrl = `tel:+918714348348`;
 
-  // DYNAMIC PRICING LOGIC
-  // Get the price based on currently selected weight. Fallback to 500g if something goes wrong.
   const currentPrice = product.prices?.[selectedWeight] || product.prices?.['500g'] || '₹0';
 
   const handleWhatsAppOrder = () => {
@@ -35,78 +32,79 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn overflow-y-auto">
-      <div className="bg-[#FFFDF8] rounded-[24px] max-w-2xl w-full border border-[#E8E2D6] shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col my-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
+      {/* Main Container: Entire card scrolls naturally if screen is small */}
+      <div className="bg-[#FFFDF8] rounded-[24px] w-full max-w-2xl border border-[#E8E2D6] shadow-2xl overflow-hidden relative max-h-[90vh] overflow-y-auto">
         
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 border border-[#E8E2D6] flex items-center justify-center text-[#202020] hover:bg-[#1D4F2B] hover:text-white transition-colors"
+          className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/90 border border-[#E8E2D6] flex items-center justify-center text-[#202020] hover:bg-[#1D4F2B] hover:text-white transition-colors"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
 
-        {/* Content Wrapper - Added flex-1 and min-h-0 for perfect internal scrolling */}
-        <div className="p-6 md:p-8 space-y-3 flex-1 min-h-0 overflow-y-auto">
+        {/* Content Wrapper - Normal flow, tight spacing */}
+        <div className="p-4 sm:p-6">
           {/* Header */}
-          <div className="space-y-1 text-left">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#D8A43A]">
+          <div className="text-left pr-8 mb-3">
+            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#D8A43A]">
               PKS Straightway Mill • Vakeelppadi
             </span>
-            <h2 className="font-serif-heading text-2xl md:text-3xl font-bold text-[#12351D]">
+            <h2 className="font-serif-heading text-xl sm:text-2xl md:text-3xl font-bold text-[#12351D] leading-tight mt-0.5">
               {title}
             </h2>
           </div>
 
           {/* Product Image & Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
-            <div className="rounded-2xl overflow-hidden border border-[#E8E2D6] shadow-sm bg-white">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 items-start mb-4">
+            <div className="rounded-2xl overflow-hidden border border-[#E8E2D6] shadow-sm bg-white h-44 sm:h-52 md:h-64 w-full">
               <img
                 src={product.image}
                 alt={title}
-                className="w-full h-61 md:h-72 object-cover"
+                className="w-full h-full object-cover"
               />
             </div>
 
-            <div className=" text-left">
-              <p className="font-sans-body text-xs sm:text-sm text-[#666666] leading-relaxed">
+            <div className="text-left">
+              <p className="font-sans-body text-xs sm:text-sm text-[#666666] leading-relaxed line-clamp-3">
                 {desc}
               </p>
 
-              <div className="space-y-2 pt-2">
-                <div className="flex items-center gap-2 text-xs font-medium text-[#12351D]">
-                  <CheckCircle className="w-4 h-4 text-[#D8A43A]" />
-                  <span>{lang === 'ml' ? '100% നാടൻ ശുദ്ധി ഉറപ്പ്' : '100% Pure & Country Quality'}</span>
+              <div className="grid grid-cols-2 gap-x-3 gap-y-2 mt-3">
+                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-[#12351D]">
+                  <CheckCircle className="w-3.5 h-3.5 text-[#D8A43A] shrink-0" />
+                  <span>{lang === 'ml' ? '100% ശുദ്ധി' : '100% Pure Quality'}</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-medium text-[#12351D]">
-                  <CheckCircle className="w-4 h-4 text-[#D8A43A]" />
-                  <span>{lang === 'ml' ? 'രാസവസ്തുക്കളോ മായമോ ചേർക്കുന്നില്ല' : 'No Artificial Colours or Fillers'}</span>
+                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-[#12351D]">
+                  <CheckCircle className="w-3.5 h-3.5 text-[#D8A43A] shrink-0" />
+                  <span>{lang === 'ml' ? 'മായമില്ല' : 'No Fillers'}</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-medium text-[#12351D]">
-                  <CheckCircle className="w-4 h-4 text-[#D8A43A]" />
-                  <span>{lang === 'ml' ? 'ശുചിത്വമുള്ള ഹോട്ടെയർ ഡ്രയർ & മിൽ' : 'Hygienically Hot-Air Dried'}</span>
+                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-[#12351D]">
+                  <CheckCircle className="w-3.5 h-3.5 text-[#D8A43A] shrink-0" />
+                  <span>{lang === 'ml' ? 'ഹോട്ടെയർ ഡ്രയർ' : 'Hot-Air Dried'}</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-medium text-[#12351D]">
-                  <ShieldCheck className="w-4 h-4 text-[#D8A43A]" />
-                  <span>{lang === 'ml' ? 'സ്വാഭാവിക സുഗന്ധം നിലനിർത്തുന്നു' : 'Sealed for Maximum Natural Oils'}</span>
+                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-[#12351D]">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#D8A43A] shrink-0" />
+                  <span>{lang === 'ml' ? 'സുഗന്ധം ഉറപ്പ്' : 'Natural Oils'}</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Weight Selector & Dynamic Price Display */}
-          <div className="space-y-4 pt-2 border-t border-[#E8E2D6] text-left">
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#202020]">
-              {lang === 'ml' ? 'ലഭ്യമായ അളവുകൾ (Pack Sizes / Quantity)' : 'Available Pack Sizes'}
+          <div className="border-t border-[#E8E2D6] pt-4 text-left mb-4">
+            <label className="block text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[#202020] mb-2">
+              {lang === 'ml' ? 'അളവ്' : 'Available Pack Sizes'}
             </label>
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-4 gap-2 sm:gap-3">
               {weights.map((w) => (
                 <button
                   key={w}
                   onClick={() => setSelectedWeight(w)}
-                  className={`py-2.5 rounded-xl text-xs font-button transition-all border ${
+                  className={`py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-button transition-all border ${
                     selectedWeight === w
-                      ? 'bg-[#1D4F2B] text-white border-[#1D4F2B] shadow-md'
+                      ? 'bg-[#1D4F2B] text-white border-[#1D4F2B] shadow-sm sm:shadow-md'
                       : 'bg-white text-[#202020] border-[#E8E2D6] hover:bg-[#F6F1E7]'
                   }`}
                 >
@@ -116,33 +114,33 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
             </div>
             
             {/* Dynamic Price Box */}
-            <div className="flex items-center justify-between bg-[#F6F1E7] p-2 rounded-xl border border-[#E8E2D6] mt-4">
-              <span className="text-sm font-medium text-[#666666]">
-                {lang === 'ml' ? 'മൊത്തം വില (Estimated Price)' : 'Estimated Price'}
+            <div className="flex items-center justify-between bg-[#F6F1E7] p-3 rounded-xl border border-[#E8E2D6] mt-4">
+              <span className="text-xs sm:text-sm font-medium text-[#666666]">
+                {lang === 'ml' ? 'മൊത്തം വില' : 'Estimated Price'}
               </span>
               <div className="text-right">
-                <span className="font-serif-heading text-2xl font-bold text-[#12351D]">{currentPrice}</span>
-                <span className="text-xs text-[#666666] ml-1">({selectedWeight})</span>
+                <span className="font-serif-heading text-xl sm:text-2xl font-bold text-[#12351D]">{currentPrice}</span>
+                <span className="text-[10px] sm:text-xs text-[#666666] ml-1">({selectedWeight})</span>
               </div>
             </div>
           </div>
 
-          {/* Actions */}
-          <div className="pt-1 flex flex-col sm:flex-row gap-2">
+          {/* Actions - Normal flow inside the scrolling container */}
+          <div className="flex flex-col sm:flex-row gap-2 pb-2">
             <a
               href={phoneUrl}
-              className="flex-1 font-button text-xs sm:text-sm bg-[#1D4F2B] hover:bg-[#12351D] text-white py-3.5 px-5 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md"
+              className="flex-1 font-button text-xs sm:text-sm bg-[#1D4F2B] hover:bg-[#12351D] text-white py-3 px-5 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md"
             >
               <Phone className="w-4 h-4 text-[#D8A43A]" />
-              <span>{lang === 'ml' ? 'ഓർഡർ ചെയ്യാൻ വിളിക്കൂ' : 'Call to Order Now'}</span>
+              <span>{lang === 'ml' ? 'വിളിച്ച് ഓർഡർ ചെയ്യൂ' : 'Call to Order Now'}</span>
             </a>
 
             <button
               onClick={handleWhatsAppOrder}
-              className="flex-1 font-button text-xs sm:text-sm bg-[#F6F1E7] hover:bg-[#E8E2D6] text-[#12351D] border border-[#E8E2D6] py-3.5 px-5 rounded-xl flex items-center justify-center gap-2 transition-colors"
+              className="flex-1 font-button text-xs sm:text-sm bg-[#F6F1E7] hover:bg-[#E8E2D6] text-[#12351D] border border-[#E8E2D6] py-3 px-5 rounded-xl flex items-center justify-center gap-2 transition-colors"
             >
               <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              <span>{lang === 'ml' ? 'വാട്സ്ആപ്പിൽ ചോദിക്കൂ' : 'Enquire on WhatsApp'}</span>
+              <span>{lang === 'ml' ? 'വാട്സ്ആപ്പ് ചോദിക്കൂ' : 'Enquire on WhatsApp'}</span>
             </button>
           </div>
 
