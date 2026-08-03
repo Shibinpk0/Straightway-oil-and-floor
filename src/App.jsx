@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Analytics } from "@vercel/analytics/react";
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import WhyChooseSection from './components/WhyChooseSection';
@@ -12,6 +13,7 @@ import GallerySection from './components/GallerySection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
+
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
