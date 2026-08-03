@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { X, CheckCircle, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
 import { translations } from '../translations';
 
@@ -6,6 +6,13 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
   // Default selected weight is 500g
   const [selectedWeight, setSelectedWeight] = useState('500g');
   const t = translations[lang] || translations.en;
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling when modal is open
+    return () => {
+      document.body.style.overflow = 'auto'; // Restore scrolling when modal is closed
+    };
+  }, []);
 
   if (!product) return null;
 
@@ -39,7 +46,7 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
           <X className="w-5 h-5" />
         </button>
 
-        <div className="overflow-y-auto p-6 md:p-8 space-y-6">
+        <div className="p-6 md:p-8 space-y-3">
           {/* Header */}
           <div className="space-y-1 text-left">
             <span className="text-xs font-semibold uppercase tracking-widest text-[#D8A43A]">
@@ -51,16 +58,16 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
           </div>
 
           {/* Product Image & Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
             <div className="rounded-2xl overflow-hidden border border-[#E8E2D6] shadow-sm bg-white">
               <img
                 src={product.image}
                 alt={title}
-                className="w-full h-64 md:h-72 object-cover"
+                className="w-full h-61 md:h-72 object-cover"
               />
             </div>
 
-            <div className="space-y-4 text-left">
+            <div className=" text-left">
               <p className="font-sans-body text-xs sm:text-sm text-[#666666] leading-relaxed">
                 {desc}
               </p>
@@ -108,7 +115,7 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
             </div>
             
             {/* Dynamic Price Box */}
-            <div className="flex items-center justify-between bg-[#F6F1E7] p-4 rounded-xl border border-[#E8E2D6] mt-4">
+            <div className="flex items-center justify-between bg-[#F6F1E7] p-2 rounded-xl border border-[#E8E2D6] mt-4">
               <span className="text-sm font-medium text-[#666666]">
                 {lang === 'ml' ? 'മൊത്തം വില (Estimated Price)' : 'Estimated Price'}
               </span>
@@ -120,7 +127,7 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
           </div>
 
           {/* Actions */}
-          <div className="pt-4 flex flex-col sm:flex-row gap-3">
+          <div className="pt-1 flex flex-col sm:flex-row gap-2">
             <a
               href={phoneUrl}
               className="flex-1 font-button text-xs sm:text-sm bg-[#1D4F2B] hover:bg-[#12351D] text-white py-3.5 px-5 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md"
