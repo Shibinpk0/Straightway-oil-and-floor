@@ -35,8 +35,8 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-[#FFFDF8] rounded-[24px] max-w-2xl w-full border border-[#E8E2D6] shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn overflow-y-auto">
+      <div className="bg-[#FFFDF8] rounded-[24px] max-w-2xl w-full border border-[#E8E2D6] shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col my-auto">
         
         {/* Close Button */}
         <button
@@ -46,7 +46,8 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
           <X className="w-5 h-5" />
         </button>
 
-        <div className="p-6 md:p-8 space-y-3">
+        {/* Content Wrapper - Added flex-1 and min-h-0 for perfect internal scrolling */}
+        <div className="p-6 md:p-8 space-y-3 flex-1 min-h-0 overflow-y-auto">
           {/* Header */}
           <div className="space-y-1 text-left">
             <span className="text-xs font-semibold uppercase tracking-widest text-[#D8A43A]">
