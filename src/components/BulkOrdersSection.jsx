@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { Building2, Utensils, Store, PartyPopper, Cake, Truck, ShieldCheck, MessageCircle, Calculator } from 'lucide-react';
+import { Building2, Utensils, Store, PartyPopper, Cake, Truck, ShieldCheck, MessageCircle, Calculator, Phone } from 'lucide-react';
 import { translations } from '../translations';
 
 const BulkOrdersSection = ({ lang }) => {
   const t = translations[lang] || translations.en;
 
-  const [quantity, setQuantity] = useState(25);
+  const [quantity, setQuantity] = useState(50);
   const [productType, setProductType] = useState('coconut_oil');
   const [grindType, setGrindType] = useState('fine');
 
-  // Rate estimates
+  const phoneUrl = `tel:+918714348348`;
+
   const rates = {
     coconut_oil: { base: 210, label: lang === 'ml' ? 'നാടൻ വെളിച്ചെണ്ണ (Ltr)' : 'Country Coconut Oil (Ltr)' },
     chilli_powder: { base: 260, label: lang === 'ml' ? 'കഴുകി ഉണക്കിയ മുളകുപൊടി (Kg)' : 'Washed Chilli Powder (Kg)' },
@@ -41,12 +42,10 @@ const BulkOrdersSection = ({ lang }) => {
 
   return (
     <section id="bulk" className="bg-[#12351D] text-white py-10 sm:py-20 md:py-28 relative overflow-hidden">
-      {/* Decorative Blur */}
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#D8A43A]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-8 sm:space-y-16 relative z-10">
         
-        {/* Header */}
         <div className="text-center space-y-2 sm:space-y-4 max-w-2xl mx-auto">
           <div className="hidden sm:flex items-center justify-center gap-3 text-[#D8A43A]">
             <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
@@ -65,7 +64,6 @@ const BulkOrdersSection = ({ lang }) => {
           </p>
         </div>
 
-        {/* Sectors Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 text-left">
           {sectors.map((sector, idx) => {
             const Icon = sector.icon;
@@ -88,7 +86,6 @@ const BulkOrdersSection = ({ lang }) => {
           })}
         </div>
 
-        {/* Bulk Calculator Box */}
         <div className="bg-white text-[#12351D] p-6 sm:p-10 rounded-[28px] border border-[#E8E2D6] shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-left">
           
           <div className="lg:col-span-6 space-y-5">
@@ -105,7 +102,6 @@ const BulkOrdersSection = ({ lang }) => {
               {t?.bulk?.calcSubtitle || "Select service and quantity for estimated pricing"}
             </p>
 
-            {/* Select Product */}
             <div>
               <label className="block text-xs font-bold text-[#202020] uppercase tracking-wider mb-2">
                 {lang === 'ml' ? 'ഉൽപ്പന്നം തിരഞ്ഞെടുക്കുക' : 'Select Product Category'}
@@ -123,7 +119,7 @@ const BulkOrdersSection = ({ lang }) => {
               </select>
             </div>
 
-            {/* Quantity Slider */}
+            {/* FIXED QUANTITY SLIDER */}
             <div>
               <div className="flex justify-between items-center mb-2 text-xs font-bold text-[#202020]">
                 <span>{lang === 'ml' ? 'അളവ് (Quantity)' : 'Select Quantity'}</span>
@@ -131,22 +127,24 @@ const BulkOrdersSection = ({ lang }) => {
               </div>
               <input
                 type="range"
-                min="10"
+                min="0"
                 max="500"
-                step="5"
+                step="10"
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
                 className="w-full accent-[#1D4F2B] cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-[#666666] mt-1 font-mono">
-                <span>10 Kg</span>
-                <span>100 Kg</span>
-                <span>250 Kg</span>
-                <span>500 Kg</span>
+              {/* Evenly spaced labels matching the 0-500 scale */}
+              <div className="flex justify-between text-[10px] text-[#666666] mt-1 font-mono px-1">
+                <span>0</span>
+                <span>100</span>
+                <span>200</span>
+                <span>300</span>
+                <span>400</span>
+                <span>500</span>
               </div>
             </div>
 
-            {/* Texture */}
             <div>
               <label className="block text-xs font-bold text-[#202020] uppercase tracking-wider mb-2">
                 {lang === 'ml' ? 'പൊടിയുടെ പാകം (Texture)' : 'Grinding Texture'}
@@ -170,7 +168,6 @@ const BulkOrdersSection = ({ lang }) => {
             </div>
           </div>
 
-          {/* Estimate Display & WhatsApp Action */}
           <div className="lg:col-span-6 bg-[#F6F1E7] p-6 sm:p-8 rounded-[24px] border border-[#E8E2D6] space-y-6 flex flex-col justify-between h-full">
             <div className="space-y-4">
               <span className="text-xs font-bold text-[#666666] uppercase tracking-wider block">
@@ -196,13 +193,23 @@ const BulkOrdersSection = ({ lang }) => {
               </div>
             </div>
 
-            <button
-              onClick={handleWhatsAppQuote}
-              className="w-full font-button text-xs sm:text-sm bg-[#25D366] hover:bg-[#20ba5a] text-white py-4 rounded-full font-bold flex items-center justify-center gap-2 shadow-md transition-colors"
-            >
-              <MessageCircle className="w-5 h-5" />
-              <span>{t?.bulk?.btnSubmit || "Submit WhatsApp Quote Request"}</span>
-            </button>
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <a
+                href={phoneUrl}
+                className="flex-1 font-button text-xs sm:text-sm bg-[#1D4F2B] hover:bg-[#12351D] text-white py-3.5 px-5 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md"
+              >
+                <Phone className="w-4 h-4 text-[#D8A43A]" />
+                <span>{lang === 'ml' ? 'ബൾക്ക് ഓർഡറിനായി വിളിക്കൂ' : 'Call to Confirm Order'}</span>
+              </a>
+
+              <button
+                onClick={handleWhatsAppQuote}
+                className="flex-1 font-button text-xs sm:text-sm bg-white hover:bg-[#E8E2D6] text-[#12351D] border border-[#E8E2D6] py-3.5 px-5 rounded-xl flex items-center justify-center gap-2 transition-colors"
+              >
+                <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                <span>{t?.bulk?.btnSubmit || "Send WhatsApp Quote"}</span>
+              </button>
+            </div>
           </div>
 
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingBag, Star, Sparkles, MessageCircle, Info } from 'lucide-react';
+import { ShoppingBag, Star } from 'lucide-react';
 import ProductDetailModal from './ProductDetailModal';
 import { translations } from '../translations';
 
@@ -30,8 +30,8 @@ const Products = ({ lang }) => {
       title: lang === 'ml' ? 'ശുദ്ധമായ നാടൻ വെളിച്ചെണ്ണ' : 'Pure Country Coconut Oil',
       subtitle: lang === 'ml' ? 'തേങ്ങ ഡ്രയറിൽ ഉണക്കി ആട്ടുന്നു' : 'Highland Coconuts • Hot-Air Dryer',
       desc: lang === 'ml' ? 'ഉണക്ക തേങ്ങ ഹൈജീനിക് ഡ്രയറിൽ ഉണക്കി ആട്ടിയെടുത്ത 100% മായമില്ലാത്ത നാടൻ വെളിച്ചെണ്ണ.' : '100% pure country coconut oil extracted from sun-dried coconuts using hygienic hot-air dryers.',
-      price: '₹220',
-      unit: '/ Ltr',
+      prices: { '100g': '₹30', '250g': '₹60', '500g': '₹110', '1kg / 1L': '₹220' },
+      unit: lang === 'ml' ? 'ലിറ്റർ' : 'Ltr',
       image: coconutoil,
       badge: lang === 'ml' ? 'ഫ്രഷ് ബാച്ച്' : 'Best Seller',
       rating: '5.0',
@@ -44,8 +44,8 @@ const Products = ({ lang }) => {
       title: lang === 'ml' ? 'കഴുകി ഉണക്കിയ മുളകുപൊടി' : 'Pure Chilli Powder',
       subtitle: lang === 'ml' ? 'കഴുകി വെയിലിൽ ഉണക്കിയത്' : 'Thoroughly Washed & Sun-Dried',
       desc: lang === 'ml' ? 'കഴുകി ഉണക്കിയ ഉത്തമമായ ചുവന്ന മുളക് സാവധാനം പൊടിച്ചത്. മായമില്ലാത്ത നിറവും എരിവും.' : 'Rich red chilli powder slow-milled from thoroughly washed and dried red chillies.',
-      price: '₹140',
-      unit: '/ 500g',
+      prices: { '100g': '₹30', '250g': '₹70', '500g': '₹140', '1kg / 1L': '₹270' },
+      unit: 'Pack',
       image: chilly,
       badge: lang === 'ml' ? 'ശുചിത്വ ഗ്യാരന്റി' : 'Washed & Dried',
       rating: '5.0',
@@ -57,8 +57,8 @@ const Products = ({ lang }) => {
       title: lang === 'ml' ? 'കഴുകി ഉണക്കിയ മഞ്ഞൾപ്പൊടി' : 'Turmeric Powder (നാടൻ മഞ്ഞൾ)',
       subtitle: lang === 'ml' ? 'ഉയർന്ന കുർകുമിൻ അളവ്' : 'High Curcumin • 100% Pure',
       desc: lang === 'ml' ? 'നാടൻ മഞ്ഞൾ കഴുകി ഉണക്കി പൊടിച്ചത്. പ്രകൃതിദത്ത നിറവും ഉത്തമ രോഗപ്രതിരോധ ശേഷിയും.' : 'High-curcumin golden turmeric powder washed & milled from natural turmeric roots.',
-      price: '₹120',
-      unit: '/ 500g',
+      prices: { '100g': '₹25', '250g': '₹60', '500g': '₹120', '1kg / 1L': '₹230' },
+      unit: 'Pack',
       image: termeric,
       badge: lang === 'ml' ? 'ഹെൽത്തി' : 'High Curcumin',
       rating: '4.9',
@@ -70,9 +70,9 @@ const Products = ({ lang }) => {
       title: lang === 'ml' ? 'കഴുകി ഉണക്കിയ മല്ലിപ്പൊടി' : 'Coriander Powder (മല്ലിപ്പൊടി)',
       subtitle: lang === 'ml' ? 'സുഗന്ധമുള്ള നാടൻ മല്ലി' : 'Aromatic & Slow Ground',
       desc: lang === 'ml' ? 'വൃത്തിയാക്കി കഴുകിയ മല്ലി മിതമായ ചൂടിൽ പൊടിച്ചത്. കറികൾക്ക് മികച്ച സുഗന്ധം.' : 'Pure aromatic coriander powder slow-ground to preserve essential spice oils.',
-      price: '₹110',
-      unit: '/ 500g',
-      image: coriander ,
+      prices: { '100g': '₹25', '250g': '₹55', '500g': '₹110', '1kg / 1L': '₹210' },
+      unit: 'Pack',
+      image: coriander,
       badge: lang === 'ml' ? 'ഫ്രഷ് സുഗന്ധം' : 'Aromatic',
       rating: '4.9',
       isCustom: false,
@@ -83,8 +83,8 @@ const Products = ({ lang }) => {
       title: lang === 'ml' ? 'കുരുമുളക് പൊടി' : 'Pepper Powder (നാടൻ കുരുമുളക്)',
       subtitle: lang === 'ml' ? 'വയനാടൻ കറുത്ത കുരുമുളക്' : 'Pure Wayanad Black Pepper',
       desc: lang === 'ml' ? 'മികച്ച കറുത്ത കുരുമുളക് ഫ്രഷായി പൊടിച്ചത്. നല്ല എരിവും മണവും.' : 'Freshly ground premium black pepper powder with authentic spice punch.',
-      price: '₹180',
-      unit: '/ 250g',
+      prices: { '100g': '₹40', '250g': '₹180', '500g': '₹350', '1kg / 1L': '₹680' }, // Pepper is expensive!
+      unit: 'Pack',
       image: pepper,
       badge: lang === 'ml' ? 'പ്രീമിയം' : 'Premium',
       rating: '5.0',
@@ -98,8 +98,8 @@ const Products = ({ lang }) => {
       title: lang === 'ml' ? 'വറുത്ത അരിപ്പൊടി & പുട്ടുപൊടി' : 'Roasted Rice Flour / Puttu Podi',
       subtitle: lang === 'ml' ? 'ഇടിയപ്പപ്പൊടി, പത്തിരിപ്പൊടി' : 'Authentic Kerala Breakfast',
       desc: lang === 'ml' ? 'അരി കഴുകി ഉണക്കി പാകത്തിന് വറുത്തു പൊടിച്ച ഫ്രഷ് പുട്ടുപൊടിയും പത്തിരിപ്പൊടിയും.' : 'Finely ground roasted rice flour for soft puttu, idiyappam, and pathiri.',
-      price: '₹70',
-      unit: '/ 1kg',
+      prices: { '100g': '₹10', '250g': '₹25', '500g': '₹45', '1kg / 1L': '₹70' },
+      unit: 'Pack',
       image: Puttu,
       badge: lang === 'ml' ? 'ട്രഡീഷണൽ' : 'Breakfast Special',
       rating: '4.9',
@@ -111,8 +111,8 @@ const Products = ({ lang }) => {
       title: lang === 'ml' ? 'വറുത്തു പൊടിച്ച ആട്ട (Wheat Flour)' : 'Roasted Whole Wheat Flour (Atta)',
       subtitle: lang === 'ml' ? 'മൃദുവായ ചപ്പാത്തിക്ക്' : '100% Whole Grain Whole Wheat',
       desc: lang === 'ml' ? 'ഗോതമ്പ് കഴുകി മിതമായി വറുത്ത് കല്ലിൽ പൊടിച്ച ശുദ്ധമായ ആട്ട. സോഫ്റ്റ് ചപ്പാത്തി ഉറപ്പ്.' : 'Slow-roasted whole wheat chakki flour for soft, nutritious rotis.',
-      price: '₹65',
-      unit: '/ 1kg',
+      prices: { '100g': '₹10', '250g': '₹20', '500g': '₹35', '1kg / 1L': '₹65' },
+      unit: 'Pack',
       image: flourImg,
       badge: lang === 'ml' ? 'സോഫ്റ്റ് ചപ്പാത്തി' : '100% Whole Wheat',
       rating: '5.0',
@@ -126,8 +126,8 @@ const Products = ({ lang }) => {
       title: lang === 'ml' ? 'മൾട്ടിഗ്രൈൻ & ഹെൽത്ത് മിക്സ്' : 'Multi Grain & Health Mix Powder',
       subtitle: lang === 'ml' ? 'നവധാന്യപ്പൊടി' : 'Traditional Multi-Grain Nutrition',
       desc: lang === 'ml' ? 'റാഗി, മില്ലറ്റ്, ചെറുപയർ തുടങ്ങി ധാന്യങ്ങൾ മുളപ്പിച്ച് വറുത്തു പൊടിച്ച നവധാന്യപ്പൊടി.' : 'Sprouted multi-grain and millet health mix for wholesome daily nourishment.',
-      price: '₹160',
-      unit: '/ 500g',
+      prices: { '100g': '₹35', '250g': '₹85', '500g': '₹160', '1kg / 1L': '₹310' },
+      unit: 'Pack',
       image: grainsImg,
       badge: lang === 'ml' ? 'നവധാന്യം' : 'Superfood',
       rating: '5.0',
@@ -139,8 +139,8 @@ const Products = ({ lang }) => {
       title: lang === 'ml' ? 'റാഗി & മില്ലറ്റ് പൊടി' : 'Pure Ragi & Millet Flour',
       subtitle: lang === 'ml' ? 'പ്രകൃതിദത്ത പോഷകം' : '100% Natural Finger Millet',
       desc: lang === 'ml' ? 'കാൽസ്യം സമൃദ്ധമായ റാഗിയും മില്ലറ്റുകളും ശുചിത്വത്തോടെ പൊടിച്ചെടുത്തത്.' : 'Pure calcium-rich ragi and finger millet flour for healthy porridge & rotis.',
-      price: '₹90',
-      unit: '/ 500g',
+      prices: { '100g': '₹20', '250g': '₹50', '500g': '₹90', '1kg / 1L': '₹170' },
+      unit: 'Pack',
       image: Raggi,
       badge: lang === 'ml' ? 'കാൽസ്യം' : 'Rich Calcium',
       rating: '4.9',
@@ -153,8 +153,9 @@ const Products = ({ lang }) => {
       title: lang === 'ml' ? 'നിങ്ങളുടെ സ്വന്തം ധാന്യങ്ങൾ പൊടിക്കാം' : 'Bring Your Own Ingredients (Custom Grinding)',
       subtitle: lang === 'ml' ? 'അരി, ഗോതമ്പ്, മസാലകൾ, തേങ്ങ' : 'Rice, Wheat, Spices, Coconuts',
       desc: lang === 'ml' ? 'നിങ്ങളുടെ സ്വന്തം വീട്ടിലെ തേങ്ങ, ഗോതമ്പ്, അരി, മുളക്, മഞ്ഞൾ കൊണ്ടുതന്നാൽ ആവശ്യാനുസരണം പൊടിച്ചു നൽകുന്നു.' : 'Bring your raw grains, chillies, turmeric, or cut coconuts for custom grinding and drying.',
-      price: '₹15',
-      unit: '/ Kg service',
+      // Custom grinding doesn't have fixed pack sizes, so we handle it differently or just show base price
+      prices: { '100g': '₹15', '250g': '₹15', '500g': '₹15', '1kg / 1L': '₹15' },
+      unit: lang === 'ml' ? 'കിലോ സർവീസ്' : '/ Kg service',
       image: realMillImg,
       badge: lang === 'ml' ? 'കസ്റ്റം മില്ലിംഗ്' : 'Custom Service',
       rating: '5.0',
@@ -215,88 +216,101 @@ const Products = ({ lang }) => {
           ))}
         </div>
 
-        {/* Products Grid */}
-        {/* Products — horizontal scroll on mobile, grid on desktop */}
+        {/* Products Grid - Mobile Horizontal Scroll */}
         <div className="flex sm:hidden gap-3 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
-          {filteredProducts.map((product) => (
-            <div
-              key={product.id}
-              onClick={() => setSelectedProduct(product)}
-              className="bg-white rounded-2xl border border-[#E8E2D6] overflow-hidden shadow-sm flex-none w-[72vw] max-w-[280px] snap-start cursor-pointer active:scale-[0.98] transition-transform"
-            >
-              <div className="relative h-36 bg-[#F6F1E7] overflow-hidden">
-                <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
-                <div className="absolute top-2 left-2 bg-[#12351D]/90 text-[#D8A43A] text-[9px] font-button font-bold px-2.5 py-0.5 rounded-full uppercase border border-[#D8A43A]/30">
-                  {product.badge}
-                </div>
-              </div>
-              <div className="p-3.5 space-y-1.5">
-                <h3 className="font-serif-heading text-sm font-bold text-[#12351D] leading-tight line-clamp-2">
-                  {product.title}
-                </h3>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="font-serif-heading text-base font-bold text-[#12351D]">{product.price}</span>
-                    <span className="text-[10px] text-[#666666] ml-1">{product.unit}</span>
+          {filteredProducts.map((product) => {
+            // Get default 500g price for mobile card display
+            const displayPrice = product.prices ? product.prices['500g'] : '₹0';
+            
+            return (
+              <div
+                key={product.id}
+                onClick={() => setSelectedProduct(product)}
+                className="bg-white rounded-2xl border border-[#E8E2D6] overflow-hidden shadow-sm flex-none w-[72vw] max-w-[280px] snap-start cursor-pointer active:scale-[0.98] transition-transform"
+              >
+                <div className="relative h-36 bg-[#F6F1E7] overflow-hidden">
+                  <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
+                  <div className="absolute top-2 left-2 bg-[#12351D]/90 text-[#D8A43A] text-[9px] font-button font-bold px-2.5 py-0.5 rounded-full uppercase border border-[#D8A43A]/30">
+                    {product.badge}
                   </div>
-                  <span className="text-[10px] font-bold text-[#1D4F2B] bg-[#F6F1E7] px-2 py-1 rounded-full">
-                    {t?.products?.btnViewDetails || "Details"}
-                  </span>
+                  <div className="absolute bottom-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full text-[9px] font-bold text-[#12351D] flex items-center gap-1 shadow-sm">
+                    <Star className="w-3 h-3 fill-[#D8A43A] text-[#D8A43A]" />
+                    <span>{product.rating}</span>
+                  </div>
+                </div>
+                <div className="p-3.5 space-y-1.5">
+                  <h3 className="font-serif-heading text-sm font-bold text-[#12351D] leading-tight line-clamp-2">
+                    {product.title}
+                  </h3>
+                  <div className="flex items-center justify-between pt-1">
+                    <div>
+                      <span className="font-serif-heading text-base font-bold text-[#12351D]">{displayPrice}</span>
+                      <span className="text-[10px] text-[#666666] ml-1">{product.unit}</span>
+                    </div>
+                    <span className="text-[10px] font-bold text-[#1D4F2B] bg-[#F6F1E7] px-2 py-1 rounded-full">
+                      {t?.products?.btnViewDetails || "Details"}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Desktop grid */}
         <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 text-left">
-          {filteredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-[24px] border border-[#E8E2D6] overflow-hidden shadow-premium-soft hover:shadow-xl transition-all duration-300 group flex flex-col justify-between"
-            >
-              <div className="relative h-48 sm:h-52 bg-[#F6F1E7] overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-3 left-3 bg-[#12351D]/90 backdrop-blur-sm text-[#D8A43A] text-[10px] font-button font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-[#D8A43A]/30">
-                  {product.badge}
-                </div>
-                <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-[#12351D] flex items-center gap-1 shadow-sm">
-                  <Star className="w-3.5 h-3.5 fill-[#D8A43A] text-[#D8A43A]" />
-                  <span>{product.rating}</span>
-                </div>
-              </div>
-              <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="font-serif-heading text-base sm:text-lg font-bold text-[#12351D] leading-snug">
-                    {product.title}
-                  </h3>
-                  <p className="text-[11px] font-sans-body text-[#D8A43A] font-semibold mt-0.5">
-                    {product.subtitle}
-                  </p>
-                  <p className="text-xs text-[#666666] line-clamp-2 mt-2 leading-relaxed">
-                    {product.desc}
-                  </p>
-                </div>
-                <div className="pt-3 border-t border-[#E8E2D6] flex items-center justify-between gap-2">
-                  <div>
-                    <span className="font-serif-heading text-lg font-bold text-[#12351D]">{product.price}</span>
-                    <span className="text-[11px] text-[#666666] ml-1">{product.unit}</span>
+          {filteredProducts.map((product) => {
+            // Get default 500g price for desktop card display
+            const displayPrice = product.prices ? product.prices['500g'] : '₹0';
+            
+            return (
+              <div
+                key={product.id}
+                className="bg-white rounded-[24px] border border-[#E8E2D6] overflow-hidden shadow-premium-soft hover:shadow-xl transition-all duration-300 group flex flex-col justify-between"
+              >
+                <div className="relative h-48 sm:h-52 bg-[#F6F1E7] overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3 bg-[#12351D]/90 backdrop-blur-sm text-[#D8A43A] text-[10px] font-button font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-[#D8A43A]/30">
+                    {product.badge}
                   </div>
-                  <button
-                    onClick={() => setSelectedProduct(product)}
-                    className="font-button text-xs bg-[#1D4F2B] hover:bg-[#12351D] text-white px-4 py-2 rounded-full flex items-center gap-1.5 transition-colors shadow-sm"
-                  >
-                    <ShoppingBag className="w-3.5 h-3.5" />
-                    <span>{t?.products?.btnViewDetails || "View Details"}</span>
-                  </button>
+                  <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-[#12351D] flex items-center gap-1 shadow-sm">
+                    <Star className="w-3.5 h-3.5 fill-[#D8A43A] text-[#D8A43A]" />
+                    <span>{product.rating}</span>
+                  </div>
+                </div>
+                <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-serif-heading text-base sm:text-lg font-bold text-[#12351D] leading-snug">
+                      {product.title}
+                    </h3>
+                    <p className="text-[11px] font-sans-body text-[#D8A43A] font-semibold mt-0.5">
+                      {product.subtitle}
+                    </p>
+                    <p className="text-xs text-[#666666] line-clamp-2 mt-2 leading-relaxed">
+                      {product.desc}
+                    </p>
+                  </div>
+                  <div className="pt-3 border-t border-[#E8E2D6] flex items-center justify-between gap-2">
+                    <div>
+                      <span className="font-serif-heading text-lg font-bold text-[#12351D]">{displayPrice}</span>
+                      <span className="text-[11px] text-[#666666] ml-1">{product.unit}</span>
+                    </div>
+                    <button
+                      onClick={() => setSelectedProduct(product)}
+                      className="font-button text-xs bg-[#1D4F2B] hover:bg-[#12351D] text-white px-4 py-2 rounded-full flex items-center gap-1.5 transition-colors shadow-sm"
+                    >
+                      <ShoppingBag className="w-3.5 h-3.5" />
+                      <span>{t?.products?.btnViewDetails || "View Details"}</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
       </div>

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { X, CheckCircle, MessageCircle, ShoppingBag, ShieldCheck } from 'lucide-react';
+import { X, CheckCircle, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
 import { translations } from '../translations';
 
 const ProductDetailModal = ({ product, onClose, lang }) => {
+  // Default selected weight is 500g
   const [selectedWeight, setSelectedWeight] = useState('500g');
   const t = translations[lang] || translations.en;
 
@@ -13,9 +14,15 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
   const title = lang === 'ml' && product.titleMl ? product.titleMl : product.title;
   const desc = lang === 'ml' && product.descMl ? product.descMl : product.desc;
 
+  const phoneUrl = `tel:+918714348348`;
+
+  // DYNAMIC PRICING LOGIC
+  // Get the price based on currently selected weight. Fallback to 500g if something goes wrong.
+  const currentPrice = product.prices?.[selectedWeight] || product.prices?.['500g'] || '₹0';
+
   const handleWhatsAppOrder = () => {
     const text = encodeURIComponent(
-      `Hello PKS Straightway Mill!\nI am interested in ordering:\n*Product:* ${title}\n*Selected Size:* ${selectedWeight}\n*Quantity:* 1\nPlease let me know availability and price.`
+      `Hello PKS Straightway Mill!\nI am interested in ordering:\n*Product:* ${title}\n*Selected Size:* ${selectedWeight}\n*Estimated Price:* ${currentPrice}\n*Quantity:* 1\nPlease let me know availability and price.`
     );
     window.open(`https://wa.me/918714348348?text=${text}`, '_blank');
   };
@@ -49,7 +56,7 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
               <img
                 src={product.image}
                 alt={title}
-                className="w-full h-56 md:h-64 object-cover"
+                className="w-full h-64 md:h-72 object-cover"
               />
             </div>
 
@@ -79,8 +86,8 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
             </div>
           </div>
 
-          {/* Weight Selector */}
-          <div className="space-y-3 pt-2 border-t border-[#E8E2D6] text-left">
+          {/* Weight Selector & Dynamic Price Display */}
+          <div className="space-y-4 pt-2 border-t border-[#E8E2D6] text-left">
             <label className="block text-xs font-semibold uppercase tracking-wider text-[#202020]">
               {lang === 'ml' ? 'ലഭ്യമായ അളവുകൾ (Pack Sizes / Quantity)' : 'Available Pack Sizes'}
             </label>
@@ -99,23 +106,35 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
                 </button>
               ))}
             </div>
+            
+            {/* Dynamic Price Box */}
+            <div className="flex items-center justify-between bg-[#F6F1E7] p-4 rounded-xl border border-[#E8E2D6] mt-4">
+              <span className="text-sm font-medium text-[#666666]">
+                {lang === 'ml' ? 'മൊത്തം വില (Estimated Price)' : 'Estimated Price'}
+              </span>
+              <div className="text-right">
+                <span className="font-serif-heading text-2xl font-bold text-[#12351D]">{currentPrice}</span>
+                <span className="text-xs text-[#666666] ml-1">({selectedWeight})</span>
+              </div>
+            </div>
           </div>
 
           {/* Actions */}
           <div className="pt-4 flex flex-col sm:flex-row gap-3">
-            <button
-              onClick={handleWhatsAppOrder}
+            <a
+              href={phoneUrl}
               className="flex-1 font-button text-xs sm:text-sm bg-[#1D4F2B] hover:bg-[#12351D] text-white py-3.5 px-5 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md"
             >
-              <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              <span>{t?.hero?.btnContact || "Contact Us"}</span>
-            </button>
+              <Phone className="w-4 h-4 text-[#D8A43A]" />
+              <span>{lang === 'ml' ? 'ഓർഡർ ചെയ്യാൻ വിളിക്കൂ' : 'Call to Order Now'}</span>
+            </a>
+
             <button
               onClick={handleWhatsAppOrder}
               className="flex-1 font-button text-xs sm:text-sm bg-[#F6F1E7] hover:bg-[#E8E2D6] text-[#12351D] border border-[#E8E2D6] py-3.5 px-5 rounded-xl flex items-center justify-center gap-2 transition-colors"
             >
-              <ShoppingBag className="w-4 h-4 text-[#D8A43A]" />
-              <span>{lang === 'ml' ? 'റേറ്റ് അറിയാൻ വിളിക്കൂ' : 'Request Custom Quote'}</span>
+              <MessageCircle className="w-4 h-4 text-[#25D366]" />
+              <span>{lang === 'ml' ? 'വാട്സ്ആപ്പിൽ ചോദിക്കൂ' : 'Enquire on WhatsApp'}</span>
             </button>
           </div>
 
