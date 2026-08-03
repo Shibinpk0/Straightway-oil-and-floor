@@ -13,7 +13,7 @@ import GallerySection from './components/GallerySection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
-
+import CoconutDryerSection from './components/CoconutDryerSection';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -51,11 +51,17 @@ function App() {
         {/* Products Showcase & Custom Grinding */}
         <Products lang={lang} />
 
+
         {/* 4-Step How to Order Section */}
         <HowToOrderSection lang={lang} />
 
+        {/* Coconut Dryer Section */}
+        <CoconutDryerSection lang={lang} />
+
+
         {/* Delivery & Doorstep Logistics */}
         <DeliverySection lang={lang} />
+
 
         {/* Bulk Orders & Wholesale Estimator */}
         <BulkOrdersSection lang={lang} />
@@ -63,8 +69,6 @@ function App() {
         {/* About Section */}
         <AboutSection lang={lang} />
 
-        {/* Gallery Section */}
-        <GallerySection lang={lang} />
 
         {/* FAQ Accordion Section */}
         <FaqSection lang={lang} />
