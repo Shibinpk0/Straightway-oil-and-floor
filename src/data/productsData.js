@@ -10,6 +10,7 @@ import coriander from "../assets/images/Corrindor.png";
 import pepper from "../assets/images/pepper.webp";
 import Raggi from "../assets/images/Raggi.jpg";
 import Puttu from "../assets/images/Puttu.png";
+import kashmiriChilli from "../assets/images/kashmiriChilli.jpg";
 
 export const productList = [
   {
@@ -21,7 +22,7 @@ export const productList = [
     desc: "100% pure country coconut oil extracted from sun-dried coconuts using hygienic hot-air dryers.",
     // OIL SIZES (ml/L)
     sizes: ["500ml", "1L"],
-    prices: { "500ml": "₹110", "1L": "₹220" },
+    prices: { "500ml": "₹180", "1L": "₹350" },
     unit: "Bottle",
     image: coconutoil,
     badge: "Best Seller",
@@ -36,7 +37,7 @@ export const productList = [
     desc: "Rich red chilli powder slow-milled from thoroughly washed and dried red chillies.",
     // POWDER SIZES (g/Kg)
     sizes: ["100g", "250g", "500g", "1Kg"],
-    prices: { "100g": "₹30", "250g": "₹70", "500g": "₹140", "1Kg": "₹270" },
+    prices: { "100g": "₹40", "250g": "₹100", "500g": "₹200", "1Kg": "₹400" },
     unit: "Pack",
     image: chilly,
     badge: "Washed & Dried",
@@ -50,7 +51,7 @@ export const productList = [
     subtitle: "High Curcumin • 100% Pure",
     desc: "High-curcumin golden turmeric powder washed & milled from natural turmeric roots.",
     sizes: ["100g", "250g", "500g", "1Kg"],
-    prices: { "100g": "₹25", "250g": "₹60", "500g": "₹120", "1Kg": "₹230" },
+    prices: { "100g": "₹20", "250g": "₹75", "500g": "₹150", "1Kg": "₹300" },
     unit: "Pack",
     image: termeric,
     badge: "High Curcumin",
@@ -64,11 +65,26 @@ export const productList = [
     subtitle: "Aromatic & Slow Ground",
     desc: "Pure aromatic coriander powder slow-ground to preserve essential spice oils.",
     sizes: ["100g", "250g", "500g", "1Kg"],
-    prices: { "100g": "₹25", "250g": "₹55", "500g": "₹110", "1Kg": "₹210" },
+    prices: { "100g": "₹20", "250g": "₹75", "500g": "₹150", "1Kg": "₹300" },
     unit: "Pack",
     image: coriander,
     badge: "Aromatic",
     rating: "4.9",
+  },
+  {
+    id: 13,
+    category: "spices",
+    titleEn: "Pure Kashmiri Chilli Powder",
+    titleMl: "കാശ്മീരി മുളകുപൊടി",
+    subtitle: "Rich Colour & Mild Heat",
+    desc: "Premium Kashmiri chilli powder, naturally rich in colour with a mild and balanced heat.",
+    // POWDER SIZES (g/Kg)
+    sizes: ["100g", "250g", "500g", "1Kg"],
+    prices: { "100g": "₹96", "250g": "₹240", "500g": "₹480", "1Kg": "₹960" },
+    unit: "Pack",
+    image: kashmiriChilli,
+    badge: "Rich Colour",
+    rating: "5.0",
   },
   {
     id: 5,
@@ -78,7 +94,12 @@ export const productList = [
     subtitle: "Pure Wayanad Black Pepper",
     desc: "Freshly ground premium black pepper powder with authentic spice punch.",
     sizes: ["100g", "250g", "500g", "1Kg"],
-    prices: { "100g": "₹40", "250g": "₹180", "500g": "₹350", "1Kg": "₹680" },
+    prices: {
+      "100g": "₹80",
+      "250g": "₹200",
+      "500g": "₹400",
+      "1Kg": "₹800",
+    },
     unit: "Pack",
     image: pepper,
     badge: "Premium",
@@ -92,7 +113,12 @@ export const productList = [
     subtitle: "Authentic Kerala Breakfast",
     desc: "Finely ground roasted rice flour for soft puttu, idiyappam, and pathiri.",
     sizes: ["500g", "1Kg", "2Kg", "5Kg"],
-    prices: { "500g": "₹45", "1Kg": "₹70", "2Kg": "₹135", "5Kg": "₹330" },
+    prices: {
+      "500g": "₹40",
+      "1Kg": "₹80",
+      "2Kg": "₹160",
+      "5Kg": "₹400",
+    },
     unit: "Pack",
     image: Puttu,
     badge: "Breakfast Special",
@@ -106,7 +132,12 @@ export const productList = [
     subtitle: "100% Whole Grain Whole Wheat",
     desc: "Slow-roasted whole wheat chakki flour for soft, nutritious rotis.",
     sizes: ["500g", "1Kg", "2Kg", "5Kg"],
-    prices: { "500g": "₹35", "1Kg": "₹65", "2Kg": "₹125", "5Kg": "₹300" },
+    prices: {
+      "500g": "₹50",
+      "1Kg": "₹100",
+      "2Kg": "₹200",
+      "5Kg": "₹500",
+    },
     unit: "Pack",
     image: flourImg,
     badge: "100% Whole Wheat",
@@ -119,8 +150,8 @@ export const productList = [
     titleMl: "മൾട്ടിഗ്രൈൻ & ഹെൽത്ത് മിക്സ്",
     subtitle: "Traditional Multi-Grain Nutrition",
     desc: "Sprouted multi-grain and millet health mix for wholesome daily nourishment.",
-    sizes: ["100g", "250g", "500g", "1Kg"],
-    prices: { "100g": "₹35", "250g": "₹85", "500g": "₹160", "1Kg": "₹310" },
+    sizes: ["250g", "500g", "1Kg"],
+    prices: { "250g": "₹85", "500g": "₹160", "1Kg": "₹310" },
     unit: "Pack",
     image: grainsImg,
     badge: "Superfood",
@@ -133,8 +164,8 @@ export const productList = [
     titleMl: "റാഗി & മില്ലറ്റ് പൊടി",
     subtitle: "100% Natural Finger Millet",
     desc: "Pure calcium-rich ragi and finger millet flour for healthy porridge & rotis.",
-    sizes: ["100g", "250g", "500g", "1Kg"],
-    prices: { "100g": "₹20", "250g": "₹50", "500g": "₹90", "1Kg": "₹170" },
+    sizes: ["250g", "500g", "1Kg"],
+    prices: { "250g": "₹25", "500g": "₹50", "1Kg": "₹100" },
     unit: "Pack",
     image: Raggi,
     badge: "Rich Calcium",
