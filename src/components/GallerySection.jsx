@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { X, ZoomIn } from 'lucide-react';
 import heroImg from '../assets/images/hero.png';
-import spicesImg from '../assets/images/spices.png';
-import flourImg from '../assets/images/flour.png';
-import grainsImg from '../assets/images/grains.png';
-import riceImg from '../assets/images/rice.png';
-import storefrontImg from '../assets/images/storefront.png';
+import spicesImg from '../assets/images/spices.jpg';
+import flourImg from '../assets/images/flour.jpg';
+import grainsImg from '../assets/images/grains.jpg';
+import riceImg from '../assets/images/rice.jpg';
+import storefrontImg from '../assets/images/storefront.jpg';
 import realMillImg from '../assets/images/pks_mill_real.png';
 import { translations } from '../translations';
 

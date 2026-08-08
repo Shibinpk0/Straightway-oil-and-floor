@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sun, Droplet, ShieldCheck, MessageCircle, Phone } from 'lucide-react';
-import realMillImg from '../assets/images/coconutdry.jpeg';
+import realMillImg from '../assets/images/coconutdry.webp';
 import { translations } from '../translations';
 
 const CoconutDryerSection = ({ lang }) => {

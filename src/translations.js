@@ -211,6 +211,7 @@ export const translations = {
       messageLabel: "Your Message",
       btnSend: "Send Message",
       openInMaps: "Open Location in Google Maps",
+      reviewsBtn: "Read Our Google Reviews",
     },
     gallery: {
       tag: "✦ OUR GALLERY & MILL PHOTOS ✦",
@@ -232,6 +233,9 @@ export const translations = {
       contactInfo: "Contact Info",
       rights: "© 2026 Straight Way Oil & Flour Mill. All Rights Reserved.",
       madeWith: "Made with ❤️ for healthy living",
+    },
+    announcement: {
+      text: "🚚 Free Home Delivery in Karulai & Vakkeelpadi for orders above ₹500!",
     },
   },
   ml: {
@@ -439,6 +443,7 @@ export const translations = {
       messageLabel: "നിങ്ങളുടെ സന്ദേശം",
       btnSend: "സന്ദേശം അയക്കൂ",
       openInMaps: "ഗൂഗിൾ മാപ്സിൽ സ്ഥലം കാണുക",
+      reviewsBtn: "ഗൂഗിൾ റിവ്യൂകൾ കാണുക",
     },
     gallery: {
       tag: "✦ ഗാലറിയും കാഴ്ചകളും ✦",
@@ -460,6 +465,9 @@ export const translations = {
       contactInfo: "ബന്ധപ്പെടാൻ",
       rights: "© 2026 സ്ട്രെയിറ്റ് വേ ഓയിൽ & ഫ്ലോർ മിൽ. ഓൾ റൈറ്റ്സ് റിസർവ്ഡ്.",
       madeWith: "ആരോഗ്യമുള്ള ജീവിതത്തിനായി ❤️നിർമ്മിച്ചത്",
+    },
+    announcement: {
+      text: "🚚 ₹500-ന് മുകളിലുള്ള ഓർഡറുകൾക്ക് കരുളായിയിലും വക്കീൽപ്പടിയിലും ഫ്രീ ഹോം ഡെലിവറി!",
     },
   },
 };

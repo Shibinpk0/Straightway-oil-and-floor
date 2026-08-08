@@ -1,43 +1,40 @@
 import React, { useState } from 'react';
 import { Analytics } from "@vercel/analytics/react";
 import Navbar from './components/Navbar';
+import AnnouncementBar from './components/AnnouncementBar';
 import Hero from './components/Hero';
 import WhyChooseSection from './components/WhyChooseSection';
-import HowToOrderSection from './components/HowToOrderSection';
+import PromoBanner from './components/PromoBanner';
 import Products from './components/Products';
+import HowToOrderSection from './components/HowToOrderSection';
+import CoconutDryerSection from './components/CoconutDryerSection';
 import DeliverySection from './components/DeliverySection';
 import BulkOrdersSection from './components/BulkOrdersSection';
-import FaqSection from './components/FaqSection';
 import AboutSection from './components/AboutSection';
+import GallerySection from './components/GallerySection';
+import WorkingHoursSection from './components/WorkingHoursSection';
+import FaqSection from './components/FaqSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
-import CoconutDryerSection from './components/CoconutDryerSection';
+import OrderList from './components/OrderList';
 
 function App() {
-  // --- NEW: Auto-detect language logic ---
   const getInitialLang = () => {
-    // 1. Check if the user has manually selected a language before
     const savedLang = localStorage.getItem('pks_lang');
     if (savedLang) return savedLang;
-
-    // 2. If no manual choice, check the browser/phone's default language
     const browserLang = navigator.language || navigator.userLanguage;
-    if (browserLang.toLowerCase().includes('ml')) {
-      return 'ml'; // Set to Malayalam if browser is in Malayalam
-    }
-    
-    // 3. Default to English
+    if (browserLang.toLowerCase().includes('ml')) return 'ml';
     return 'en';
   };
 
   const [activeTab, setActiveTab] = useState('home');
-  const [lang, setLang] = useState(getInitialLang); // Initialize with the detected language
+  const [lang, setLang] = useState(getInitialLang);
+  const [cart, setCart] = useState([]);
 
-  // --- NEW: Wrapper function to save the language when toggled manually ---
   const handleSetLang = (newLang) => {
     setLang(newLang);
-    localStorage.setItem('pks_lang', newLang); // Remember the user's manual choice
+    localStorage.setItem('pks_lang', newLang);
   };
 
   const scrollToSection = (id) => {
@@ -48,57 +45,71 @@ function App() {
     }
   };
 
+   // Updated: Add to cart function combining bilingual titles
+  const addToCart = (product, selectedWeight = '500g') => {
+    const price = product.prices?.[selectedWeight] || '₹0';
+    const combinedTitle = `${product.titleEn} / ${product.titleMl}`; // Combine titles here
+    
+    setCart((prevCart) => {
+      const existingItem = prevCart.find(item => item.id === product.id && item.selectedWeight === selectedWeight);
+      if (existingItem) {
+        return prevCart.map(item => 
+          item.id === product.id && item.selectedWeight === selectedWeight
+            ? { ...item, qty: item.qty + 1 }
+            : item
+        );
+      } else {
+        // Added `title: combinedTitle` to the cart object
+        return [...prevCart, { ...product, title: combinedTitle, cartId: Date.now(), selectedWeight: selectedWeight, currentPrice: price, qty: 1 }];
+      }
+    });
+  };
+
+  const removeFromCart = (cartId) => {
+    setCart(cart.filter(item => item.cartId !== cartId));
+  };
+
+  const updateQty = (cartId, delta) => {
+    setCart((prevCart) => {
+      return prevCart.map(item => {
+        if (item.cartId === cartId) {
+          return { ...item, qty: item.qty + delta };
+        }
+        return item;
+      }).filter(item => item.qty > 0);
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-[#FFFDF8] font-sans-body selection:bg-[#1D4F2B] selection:text-white flex flex-col justify-between overflow-x-hidden">
+    <div className="min-h-screen bg-[#FFFDF8] font-sans-body selection:bg-[#1D4F2B] selection:text-white flex flex-col justify-between overflow-x-hidden pb-20 sm:pb-24">
       <div>
-        {/* Sticky Header with Language Switcher */}
-        <Navbar
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          lang={lang}
-          setLang={handleSetLang} // Passed the new wrapper function here
-        />
-
-        {/* Hero Section */}
-        <Hero
-          onExploreClick={() => scrollToSection('products')}
-          onContactClick={() => scrollToSection('contact')}
-          lang={lang}
-        />
-
-        {/* Why Choose Straightway (4 Core Value Pillars) */}
+        {/* Announcement Bar */}
+        <AnnouncementBar lang={lang} />
+        
+        <Navbar activeTab={activeTab} setActiveTab={setActiveTab} lang={lang} setLang={handleSetLang} />
+        
+        <Hero onExploreClick={() => scrollToSection('products')} onContactClick={() => scrollToSection('contact')} lang={lang} />
         <WhyChooseSection lang={lang} />
-
-        {/* Products Showcase & Custom Grinding */}
-        <Products lang={lang} />
-
-        {/* 4-Step How to Order Section */}
+        
+        {/* Added Promo Banner back */}
+        <PromoBanner lang={lang} onKnowMoreClick={() => scrollToSection('about')} />
+        
+        <Products lang={lang} onQuickAdd={addToCart} />
         <HowToOrderSection lang={lang} />
-
-        {/* Coconut Dryer Section */}
         <CoconutDryerSection lang={lang} />
-
-        {/* Delivery & Doorstep Logistics */}
         <DeliverySection lang={lang} />
-
-        {/* Bulk Orders & Wholesale Estimator */}
         <BulkOrdersSection lang={lang} />
-
-        {/* About Section */}
+        
         <AboutSection lang={lang} />
-
-        {/* FAQ Accordion Section */}
+        
         <FaqSection lang={lang} />
-
-        {/* Contact Section & Shop Working Hours */}
         <ContactSection lang={lang} />
       </div>
 
-      {/* Footer */}
       <Footer setActiveTab={setActiveTab} lang={lang} />
-
-      {/* Instant Floating Action Buttons (Call + WhatsApp) */}
       <WhatsAppFloat />
+      
+      <OrderList cart={cart} removeFromCart={removeFromCart} updateQty={updateQty} lang={lang} />
     </div>
   );
 }

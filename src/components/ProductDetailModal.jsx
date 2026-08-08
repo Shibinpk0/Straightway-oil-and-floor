@@ -3,40 +3,38 @@ import { X, CheckCircle, MessageCircle, Phone, ShieldCheck } from 'lucide-react'
 import { translations } from '../translations';
 
 const ProductDetailModal = ({ product, onClose, lang }) => {
-  const [selectedWeight, setSelectedWeight] = useState('500g');
+  // Default to the middle size (e.g., 500g or 500ml)
+  const defaultWeight = product.sizes ? product.sizes[Math.floor(product.sizes.length / 2)] : '500g';
+  const [selectedWeight, setSelectedWeight] = useState(defaultWeight);
   const t = translations[lang] || translations.en;
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'auto'; // Restore scrolling
+      document.body.style.overflow = 'auto';
     };
   }, []);
 
   if (!product) return null;
 
-  const weights = ['100g', '250g', '500g', '1kg / 1L'];
-
-  const title = lang === 'ml' && product.titleMl ? product.titleMl : product.title;
-  const desc = lang === 'ml' && product.descMl ? product.descMl : product.desc;
+  // Combine English and Malayalam titles
+  const title = `${product.titleEn} / ${product.titleMl}`;
+  const desc = product.desc;
 
   const phoneUrl = `tel:+918714348348`;
-
-  const currentPrice = product.prices?.[selectedWeight] || product.prices?.['500g'] || '₹0';
+  const currentPrice = product.prices?.[selectedWeight] || '₹0';
 
   const handleWhatsAppOrder = () => {
     const text = encodeURIComponent(
-      `Hello PKS Straightway Mill!\nI am interested in ordering:\n*Product:* ${title}\n*Selected Size:* ${selectedWeight}\n*Estimated Price:* ${currentPrice}\n*Quantity:* 1\nPlease let me know availability and price.`
+      `Hello PKS Straightway Mill!\nI am interested in ordering:\n*Product:* ${product.titleEn} (${product.titleMl})\n*Selected Size:* ${selectedWeight}\n*Estimated Price:* ${currentPrice}\n*Quantity:* 1\nPlease let me know availability and price.`
     );
     window.open(`https://wa.me/918714348348?text=${text}`, '_blank');
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-      {/* Main Container: Entire card scrolls naturally if screen is small */}
       <div className="bg-[#FFFDF8] rounded-[24px] w-full max-w-2xl border border-[#E8E2D6] shadow-2xl overflow-hidden relative max-h-[90vh] overflow-y-auto">
         
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/90 border border-[#E8E2D6] flex items-center justify-center text-[#202020] hover:bg-[#1D4F2B] hover:text-white transition-colors"
@@ -44,9 +42,7 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
           <X className="w-4 h-4" />
         </button>
 
-        {/* Content Wrapper - Normal flow, tight spacing */}
         <div className="p-4 sm:p-6">
-          {/* Header */}
           <div className="text-left pr-8 mb-3">
             <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#D8A43A]">
               PKS Straightway Mill • Vakeelppadi
@@ -56,10 +52,7 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
             </h2>
           </div>
 
-          {/* Product Image & Details */}
-          {/* Changed grid gap to gap-4 for tighter mobile look */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start mb-4">
-            {/* IMAGE: Made much smaller on mobile (h-36) to save scroll space */}
             <div className="rounded-2xl overflow-hidden border border-[#E8E2D6] shadow-sm bg-white h-36 sm:h-52 md:h-64 w-full">
               <img
                 src={product.image}
@@ -100,7 +93,8 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
               {lang === 'ml' ? 'അളവ്' : 'Available Pack Sizes'}
             </label>
             <div className="grid grid-cols-4 gap-2 sm:gap-3">
-              {weights.map((w) => (
+              {/* Maps over the specific sizes for this product (e.g., ml/L vs g/Kg) */}
+              {product.sizes.map((w) => (
                 <button
                   key={w}
                   onClick={() => setSelectedWeight(w)}
@@ -115,7 +109,6 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
               ))}
             </div>
             
-            {/* Dynamic Price Box */}
             <div className="flex items-center justify-between bg-[#F6F1E7] p-3 rounded-xl border border-[#E8E2D6] mt-4">
               <span className="text-xs sm:text-sm font-medium text-[#666666]">
                 {lang === 'ml' ? 'മൊത്തം വില' : 'Estimated Price'}
@@ -127,7 +120,6 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
             </div>
           </div>
 
-          {/* Actions - Normal flow inside the scrolling container */}
           <div className="flex flex-col sm:flex-row gap-2 pb-2">
             <a
               href={phoneUrl}

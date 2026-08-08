@@ -1,6 +1,6 @@
 import React from 'react';
 import { Award, CheckCircle2, ShieldCheck } from 'lucide-react';
-import storefrontImg from '../assets/images/storefront.png';
+import storefrontImg from '../assets/images/storefront.jpg';
 import realMillImg from '../assets/images/pks_mill_real.png';
 import { translations } from '../translations';
 
