@@ -6,7 +6,7 @@ const DeliverySection = ({ lang }) => {
   const t = translations[lang] || translations.en;
 
   return (
-    <section id="delivery" className="bg-[#FFFDF8] py-8 sm:py-16 md:py-24 border-b border-[#E8E2D6] relative">
+    <section id="delivery" className="bg-[#FFFDF8] py-6 sm:py-16 md:py-24 border-b border-[#E8E2D6] relative">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-6 sm:space-y-12">
         
         {/* Header */}

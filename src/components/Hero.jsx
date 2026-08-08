@@ -42,10 +42,10 @@ const Hero = ({ onExploreClick, lang }) => {
                   }`}
                 >
                   <img
-                    src={slideImg}
-                    alt={`PKS Mill showcase ${index + 1}`}
-                    className="w-full h-full object-cover object-right"
-                  />
+                      src={slideImg}
+                      alt={`PKS Mill showcase ${index + 1} - Flour and Oil Mill Karulai`}
+                      className="w-full h-full object-cover object-right"
+                    />
                 </div>
               ))}
 

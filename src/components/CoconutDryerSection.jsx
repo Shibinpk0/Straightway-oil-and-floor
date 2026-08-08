@@ -13,7 +13,7 @@ const CoconutDryerSection = ({ lang }) => {
 
   return (
     // Changed to premium beige background
-    <section className="bg-[#FFFDF8] py-12 md:py-24 relative overflow-hidden">
+    <section className="bg-[#FFFDF8] py-8 md:py-24 relative overflow-hidden">
       {/* Decorative Glow - Adjusted opacity for light mode */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#D8A43A]/20 rounded-full blur-3xl pointer-events-none" />
 

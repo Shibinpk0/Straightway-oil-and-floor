@@ -9,15 +9,36 @@ import DeliverySection from './components/DeliverySection';
 import BulkOrdersSection from './components/BulkOrdersSection';
 import FaqSection from './components/FaqSection';
 import AboutSection from './components/AboutSection';
-import GallerySection from './components/GallerySection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
 import CoconutDryerSection from './components/CoconutDryerSection';
 
 function App() {
+  // --- NEW: Auto-detect language logic ---
+  const getInitialLang = () => {
+    // 1. Check if the user has manually selected a language before
+    const savedLang = localStorage.getItem('pks_lang');
+    if (savedLang) return savedLang;
+
+    // 2. If no manual choice, check the browser/phone's default language
+    const browserLang = navigator.language || navigator.userLanguage;
+    if (browserLang.toLowerCase().includes('ml')) {
+      return 'ml'; // Set to Malayalam if browser is in Malayalam
+    }
+    
+    // 3. Default to English
+    return 'en';
+  };
+
   const [activeTab, setActiveTab] = useState('home');
-  const [lang, setLang] = useState('en'); // 'en' | 'ml'
+  const [lang, setLang] = useState(getInitialLang); // Initialize with the detected language
+
+  // --- NEW: Wrapper function to save the language when toggled manually ---
+  const handleSetLang = (newLang) => {
+    setLang(newLang);
+    localStorage.setItem('pks_lang', newLang); // Remember the user's manual choice
+  };
 
   const scrollToSection = (id) => {
     setActiveTab(id);
@@ -35,7 +56,7 @@ function App() {
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           lang={lang}
-          setLang={setLang}
+          setLang={handleSetLang} // Passed the new wrapper function here
         />
 
         {/* Hero Section */}
@@ -51,24 +72,20 @@ function App() {
         {/* Products Showcase & Custom Grinding */}
         <Products lang={lang} />
 
-
         {/* 4-Step How to Order Section */}
         <HowToOrderSection lang={lang} />
 
         {/* Coconut Dryer Section */}
         <CoconutDryerSection lang={lang} />
 
-
         {/* Delivery & Doorstep Logistics */}
         <DeliverySection lang={lang} />
-
 
         {/* Bulk Orders & Wholesale Estimator */}
         <BulkOrdersSection lang={lang} />
 
         {/* About Section */}
         <AboutSection lang={lang} />
-
 
         {/* FAQ Accordion Section */}
         <FaqSection lang={lang} />

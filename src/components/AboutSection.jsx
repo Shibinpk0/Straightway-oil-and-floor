@@ -8,7 +8,7 @@ const AboutSection = ({ lang }) => {
   const t = translations[lang] || translations.en;
 
   return (
-    <section id="about" className="bg-[#F6F1E7] py-10 sm:py-20 md:py-28 relative">
+    <section id="about" className="bg-[#F6F1E7] py-6 sm:py-20 md:py-28 relative">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-8 sm:space-y-16">
         
         {/* Header */}

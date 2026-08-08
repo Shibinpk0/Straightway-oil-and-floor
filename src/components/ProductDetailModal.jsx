@@ -57,8 +57,10 @@ const ProductDetailModal = ({ product, onClose, lang }) => {
           </div>
 
           {/* Product Image & Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 items-start mb-4">
-            <div className="rounded-2xl overflow-hidden border border-[#E8E2D6] shadow-sm bg-white h-44 sm:h-52 md:h-64 w-full">
+          {/* Changed grid gap to gap-4 for tighter mobile look */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start mb-4">
+            {/* IMAGE: Made much smaller on mobile (h-36) to save scroll space */}
+            <div className="rounded-2xl overflow-hidden border border-[#E8E2D6] shadow-sm bg-white h-36 sm:h-52 md:h-64 w-full">
               <img
                 src={product.image}
                 alt={title}

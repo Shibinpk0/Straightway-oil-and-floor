@@ -177,7 +177,8 @@ const Products = ({ lang }) => {
     : productList.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="products" className="bg-[#FFFDF8] py-8 sm:py-20 md:py-28 relative">
+    // CHANGE 3: Reduced mobile top/bottom padding from py-8 to py-6
+    <section id="products" className="bg-[#FFFDF8] py-6 sm:py-20 md:py-28 relative">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-6 sm:space-y-12">
         
         {/* Section Header */}
@@ -229,7 +230,11 @@ const Products = ({ lang }) => {
                 className="bg-white rounded-2xl border border-[#E8E2D6] overflow-hidden shadow-sm flex-none w-[72vw] max-w-[280px] snap-start cursor-pointer active:scale-[0.98] transition-transform"
               >
                 <div className="relative h-36 bg-[#F6F1E7] overflow-hidden">
-                  <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
+                  <img 
+                      src={product.image} 
+                      alt={`${product.title} - Freshly ground at Straightway Mill Nilambur`} 
+                      className="w-full h-full object-cover" 
+                  />
                   <div className="absolute top-2 left-2 bg-[#12351D]/90 text-[#D8A43A] text-[9px] font-button font-bold px-2.5 py-0.5 rounded-full uppercase border border-[#D8A43A]/30">
                     {product.badge}
                   </div>
@@ -257,8 +262,8 @@ const Products = ({ lang }) => {
           })}
         </div>
 
-        {/* Desktop grid */}
-        <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 text-left">
+        {/* CHANGE 2: Desktop grid changed from xl:grid-cols-4 to lg:grid-cols-3 for cleaner spacing */}
+        <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-6 text-left">
           {filteredProducts.map((product) => {
             // Get default 500g price for desktop card display
             const displayPrice = product.prices ? product.prices['500g'] : '₹0';

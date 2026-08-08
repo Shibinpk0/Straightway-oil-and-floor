@@ -18,7 +18,7 @@ const ContactSection = ({ lang }) => {
   };
 
   return (
-    <section id="contact" className="bg-[#FFFDF8] py-8 sm:py-20 md:py-28 relative">
+    <section id="contact" className="bg-[#FFFDF8] py-6 sm:py-20 md:py-28 relative">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-8 sm:space-y-16">
         
         {/* Header */}
