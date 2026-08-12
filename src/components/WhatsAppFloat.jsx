@@ -16,7 +16,7 @@ const WhatsAppFloat = () => {
           aria-label="Call Mill Directly"
           title="Call +91 8714 348 348"
         >
-          <Phone className="w-5 h-5 text-[#D8A43A]" />
+          <Phone className="w-5 h-5 text-[#C7A15A]" />
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-in-out whitespace-nowrap text-xs font-button font-bold pr-1">
             Call +91 8714 348 348
           </span>
@@ -45,7 +45,7 @@ const WhatsAppFloat = () => {
           href={phoneUrl}
           className="flex-1 bg-[#12351D] text-white py-3 rounded-xl flex items-center justify-center gap-2 font-button text-xs font-bold shadow-sm active:scale-[0.97] transition-transform"
         >
-          <Phone className="w-4 h-4 text-[#D8A43A]" />
+          <Phone className="w-4 h-4 text-[#C7A15A]" />
           <span>Call Now</span>
         </a>
         <a

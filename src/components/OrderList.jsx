@@ -27,7 +27,7 @@ const OrderList = ({ cart, removeFromCart, updateQty, lang }) => {
       {/* Floating Cart Button - Locked Perfect Circle for Mobile & Desktop */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-20 right-4 sm:bottom-6 sm:left-6 z-40 w-14 h-14 bg-[#D8A43A] hover:bg-[#c4922f] text-[#12351D] rounded-full shadow-2xl flex items-center justify-center shrink-0 transition-transform duration-300 transform hover:scale-105 border-2 border-white"
+        className="fixed bottom-20 right-4 sm:bottom-6 sm:left-6 z-40 w-14 h-14 bg-[#C7A15A] hover:bg-[#c4922f] text-[#12351D] rounded-full shadow-2xl flex items-center justify-center shrink-0 transition-transform duration-300 transform hover:scale-105 border-2 border-white"
       >
         <ShoppingCart className="w-6 h-6" />
         <span className="absolute -top-1 -right-1 bg-[#12351D] text-white text-xs font-bold min-w-[22px] h-[22px] px-1.5 rounded-full flex items-center justify-center border-2 border-[#D8A43A]">
@@ -38,7 +38,7 @@ const OrderList = ({ cart, removeFromCart, updateQty, lang }) => {
       {/* Order List Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-[#FFFDF8] rounded-[24px] w-full max-w-lg border border-[#E8E2D6] shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col">
+          <div className="bg-[#FFFDF7] rounded-[24px] w-full max-w-lg border border-[#E8E2D6] shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col">
             
             {/* Header */}
             <div className="flex items-center justify-between p-4 sm:p-6 border-b border-[#E8E2D6] bg-white">

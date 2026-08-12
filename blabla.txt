@@ -1,0 +1,16 @@
+// FROM:
+<span className="font-sans-body text-base font-bold text-[#12351D] block leading-none">{displayPrice}</span>
+// TO:
+<span className="font-sans-body text-base font-bold text-[#12351D] block leading-none">{displayPrice}</span>
+// FROM:
+<span className="font-serif-heading text-xl sm:text-2xl font-bold text-[#12351D]">{currentPrice}</span>
+// TO:
+<span className="font-sans-body text-xl sm:text-2xl font-bold text-[#12351D]">{currentPrice}</span>
+      {selectedProduct && (
+        <ProductDetailModal 
+          product={selectedProduct} 
+          onClose={() => setSelectedProduct(null)} 
+          lang={lang} 
+          onQuickAdd={onQuickAdd} // <-- ADD THIS LINE
+        />
+      )}

@@ -41,7 +41,7 @@ const Features = ({ lang }) => {
               >
                 <div className="space-y-4">
                   {/* Icon */}
-                  <div className="w-13 h-13 rounded-2xl bg-[#FFFDF8] border border-[#E8E2D6] flex items-center justify-center text-[#1D4F2B] group-hover:bg-[#1D4F2B] group-hover:text-white transition-all duration-300">
+                  <div className="w-13 h-13 rounded-2xl bg-[#FFFDF7] border border-[#E8E2D6] flex items-center justify-center text-[#1D4F2B] group-hover:bg-[#1D4F2B] group-hover:text-white transition-all duration-300">
                     <IconComponent className="w-6 h-6 stroke-[1.75]" />
                   </div>
 
@@ -58,10 +58,10 @@ const Features = ({ lang }) => {
 
                 {/* Accent line */}
                 <div className="mt-6 pt-4 border-t border-[#F6F1E7] flex items-center justify-between">
-                  <span className="text-[11px] font-mono text-[#D8A43A] font-semibold uppercase tracking-wider">
+                  <span className="text-[11px] font-mono text-[#C7A15A] font-semibold uppercase tracking-wider">
                     0{idx + 1} / Guarantee
                   </span>
-                  <span className="w-2 h-2 rounded-full bg-[#D8A43A] opacity-70 group-hover:scale-125 transition-transform" />
+                  <span className="w-2 h-2 rounded-full bg-[#C7A15A] opacity-70 group-hover:scale-125 transition-transform" />
                 </div>
               </div>
             );

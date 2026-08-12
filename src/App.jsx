@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Analytics } from "@vercel/analytics/react";
 import Navbar from './components/Navbar';
 import AnnouncementBar from './components/AnnouncementBar';
@@ -11,8 +11,6 @@ import CoconutDryerSection from './components/CoconutDryerSection';
 import DeliverySection from './components/DeliverySection';
 import BulkOrdersSection from './components/BulkOrdersSection';
 import AboutSection from './components/AboutSection';
-import GallerySection from './components/GallerySection';
-import WorkingHoursSection from './components/WorkingHoursSection';
 import FaqSection from './components/FaqSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
@@ -30,7 +28,18 @@ function App() {
 
   const [activeTab, setActiveTab] = useState('home');
   const [lang, setLang] = useState(getInitialLang);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    try {
+      const savedCart = localStorage.getItem('pks_cart');
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('pks_cart', JSON.stringify(cart));
+  }, [cart]);
 
   const handleSetLang = (newLang) => {
     setLang(newLang);
@@ -45,10 +54,9 @@ function App() {
     }
   };
 
-   // Updated: Add to cart function combining bilingual titles
   const addToCart = (product, selectedWeight = '500g') => {
     const price = product.prices?.[selectedWeight] || '₹0';
-    const combinedTitle = `${product.titleEn} / ${product.titleMl}`; // Combine titles here
+    const combinedTitle = `${product.titleEn} / ${product.titleMl}`;
     
     setCart((prevCart) => {
       const existingItem = prevCart.find(item => item.id === product.id && item.selectedWeight === selectedWeight);
@@ -59,7 +67,6 @@ function App() {
             : item
         );
       } else {
-        // Added `title: combinedTitle` to the cart object
         return [...prevCart, { ...product, title: combinedTitle, cartId: Date.now(), selectedWeight: selectedWeight, currentPrice: price, qty: 1 }];
       }
     });
@@ -81,35 +88,29 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFDF8] font-sans-body selection:bg-[#1D4F2B] selection:text-white flex flex-col justify-between overflow-x-hidden pb-20 sm:pb-24">
+    <div className="min-h-screen bg-[#F7F3E8] font-sans-body selection:bg-[#667A61] selection:text-white flex flex-col justify-between overflow-x-hidden">
       <div>
-        {/* Announcement Bar */}
         <AnnouncementBar lang={lang} />
-        
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} lang={lang} setLang={handleSetLang} />
         
         <Hero onExploreClick={() => scrollToSection('products')} onContactClick={() => scrollToSection('contact')} lang={lang} />
         <WhyChooseSection lang={lang} />
-        
-        {/* Added Promo Banner back */}
         <PromoBanner lang={lang} onKnowMoreClick={() => scrollToSection('about')} />
-        
         <Products lang={lang} onQuickAdd={addToCart} />
         <HowToOrderSection lang={lang} />
         <CoconutDryerSection lang={lang} />
         <DeliverySection lang={lang} />
         <BulkOrdersSection lang={lang} />
-        
         <AboutSection lang={lang} />
-        
+  
         <FaqSection lang={lang} />
         <ContactSection lang={lang} />
       </div>
 
       <Footer setActiveTab={setActiveTab} lang={lang} />
       <WhatsAppFloat />
-      
       <OrderList cart={cart} removeFromCart={removeFromCart} updateQty={updateQty} lang={lang} />
+      <Analytics />
     </div>
   );
 }

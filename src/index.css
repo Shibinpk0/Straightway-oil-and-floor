@@ -4,14 +4,16 @@
   html {
     scroll-behavior: smooth;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    color: #202020;
-    background-color: #FFFDF8;
+    color: #29332B; /* Deep Charcoal Olive */
+    background-color: #F7F3E8; /* Coconut Cream */
   }
 
   body {
-    background-color: #FFFDF8;
-    color: #202020;
+    background-color: #F7F3E8;
+    color: #29332B;
     overflow-x: hidden;
+    /* Subtle Premium Paper Texture using Terracotta/Sage blend */
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23B86F52' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
 }
 
@@ -30,36 +32,37 @@
 }
 
 /* Custom Color Tokens */
-.bg-cream { background-color: #FFFDF8; }
-.bg-warm-beige { background-color: #F6F1E7; }
-.bg-forest-green { background-color: #1D4F2B; }
-.bg-dark-green { background-color: #12351D; }
-.bg-muted-gold { background-color: #D8A43A; }
+.bg-coconut-cream { background-color: #F7F3E8; }
+.bg-warm-sand { background-color: #EAE2D2; }
+.bg-warm-white { background-color: #FFFDF7; }
+.bg-sage { background-color: #667A61; }
+.bg-terracotta { background-color: #B86F52; }
+.bg-wheat-gold { background-color: #C7A15A; }
 
-.text-forest-green { color: #1D4F2B; }
-.text-dark-green { color: #12351D; }
-.text-muted-gold { color: #D8A43A; }
-.text-primary-dark { color: #202020; }
-.text-secondary-muted { color: #666666; }
+.text-sage { color: #667A61; }
+.text-charcoal { color: #29332B; }
+.text-terracotta { color: #B86F52; }
+.text-wheat-gold { color: #C7A15A; }
+.text-muted-olive { color: #5A635A; }
 
-.border-custom { border-color: #E8E2D6; }
+.border-custom { border-color: #E1D9C9; }
 
-/* Apple & Airbnb Inspired Soft Premium Shadow System */
+/* Premium Soft Shadow System (Based on Charcoal Olive) */
 .shadow-premium-soft {
-  box-shadow: 0 10px 30px -5px rgba(29, 79, 43, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 8px 30px rgba(41, 51, 43, 0.06);
 }
 
 .shadow-premium-hover {
-  box-shadow: 0 20px 40px -10px rgba(29, 79, 43, 0.12), 0 8px 16px -4px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 16px 40px rgba(41, 51, 43, 0.1);
 }
 
 .shadow-nav-scroll {
-  box-shadow: 0 4px 20px -2px rgba(18, 53, 29, 0.06);
+  box-shadow: 0 4px 20px -2px rgba(41, 51, 43, 0.05);
 }
 
 /* Wave divider curve animation/styling */
 .wave-divider {
-  fill: #FFFDF8;
+  fill: #F7F3E8;
 }
 
 /* Smooth transition defaults */
@@ -72,14 +75,14 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #FFFDF8;
+  background: #F7F3E8;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D8A43A;
+  background: #667A61; /* Sage */
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #1D4F2B;
+  background: #29332B; /* Charcoal */
 }
 
 /* Hide scrollbar for horizontal scroll carousels */
@@ -96,4 +99,29 @@
   body {
     padding-bottom: 60px;
   }
+}
+
+/* Hand-drawn crafty underline for headings */
+.hand-drawn-underline {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='10' viewBox='0 0 100 10'%3E%3Cpath d='M0 5 Q 25 10 50 5 T 100 5' stroke='%23C7A15A' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: 100% 6px;
+  padding-bottom: 8px;
+}
+/* --- Add this to the bottom of index.css --- */
+
+/* Fix: Prevents sticky navbar from covering section titles when clicking nav links */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+/* Mobile Bottom Sheet Animation */
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0.8; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

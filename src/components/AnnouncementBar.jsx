@@ -9,7 +9,7 @@ const AnnouncementBar = ({ lang }) => {
   if (!visible) return null;
 
   return (
-    <div className="bg-[#12351D] text-[#D8A43A] text-center text-[10px] sm:text-xs font-semibold py-2 px-4 flex items-center justify-center gap-2 relative">
+    <div className="bg-[#29332B] text-[#C7A15A] text-center text-[10px] sm:text-xs font-semibold py-2 px-4 flex items-center justify-center gap-2 relative">
       <span>{t?.announcement?.text || "🚚 Free Home Delivery in Karulai & Vakkeelpadi for orders above ₹500!"}</span>
       <button 
         onClick={() => setVisible(false)} 

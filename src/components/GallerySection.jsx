@@ -78,17 +78,17 @@ const GallerySection = ({ lang }) => {
     : galleryItems.filter((i) => i.category === activeCategory);
 
   return (
-    <section id="gallery" className="bg-[#FFFDF8] py-8 sm:py-20 md:py-28 relative">
+    <section id="gallery" className="bg-[#FFFDF7] py-8 sm:py-20 md:py-28 relative">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-6 sm:space-y-12">
         
         {/* Header */}
         <div className="text-center space-y-2 sm:space-y-4 max-w-2xl mx-auto">
-          <div className="hidden sm:flex items-center justify-center gap-3 text-[#D8A43A]">
-            <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
+          <div className="hidden sm:flex items-center justify-center gap-3 text-[#C7A15A]">
+            <span className="h-[1px] w-12 bg-[#C7A15A]/40"></span>
             <span className="font-serif-heading font-semibold text-xs sm:text-sm tracking-wider uppercase">
               {t?.gallery?.tag || "✦ GALLERY & PHOTOS ✦"}
             </span>
-            <span className="h-[1px] w-12 bg-[#D8A43A]/40"></span>
+            <span className="h-[1px] w-12 bg-[#C7A15A]/40"></span>
           </div>
 
           <h2 className="font-serif-heading text-xl sm:text-3xl md:text-[42px] font-bold text-[#12351D]">
@@ -163,7 +163,7 @@ const GallerySection = ({ lang }) => {
       {/* Lightbox Modal */}
       {activeImage && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-[#FFFDF8] rounded-[24px] max-w-3xl w-full border border-[#E8E2D6] shadow-2xl overflow-hidden relative p-4 sm:p-6 text-left space-y-4">
+          <div className="bg-[#FFFDF7] rounded-[24px] max-w-3xl w-full border border-[#E8E2D6] shadow-2xl overflow-hidden relative p-4 sm:p-6 text-left space-y-4">
             <button
               onClick={() => setActiveImage(null)}
               className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white border border-[#E8E2D6] flex items-center justify-center text-[#202020] hover:bg-[#1D4F2B] hover:text-white transition-colors"

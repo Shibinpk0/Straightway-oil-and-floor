@@ -26,7 +26,7 @@ const WorkingHoursSection = ({ lang }) => {
           {/* Left Title Column (6 cols) */}
           <div className="lg:col-span-6 space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1D4F2B]/10 text-[#1D4F2B] text-xs font-semibold">
-              <Clock className="w-3.5 h-3.5 text-[#D8A43A]" />
+              <Clock className="w-3.5 h-3.5 text-[#C7A15A]" />
               <span>{t?.workingHours?.tag || "✦ STORE TIMINGS ✦"}</span>
             </div>
 
@@ -60,7 +60,7 @@ const WorkingHoursSection = ({ lang }) => {
           </div>
 
           {/* Right Hours Schedule Card (6 cols) */}
-          <div className="lg:col-span-6 bg-[#FFFDF8] p-6 rounded-2xl border border-[#E8E2D6] space-y-4">
+          <div className="lg:col-span-6 bg-[#FFFDF7] p-6 rounded-2xl border border-[#E8E2D6] space-y-4">
             
             {/* Weekdays */}
             <div className="flex items-start justify-between pb-3 border-b border-[#E8E2D6]">
@@ -83,7 +83,7 @@ const WorkingHoursSection = ({ lang }) => {
             {/* Sunday */}
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <AlertCircle className="w-5 h-5 text-[#D8A43A]" />
+                <AlertCircle className="w-5 h-5 text-[#C7A15A]" />
                 <div>
                   <span className="font-serif-heading text-sm font-bold text-[#12351D] block">
                     {lang === 'ml' ? 'ഞായറാഴ്ച' : 'Sunday'}
@@ -100,7 +100,7 @@ const WorkingHoursSection = ({ lang }) => {
 
             {/* Address callout */}
             <div className="pt-2 text-xs text-[#666666] flex items-center gap-2 border-t border-[#E8E2D6]">
-              <MapPin className="w-4 h-4 text-[#D8A43A] shrink-0" />
+              <MapPin className="w-4 h-4 text-[#C7A15A] shrink-0" />
               <span>{t?.contact?.addressText || "Pulliyil, Nilambur - Karulai Rd, Vakkeelpadi, Karulai"}</span>
             </div>
 

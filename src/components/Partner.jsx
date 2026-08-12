@@ -6,7 +6,7 @@ const Partner = ({ lang }) => {
   const t = translations[lang] || translations.en;
 
   return (
-    <section id="partner" className="bg-[#FFFDF8] py-20 md:py-24 relative">
+    <section id="partner" className="bg-[#FFFDF7] py-20 md:py-24 relative">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
         
         {/* Subtle Outer Card */}
@@ -21,10 +21,10 @@ const Partner = ({ lang }) => {
             <div className="lg:col-span-8 space-y-5">
               
               <div className="flex items-center gap-3">
-                <span className="px-3 py-1 rounded-full bg-[#D8A43A] text-[#12351D] font-button text-[11px] font-bold uppercase tracking-wider">
+                <span className="px-3 py-1 rounded-full bg-[#C7A15A] text-[#12351D] font-button text-[11px] font-bold uppercase tracking-wider">
                   {t?.partner?.badge || "Educational Partner"}
                 </span>
-                <span className="text-xs text-[#D8A43A] font-semibold tracking-wider uppercase">
+                <span className="text-xs text-[#C7A15A] font-semibold tracking-wider uppercase">
                   {t?.partner?.tag || "✦ EDUCATIONAL COLLABORATION ✦"}
                 </span>
               </div>
@@ -40,11 +40,11 @@ const Partner = ({ lang }) => {
 
               <div className="flex flex-wrap items-center gap-6 pt-2 text-xs text-[#FFFDF8]/70">
                 <div className="flex items-center gap-2">
-                  <GraduationCap className="w-4 h-4 text-[#D8A43A]" />
+                  <GraduationCap className="w-4 h-4 text-[#C7A15A]" />
                   <span>{lang === 'ml' ? 'ഓൺലൈൻ സ്പോക്കൺ ഇംഗ്ലീഷ്' : 'Interactive Online Classes'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Award className="w-4 h-4 text-[#D8A43A]" />
+                  <Award className="w-4 h-4 text-[#C7A15A]" />
                   <span>{lang === 'ml' ? 'വ്യക്തിഗത പരിശീലനം' : 'Personal Mentorship'}</span>
                 </div>
               </div>
@@ -53,7 +53,7 @@ const Partner = ({ lang }) => {
 
             {/* Right Action Box (4 cols) */}
             <div className="lg:col-span-4 bg-white/10 p-6 rounded-2xl border border-white/20 space-y-4 text-center">
-              <div className="w-12 h-12 rounded-full bg-[#D8A43A]/20 text-[#D8A43A] mx-auto flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-[#C7A15A]/20 text-[#C7A15A] mx-auto flex items-center justify-center">
                 <GraduationCap className="w-6 h-6" />
               </div>
               <div>
