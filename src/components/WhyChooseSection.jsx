@@ -1,81 +1,442 @@
 import React from 'react';
-import { Sparkles, Leaf, ShieldCheck, HeartHandshake } from 'lucide-react';
+import {
+  Sparkles,
+  Wheat,
+  HandHeart,
+  MapPin,
+} from 'lucide-react';
+
 import { translations } from '../translations';
 
 const WhyChooseSection = ({ lang }) => {
   const t = translations[lang] || translations.en;
+  const isMalayalam = lang === 'ml';
 
   const features = [
-    { 
-      icon: Sparkles, 
-      title: t?.whyChoose?.f1Title || "Freshly Ground", 
-      desc: t?.whyChoose?.f1Desc || "Every order is freshly processed for maximum freshness and natural aroma.", 
-      span: "col-span-1 lg:col-span-2", 
-      iconSize: "w-6 h-6 sm:w-7 sm:h-8", 
-      titleSize: "text-sm sm:text-xl", 
-      descSize: "text-[11px] sm:text-base", 
-      boxSize: "w-10 h-10 sm:w-14 sm:h-14" 
+    {
+      icon: Sparkles,
+      number: '01',
+      title: t?.whyChoose?.f1Title || 'Freshly Processed',
+      desc:
+        t?.whyChoose?.f1Desc ||
+        'Products are processed fresh with care instead of being stored for long periods.',
     },
-    { 
-      icon: Leaf, 
-      title: t?.whyChoose?.f2Title || "Pure Ingredients", 
-      desc: t?.whyChoose?.f2Desc || "100% natural spices and grains. Zero artificial colours, zero preservatives.", 
-      span: "col-span-1 lg:col-span-1", 
-      iconSize: "w-5 h-5 sm:w-6 sm:h-6", 
-      titleSize: "text-sm sm:text-lg", 
-      descSize: "text-[11px] sm:text-sm", 
-      boxSize: "w-10 h-10 sm:w-12 sm:h-12" 
+    {
+      icon: Wheat,
+      number: '02',
+      title: t?.whyChoose?.f2Title || 'Traditional Milling',
+      desc:
+        t?.whyChoose?.f2Desc ||
+        'Traditional milling methods help preserve the natural character, aroma and taste of the ingredients.',
     },
-    { 
-      icon: ShieldCheck, 
-      title: t?.whyChoose?.f3Title || "Hygienic Processing", 
-      desc: t?.whyChoose?.f3Desc || "Prepared using clean, safe, and modern hot-air drying & stone chakki methods.", 
-      span: "col-span-1 lg:col-span-1", 
-      iconSize: "w-5 h-5 sm:w-6 sm:h-6", 
-      titleSize: "text-sm sm:text-lg", 
-      descSize: "text-[11px] sm:text-sm", 
-      boxSize: "w-10 h-10 sm:w-12 sm:h-12" 
+    {
+      icon: HandHeart,
+      number: '03',
+      title: t?.whyChoose?.f3Title || 'Bring Your Own',
+      desc:
+        t?.whyChoose?.f3Desc ||
+        'Bring your coconuts, grains or suitable ingredients and let our mill process them for you.',
     },
-    { 
-      icon: HeartHandshake, 
-      title: t?.whyChoose?.f4Title || "Trusted by Families", 
-      desc: t?.whyChoose?.f4Desc || "Serving local families in Karulai & Vakkeelpadi with honesty and care.", 
-      span: "col-span-1 lg:col-span-2", 
-      iconSize: "w-6 h-6 sm:w-7 sm:h-7", 
-      titleSize: "text-sm sm:text-xl", 
-      descSize: "text-[11px] sm:text-base", 
-      boxSize: "w-10 h-10 sm:w-14 sm:h-14" 
+    {
+      icon: MapPin,
+      number: '04',
+      title: t?.whyChoose?.f4Title || 'Local & Personal',
+      desc:
+        t?.whyChoose?.f4Desc ||
+        'A local mill serving families, farmers and customers around Karulai and nearby areas.',
     },
   ];
 
   return (
-    <section className="bg-[#EAE2D2] py-12 md:py-16 lg:py-20 border-b border-[#E1D9C9] relative">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-8 md:space-y-10">
-        <div className="text-center space-y-2 max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-3 text-[#B86F52]">
-            <span className="h-[1px] w-12 bg-[#B86F52]/40"></span>
-            <span className="font-serif-heading font-semibold text-xs sm:text-sm tracking-wider uppercase">{t?.whyChoose?.tag || "✦ WHY CHOOSE STRAIGHTWAY ✦"}</span>
-            <span className="h-[1px] w-12 bg-[#B86F52]/40"></span>
-          </div>
-          <h2 className="font-serif-heading text-xl sm:text-3xl font-bold text-[#29332B]">{t?.whyChoose?.heading || "Purity & Care in Every Batch"}</h2>
-        </div>
+    <section
+      id="why-choose"
+      aria-labelledby="why-choose-heading"
+      className="
+        relative
+        overflow-hidden
+        bg-[#EAE2D2]
+        text-[#29332B]
+      "
+    >
+      {/* =====================================================
+          TOP WAVE
+      ====================================================== */}
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 auto-rows-fr text-left">
-          {features.map((f, idx) => {
-            const Icon = f.icon;
+      <div
+        aria-hidden="true"
+        className="
+          relative
+          -mt-px
+          w-full
+          overflow-hidden
+          leading-none
+        "
+      >
+        <svg
+          className="
+            block
+            h-[34px]
+            w-full
+            sm:h-[48px]
+            md:h-[60px]
+          "
+          viewBox="0 0 1200 100"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="
+              M0,0
+              L0,35
+              C120,75 240,88 370,50
+              C500,12 600,12 720,48
+              C850,86 1010,82 1200,30
+              L1200,0
+              Z
+            "
+            fill="#EAE2D2"
+          />
+        </svg>
+      </div>
+
+      {/* =====================================================
+          CONTENT
+      ====================================================== */}
+
+      <div
+        className="
+          relative
+          mx-auto
+          max-w-[1280px]
+          px-4
+          pb-14
+          pt-2
+          sm:px-6
+          sm:pb-16
+          sm:pt-4
+          md:px-8
+          lg:px-12
+        "
+      >
+        {/* Header */}
+
+        <header className="mx-auto max-w-2xl text-center">
+          <div className="
+            mb-3
+            flex
+            items-center
+            justify-center
+            gap-3
+          ">
+            <span
+              aria-hidden="true"
+              className="h-px w-8 bg-[#B86F52]/70"
+            />
+
+            <span className="
+              font-sans-body
+              text-[9px]
+              font-bold
+              uppercase
+              tracking-[0.22em]
+              text-[#B86F52]
+              sm:text-[10px]
+            ">
+              {t?.whyChoose?.tag || 'Why Choose PKS'}
+            </span>
+
+            <span
+              aria-hidden="true"
+              className="h-px w-8 bg-[#B86F52]/70"
+            />
+          </div>
+
+          <h2
+            id="why-choose-heading"
+            className="
+              font-serif-heading
+              text-[26px]
+              font-bold
+              leading-[1.05]
+              tracking-tight
+              text-[#29332B]
+              sm:text-3xl
+              md:text-4xl
+            "
+          >
+            {isMalayalam ? (
+              <>
+                ഞങ്ങളുടെ മില്ലിനെ
+                <span className="text-[#667A61]">
+                  {' '}തിരഞ്ഞെടുക്കാനുള്ള കാരണങ്ങൾ
+                </span>
+              </>
+            ) : (
+              <>
+                Why Choose
+                <span className="text-[#667A61]">
+                  {' '}PKS Straightway?
+                </span>
+              </>
+            )}
+          </h2>
+
+          <p
+            className="
+              mx-auto
+              mt-3
+              max-w-xl
+              text-xs
+              leading-6
+              text-[#5A635A]
+              sm:text-sm
+            "
+          >
+            {isMalayalam
+              ? 'പരമ്പരാഗത മില്ലിംഗ് രീതികളും പുതുമയും പ്രാദേശിക സേവനവും ഒരുമിച്ച്.'
+              : 'Traditional milling, fresh processing and personal local service — all from one neighbourhood mill.'}
+          </p>
+        </header>
+
+        {/* =================================================
+            FEATURE GRID
+        ================================================== */}
+
+        <div
+          className="
+            mx-auto
+            mt-7
+            grid
+            max-w-[980px]
+            grid-cols-1
+            gap-3
+            sm:grid-cols-2
+            sm:gap-4
+            lg:grid-cols-4
+          "
+        >
+          {features.map((feature) => {
+            const Icon = feature.icon;
+
             return (
-              <div key={idx} className={`bg-[#FFFDF7] p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-[#E1D9C9] shadow-premium-soft hover:shadow-premium-hover transition-all duration-300 space-y-2 sm:space-y-4 group flex flex-col ${f.span}`}>
-                <div className={`flex items-center justify-center ${f.boxSize} rounded-xl sm:rounded-2xl bg-[#667A61]/10 text-[#667A61] group-hover:bg-[#667A61] group-hover:text-white transition-colors duration-300`}>
-                  <Icon className={f.iconSize} />
+              <article
+                key={feature.number}
+                className="
+                  group
+                  relative
+                  overflow-hidden
+                  rounded-2xl
+                  border
+                  border-[#D8CFBD]
+                  bg-[#F7F3E8]
+                  p-4
+                  shadow-[0_5px_20px_rgba(41,51,43,0.04)]
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:border-[#667A61]/40
+                  hover:shadow-[0_12px_28px_rgba(41,51,43,0.08)]
+                  sm:p-5
+                "
+              >
+                {/* Number */}
+
+                <span
+                  className="
+                    absolute
+                    right-4
+                    top-4
+                    font-mono
+                    text-[11px]
+                    font-bold
+                    text-[#C7A15A]/70
+                  "
+                >
+                  {feature.number}
+                </span>
+
+                {/* Icon */}
+
+                <div
+                  className="
+                    flex
+                    h-10
+                    w-10
+                    items-center
+                    justify-center
+                    rounded-xl
+                    bg-[#667A61]/10
+                    text-[#667A61]
+                    transition-all
+                    duration-300
+                    group-hover:bg-[#667A61]
+                    group-hover:text-white
+                  "
+                >
+                  <Icon
+                    className="h-[18px] w-[18px]"
+                    strokeWidth={1.7}
+                  />
                 </div>
-                <div className="space-y-1 sm:space-y-2">
-                  <h3 className={`font-serif-heading ${f.titleSize} font-bold text-[#29332B] leading-tight`}>{f.title}</h3>
-                  <p className={`font-sans-body ${f.descSize} text-[#5A635A] leading-relaxed`}>{f.desc}</p>
-                </div>
-              </div>
+
+                {/* Text */}
+
+                <h3
+                  className="
+                    mt-4
+                    font-serif-heading
+                    text-sm
+                    font-bold
+                    leading-tight
+                    text-[#29332B]
+                    sm:text-base
+                  "
+                >
+                  {feature.title}
+                </h3>
+
+                <p
+                  className="
+                    mt-2
+                    text-[11px]
+                    leading-relaxed
+                    text-[#5A635A]
+                    sm:text-xs
+                  "
+                >
+                  {feature.desc}
+                </p>
+
+                {/* Bottom accent */}
+
+                <div
+                  aria-hidden="true"
+                  className="
+                    absolute
+                    bottom-0
+                    left-0
+                    h-[2px]
+                    w-0
+                    bg-[#B86F52]
+                    transition-all
+                    duration-300
+                    group-hover:w-full
+                  "
+                />
+              </article>
             );
           })}
         </div>
+
+        {/* =================================================
+            LOCAL SERVICE NOTE
+        ================================================== */}
+
+        <div
+          className="
+            mx-auto
+            mt-6
+            flex
+            max-w-[980px]
+            flex-col
+            items-center
+            justify-between
+            gap-3
+            rounded-2xl
+            border
+            border-[#D8CFBD]
+            bg-[#29332B]
+            px-5
+            py-4
+            text-center
+            sm:flex-row
+            sm:text-left
+          "
+        >
+          <div>
+            <p className="
+              font-serif-heading
+              text-sm
+              font-bold
+              text-white
+            ">
+              {isMalayalam
+                ? 'കരുളായിയിൽ നിന്ന് പ്രാദേശിക സേവനം'
+                : 'A local mill, close to home.'}
+            </p>
+
+            <p className="
+              mt-0.5
+              text-[10px]
+              leading-relaxed
+              text-white/65
+              sm:text-xs
+            ">
+              {isMalayalam
+                ? 'കരുളായി, വക്കീൽപ്പടി, മൂത്തേടം, എടക്കര, നിലമ്പൂർ ഭാഗങ്ങളിൽ സേവനം.'
+                : 'Serving Karulai, Vakkeelpadi, Moothedam, Edakkara and nearby Nilambur areas.'}
+            </p>
+          </div>
+
+          <a
+            href="#contact"
+            className="
+              inline-flex
+              shrink-0
+              items-center
+              justify-center
+              rounded-full
+              border
+              border-[#C7A15A]/40
+              bg-[#C7A15A]/10
+              px-4
+              py-2
+              text-[10px]
+              font-bold
+              text-[#E7D9B8]
+              transition-colors
+              hover:bg-[#C7A15A]/20
+              sm:text-xs
+            "
+          >
+            {isMalayalam
+              ? 'ബന്ധപ്പെടുക'
+              : 'Talk to the Mill'}
+          </a>
+        </div>
+      </div>
+
+      {/* =====================================================
+          BOTTOM WAVE
+      ====================================================== */}
+
+      <div
+        aria-hidden="true"
+        className="
+          absolute
+          bottom-0
+          left-0
+          w-full
+          overflow-hidden
+          leading-none
+        "
+      >
+        <svg
+          className="block h-[24px] w-full sm:h-[34px]"
+          viewBox="0 0 1200 80"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="
+              M0,30
+              C160,70 300,5 470,32
+              C650,65 850,12 1200,35
+              L1200,80
+              L0,80
+              Z
+            "
+            fill="#F7F3E8"
+          />
+        </svg>
       </div>
     </section>
   );

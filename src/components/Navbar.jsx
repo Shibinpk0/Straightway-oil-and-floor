@@ -6,8 +6,8 @@ import { translations } from '../translations';
 const Navbar = ({ activeTab, setActiveTab, lang, setLang }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
 
   const t = translations[lang] || translations.en;
 
@@ -15,45 +15,81 @@ const Navbar = ({ activeTab, setActiveTab, lang, setLang }) => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
 
-      // Determine if we should show/hide navbar (only if mobile menu is closed)
       if (!mobileMenuOpen) {
-        if (currentScrollPos > prevScrollPos && currentScrollPos > 120) {
-          // Scrolling DOWN & past 120px -> Hide
+        if (
+          currentScrollPos > prevScrollPos &&
+          currentScrollPos > 120
+        ) {
           setVisible(false);
         } else {
-          // Scrolling UP -> Show
           setVisible(true);
         }
       }
 
-      // Add shadow if scrolled past 20px
-      setScrolled(currentScrollPos > 20);
+      setScrolled(currentScrollPos > 30);
       setPrevScrollPos(currentScrollPos);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [prevScrollPos, mobileMenuOpen]);
 
   const navItems = [
-    { id: 'home', label: t?.nav?.home || 'Home' },
-    { id: 'products', label: t?.nav?.products || 'Products' },
-    { id: 'how-it-works', label: t?.nav?.howItWorks || 'How to Order' },
-    { id: 'bulk', label: t?.nav?.bulk || 'Wholesale' },
-    { id: 'about', label: t?.nav?.about || 'About Us' },
-    { id: 'contact', label: t?.nav?.contact || 'Contact' },
+    {
+      id: 'home',
+      label: t?.nav?.home || 'Home',
+    },
+    {
+      id: 'products',
+      label: t?.nav?.products || 'Products',
+    },
+    {
+      id: 'how-it-works',
+      label: t?.nav?.howItWorks || 'How to Order',
+    },
+    {
+      id: 'bulk',
+      label: t?.nav?.bulk || 'Wholesale',
+    },
+    {
+      id: 'about',
+      label: t?.nav?.about || 'About Us',
+    },
+    {
+      id: 'contact',
+      label: t?.nav?.contact || 'Contact',
+    },
   ];
 
   const handleNavClick = (id) => {
     setActiveTab(id);
     setMobileMenuOpen(false);
+
     if (id === 'home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      return;
+    }
+
+    const element = document.getElementById(id);
+
+    if (element) {
+      const navbarOffset = 80;
+
+      const elementPosition =
+        element.getBoundingClientRect().top +
+        window.scrollY -
+        navbarOffset;
+
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth',
+      });
     }
   };
 
@@ -62,104 +98,427 @@ const Navbar = ({ activeTab, setActiveTab, lang, setLang }) => {
   };
 
   return (
-    // Added transition-transform and translate-y logic
-    <header className={`sticky top-0 z-50 h-[80px] bg-[#F7F3E8] transition-all duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-nav-scroll border-b border-[#E1D9C9]/60 bg-[#F7F3E8]/95 backdrop-blur-md' : 'border-b border-[#E1D9C9]/40'}`}>
-      <div className="max-w-[1280px] mx-auto h-full px-4 sm:px-6 flex items-center justify-between">
-        
-        <button 
+    <header
+      className={`
+        fixed
+        inset-x-0
+        top-0
+        z-50
+        h-[80px]
+
+        transition-all
+        duration-500
+        ease-out
+
+        ${
+          visible
+            ? 'translate-y-0'
+            : '-translate-y-full'
+        }
+
+        ${
+          scrolled
+            ? `
+              bg-[#F7F3E8]/95
+              backdrop-blur-xl
+              border-b
+              border-[#D9D0BE]/70
+              shadow-[0_8px_30px_rgba(38,48,42,0.08)]
+            `
+            : `
+              bg-gradient-to-b
+              from-[#F7F3E8]/95
+              via-[#F7F3E8]/65
+              to-transparent
+              border-transparent
+            `
+        }
+      `}
+    >
+      <div
+        className="
+          mx-auto
+          flex
+          h-full
+          max-w-[1360px]
+          items-center
+          justify-between
+          px-5
+          sm:px-8
+          lg:px-12
+        "
+      >
+
+        {/* =====================================================
+            LOGO
+        ===================================================== */}
+        <button
+          type="button"
           onClick={() => handleNavClick('home')}
-          className="flex items-center gap-2.5 sm:gap-3 text-left group focus:outline-none shrink-0"
+          className="
+            group
+            flex
+            shrink-0
+            items-center
+            gap-2.5
+            text-left
+            focus:outline-none
+          "
         >
-          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border border-[#E1D9C9] bg-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-all duration-300">
-            <img src={logoImg} alt="Straightway Logo" className="w-full h-full object-cover" />
+          <div
+            className="
+              flex
+              h-10
+              w-10
+              items-center
+              justify-center
+              overflow-hidden
+              rounded-full
+              border
+              border-[#D9D0BE]
+              bg-[#FFFDF7]
+              shadow-sm
+              transition-all
+              duration-300
+              group-hover:scale-105
+              group-hover:shadow-md
+              sm:h-11
+              sm:w-11
+            "
+          >
+            <img
+              src={logoImg}
+              alt="Straightway Logo"
+              className="h-full w-full object-cover"
+            />
           </div>
+
           <div>
-            <span className="block font-serif-heading text-xs sm:text-sm md:text-base font-bold tracking-tight text-[#29332B] uppercase leading-none">
-              {t?.brandName || "STRAIGHTWAY"}
+            <span
+              className={`
+                block
+                font-serif-heading
+                text-xs
+                font-bold
+                uppercase
+                leading-none
+                tracking-tight
+                transition-colors
+                duration-300
+                sm:text-sm
+                md:text-base
+
+                ${
+                  scrolled
+                    ? 'text-[#26302A]'
+                    : 'text-[#26302A]'
+                }
+              `}
+            >
+              {t?.brandName || 'STRAIGHTWAY'}
             </span>
-            <span className="block text-[9px] sm:text-[10px] md:text-[11px] font-sans-body font-medium tracking-wider text-[#C7A15A] uppercase mt-0.5">
-              {t?.brandSubtitle || "Flour & Spice Mills"}
+
+            <span
+              className="
+                mt-0.5
+                block
+                font-sans-body
+                text-[9px]
+                font-medium
+                uppercase
+                tracking-[0.16em]
+                text-[#C9825B]
+                sm:text-[10px]
+                md:text-[11px]
+              "
+            >
+              {t?.brandSubtitle || 'Flour & Spice Mills'}
             </span>
           </div>
         </button>
 
-        <nav className="hidden xl:flex items-center gap-5">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleNavClick(item.id)}
-              className={`text-xs font-sans-body font-medium transition-colors relative py-1 ${
-                activeTab === item.id 
-                  ? 'text-[#667A61] font-semibold' 
-                  : 'text-[#29332B]/60 hover:text-[#667A61]'
-              }`}
-            >
-              {item.label}
-              {activeTab === item.id && (
-                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#B86F52] rounded-full" />
-              )}
-            </button>
-          ))}
+        {/* =====================================================
+            DESKTOP NAVIGATION
+        ===================================================== */}
+        <nav className="hidden items-center gap-6 xl:flex">
+          {navItems.map((item) => {
+            const isActive = activeTab === item.id;
+
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => handleNavClick(item.id)}
+                className={`
+                  group
+                  relative
+                  py-2
+                  font-sans-body
+                  text-xs
+                  font-medium
+                  transition-colors
+                  duration-300
+
+                  ${
+                    isActive
+                      ? 'text-[#667A61]'
+                      : 'text-[#26302A]/65 hover:text-[#667A61]'
+                  }
+                `}
+              >
+                {item.label}
+
+                <span
+                  className={`
+                    absolute
+                    bottom-0
+                    left-1/2
+                    h-[2px]
+                    -translate-x-1/2
+                    rounded-full
+                    bg-[#C9825B]
+                    transition-all
+                    duration-300
+
+                    ${
+                      isActive
+                        ? 'w-full opacity-100'
+                        : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
+                    }
+                  `}
+                />
+              </button>
+            );
+          })}
         </nav>
 
-        <div className="hidden sm:flex items-center gap-2.5">
+        {/* =====================================================
+            DESKTOP ACTIONS
+        ===================================================== */}
+        <div className="hidden items-center gap-2.5 sm:flex">
+
           <button
+            type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 bg-[#EAE2D2] hover:bg-[#E1D9C9] text-[#29332B] border border-[#E1D9C9] px-3 py-1.5 rounded-full text-xs font-button transition-all shadow-sm"
+            className="
+              flex
+              items-center
+              gap-1.5
+              rounded-full
+              border
+              border-[#D9D0BE]
+              bg-[#EAE2D2]/80
+              px-3
+              py-1.5
+              font-button
+              text-xs
+              text-[#26302A]
+              shadow-sm
+              backdrop-blur-sm
+              transition-all
+              duration-300
+              hover:-translate-y-0.5
+              hover:bg-[#E1D9C9]
+            "
             title="Switch Language / ഭാഷ മാറ്റുക"
           >
-            <Globe className="w-3.5 h-3.5 text-[#B86F52]" />
-            <span>{lang === 'en' ? 'മലയാളം' : 'English'}</span>
+            <Globe className="h-3.5 w-3.5 text-[#C9825B]" />
+
+            <span>
+              {lang === 'en' ? 'മലയാളം' : 'English'}
+            </span>
           </button>
 
           <a
             href="tel:+918714348348"
-            className="font-button text-xs bg-[#667A61] hover:bg-[#52644E] text-white px-3.5 py-2 rounded-full flex items-center gap-1.5 transition-all shadow-md"
+            className="
+              flex
+              items-center
+              gap-1.5
+              rounded-full
+              bg-[#667A61]
+              px-4
+              py-2
+              font-button
+              text-xs
+              font-medium
+              text-white
+              shadow-md
+              transition-all
+              duration-300
+              hover:-translate-y-0.5
+              hover:bg-[#596B54]
+              hover:shadow-lg
+            "
           >
-            <Phone className="w-3.5 h-3.5 text-[#FFFDF7]" />
-            <span>{t?.phone1 || "+91 8714 348 348"}</span>
+            <Phone className="h-3.5 w-3.5 text-white" />
+
+            <span>
+              {t?.phone1 || '+91 8714 348 348'}
+            </span>
           </a>
+
         </div>
 
+        {/* =====================================================
+            MOBILE ACTIONS
+        ===================================================== */}
         <div className="flex items-center gap-2 xl:hidden">
+
           <button
+            type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1 bg-[#EAE2D2] text-[#29332B] px-2.5 py-1.5 rounded-full text-xs font-button border border-[#E1D9C9]"
+            className="
+              flex
+              items-center
+              gap-1
+              rounded-full
+              border
+              border-[#D9D0BE]
+              bg-[#EAE2D2]/90
+              px-2.5
+              py-1.5
+              font-button
+              text-xs
+              text-[#26302A]
+              shadow-sm
+            "
           >
-            <Globe className="w-3 h-3 text-[#B86F52]" />
-            <span>{lang === 'en' ? 'മലയാളം' : 'EN'}</span>
+            <Globe className="h-3 w-3 text-[#C9825B]" />
+
+            <span>
+              {lang === 'en' ? 'മലയാളം' : 'EN'}
+            </span>
           </button>
 
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-[#29332B] p-2 rounded-lg hover:bg-[#EAE2D2] transition-colors"
+            type="button"
+            onClick={() =>
+              setMobileMenuOpen(!mobileMenuOpen)
+            }
+            className="
+              rounded-xl
+              p-2
+              text-[#26302A]
+              transition-colors
+              hover:bg-[#EAE2D2]
+            "
             aria-label="Toggle Navigation Menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
+
         </div>
+
       </div>
 
+      {/* =======================================================
+          MOBILE MENU
+      ======================================================= */}
       {mobileMenuOpen && (
-        <div className="xl:hidden bg-[#F7F3E8] border-b border-[#E1D9C9] px-6 py-6 space-y-3 shadow-2xl max-h-[80vh] overflow-y-auto animate-fadeIn text-left">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleNavClick(item.id)}
-              className={`block w-full text-left py-2 text-sm font-medium ${
-                activeTab === item.id ? 'text-[#667A61] font-bold border-l-2 border-[#B86F52] pl-2' : 'text-[#29332B]/70'
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
-          <div className="pt-4 border-t border-[#E1D9C9] space-y-2">
+        <div
+          className="
+            absolute
+            inset-x-0
+            top-[80px]
+            border-b
+            border-[#D9D0BE]
+            bg-[#F7F3E8]/98
+            px-6
+            py-6
+            shadow-[0_20px_40px_rgba(38,48,42,0.12)]
+            backdrop-blur-xl
+            xl:hidden
+          "
+        >
+          <div className="space-y-1">
+
+            {navItems.map((item) => {
+              const isActive =
+                activeTab === item.id;
+
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() =>
+                    handleNavClick(item.id)
+                  }
+                  className={`
+                    block
+                    w-full
+                    rounded-lg
+                    py-3
+                    text-left
+                    font-sans-body
+                    text-sm
+                    transition-all
+
+                    ${
+                      isActive
+                        ? `
+                          border-l-2
+                          border-[#C9825B]
+                          bg-[#EAE2D2]/60
+                          pl-4
+                          font-bold
+                          text-[#667A61]
+                        `
+                        : `
+                          pl-3
+                          text-[#26302A]/70
+                          hover:bg-[#EAE2D2]/50
+                          hover:text-[#667A61]
+                        `
+                    }
+                  `}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+
+          </div>
+
+          <div
+            className="
+              mt-4
+              border-t
+              border-[#D9D0BE]
+              pt-4
+            "
+          >
             <a
               href="tel:+918714348348"
-              className="w-full font-button text-xs sm:text-sm bg-[#667A61] text-white px-4 py-3 rounded-xl flex items-center justify-center gap-2"
+              className="
+                flex
+                w-full
+                items-center
+                justify-center
+                gap-2
+                rounded-xl
+                bg-[#667A61]
+                px-4
+                py-3
+                font-button
+                text-sm
+                font-medium
+                text-white
+                shadow-md
+                transition-all
+                hover:bg-[#596B54]
+              "
             >
-              <Phone className="w-4 h-4 text-[#FFFDF7]" />
-              <span>{t?.nav?.callUs || "Call Us"}: {t?.phone1 || "+91 8714 348 348"}</span>
+              <Phone className="h-4 w-4" />
+
+              <span>
+                {t?.nav?.callUs || 'Call Us'}:{' '}
+                {t?.phone1 || '+91 8714 348 348'}
+              </span>
             </a>
           </div>
         </div>

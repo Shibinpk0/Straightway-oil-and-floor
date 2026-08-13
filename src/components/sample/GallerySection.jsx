@@ -91,11 +91,11 @@ const GallerySection = ({ lang }) => {
             <span className="h-[1px] w-12 bg-[#C7A15A]/40"></span>
           </div>
 
-          <h2 className="font-serif-heading text-xl sm:text-3xl md:text-[42px] font-bold text-[#29332B]">
+          <h2 className="font-serif-heading text-xl sm:text-3xl md:text-[42px] font-bold text-[#12351D]">
             {t?.gallery?.heading || "A Glimpse of Our Mill & Products"}
           </h2>
 
-          <p className="hidden sm:block font-sans-body text-sm sm:text-base text-[#5A635A]">
+          <p className="hidden sm:block font-sans-body text-sm sm:text-base text-[#666666]">
             {t?.gallery?.subtitle || "Explore our storefront, traditional chakki milling, washed spices, and custom products."}
           </p>
         </div>
@@ -108,8 +108,8 @@ const GallerySection = ({ lang }) => {
               onClick={() => setActiveCategory(cat)}
               className={`px-5 py-2.5 rounded-full text-xs font-button transition-all duration-300 ${
                 activeCategory === cat
-                  ? 'bg-[#667A61] text-white shadow-md'
-                  : 'bg-[#F7F3E8] text-[#5A635A] hover:bg-[#E1D9C9] hover:text-[#29332B]'
+                  ? 'bg-[#1D4F2B] text-white shadow-md'
+                  : 'bg-[#F6F1E7] text-[#666666] hover:bg-[#E8E2D6] hover:text-[#12351D]'
               }`}
             >
               {cat === 'All' ? t.products.filterAll : cat}
@@ -127,7 +127,7 @@ const GallerySection = ({ lang }) => {
               <div
                 key={item.id}
                 onClick={() => setActiveImage(item)}
-                className="bg-[#FFFDF7] rounded-[20px] overflow-hidden border border-[#E1D9C9] shadow-premium-soft hover:shadow-premium-hover transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer group text-left"
+                className="bg-white rounded-[20px] overflow-hidden border border-[#E8E2D6] shadow-premium-soft hover:shadow-premium-hover transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer group text-left"
               >
                 <div className="relative h-36 sm:h-64 overflow-hidden">
                   <img
@@ -140,16 +140,16 @@ const GallerySection = ({ lang }) => {
                       <ZoomIn className="w-6 h-6 text-white" />
                     </div>
                   </div>
-                  <div className="absolute top-3 left-3 bg-[#29332B]/90 backdrop-blur-sm text-[#F7F3E8] px-3 py-1 rounded-full text-[10px] font-button font-bold border border-[#C7A15A]">
+                  <div className="absolute top-3 left-3 bg-[#12351D]/90 backdrop-blur-sm text-[#FFFDF8] px-3 py-1 rounded-full text-[10px] font-button font-bold border border-[#D8A43A]">
                     {item.category}
                   </div>
                 </div>
 
                 <div className="p-3 sm:p-5 space-y-1">
-                  <h3 className="font-serif-heading text-xs sm:text-lg font-bold text-[#29332B] group-hover:text-[#667A61] transition-colors leading-tight line-clamp-2">
+                  <h3 className="font-serif-heading text-xs sm:text-lg font-bold text-[#12351D] group-hover:text-[#1D4F2B] transition-colors leading-tight line-clamp-2">
                     {itemTitle}
                   </h3>
-                  <p className="font-sans-body text-xs text-[#5A635A]">
+                  <p className="font-sans-body text-xs text-[#666666]">
                     {itemDesc}
                   </p>
                 </div>
@@ -163,15 +163,15 @@ const GallerySection = ({ lang }) => {
       {/* Lightbox Modal */}
       {activeImage && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-[#FFFDF7] rounded-[24px] max-w-3xl w-full border border-[#E1D9C9] shadow-2xl overflow-hidden relative p-4 sm:p-6 text-left space-y-4">
+          <div className="bg-[#FFFDF7] rounded-[24px] max-w-3xl w-full border border-[#E8E2D6] shadow-2xl overflow-hidden relative p-4 sm:p-6 text-left space-y-4">
             <button
               onClick={() => setActiveImage(null)}
-              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white border border-[#E1D9C9] flex items-center justify-center text-[#29332B] hover:bg-[#667A61] hover:text-white transition-colors" aria-label="Close image"
+              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white border border-[#E8E2D6] flex items-center justify-center text-[#202020] hover:bg-[#1D4F2B] hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="rounded-2xl overflow-hidden border border-[#E1D9C9] max-h-[70vh]">
+            <div className="rounded-2xl overflow-hidden border border-[#E8E2D6] max-h-[70vh]">
               <img
                 src={activeImage.src}
                 alt={activeImage.title}
@@ -180,10 +180,10 @@ const GallerySection = ({ lang }) => {
             </div>
 
             <div>
-              <h3 className="font-serif-heading text-xl font-bold text-[#29332B]">
+              <h3 className="font-serif-heading text-xl font-bold text-[#12351D]">
                 {lang === 'ml' && activeImage.titleMl ? activeImage.titleMl : activeImage.title}
               </h3>
-              <p className="text-xs sm:text-sm text-[#5A635A] mt-1">
+              <p className="text-xs sm:text-sm text-[#666666] mt-1">
                 {lang === 'ml' && activeImage.descMl ? activeImage.descMl : activeImage.desc}
               </p>
             </div>

@@ -1,158 +1,706 @@
 import React, { useState } from 'react';
-import { ShoppingBag, Plus, Check } from 'lucide-react'; // Added Check icon
+import {
+  ShoppingBag,
+  Plus,
+  Check,
+  SlidersHorizontal,
+} from 'lucide-react';
+
 import ProductDetailModal from './ProductDetailModal';
 import { productList } from '../data/productsData';
 import { translations } from '../translations';
 
 const Products = ({ lang, onQuickAdd }) => {
   const t = translations[lang] || translations.en;
+
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cardWeights, setCardWeights] = useState({});
-  const [addedId, setAddedId] = useState(null); // State for "Added!" animation
+  const [addedId, setAddedId] = useState(null);
 
   const categories = [
-    { id: 'all', label: t?.products?.filterAll || 'All Products' },
-    { id: 'oil', label: t?.products?.catOils || 'Edible Oils' },
-    { id: 'spices', label: t?.products?.catSpices || 'Spice Powders' },
-    { id: 'flour', label: t?.products?.catFlour || 'Flour' },
-    { id: 'grains', label: t?.products?.catGrains || 'Grain Powders' },
-    { id: 'custom', label: t?.nav?.customGrinding || 'Custom Grinding' },
+    {
+      id: 'all',
+      label: t?.products?.filterAll || 'All',
+    },
+    {
+      id: 'oil',
+      label: t?.products?.catOils || 'Edible Oils',
+    },
+    {
+      id: 'spices',
+      label: t?.products?.catSpices || 'Spice Powders',
+    },
+    {
+      id: 'flour',
+      label: t?.products?.catFlour || 'Flour',
+    },
+    {
+      id: 'grains',
+      label: t?.products?.catGrains || 'Grain Powders',
+    },
+    {
+      id: 'custom',
+      label: t?.nav?.customGrinding || 'Custom Grinding',
+    },
   ];
 
-  const filteredProducts = activeCategory === 'all' ? productList : productList.filter((p) => p.category === activeCategory);
-  const getCardWeight = (productId) => cardWeights[productId] || null;
-  
-  const handleWeightChange = (productId, weight, e) => {
-    e.stopPropagation();
-    setCardWeights(prev => ({ ...prev, [productId]: weight }));
+  const filteredProducts =
+    activeCategory === 'all'
+      ? productList
+      : productList.filter(
+          (product) => product.category === activeCategory
+        );
+
+  const getCardWeight = (product) => {
+    if (!product?.sizes?.length) return null;
+
+    return (
+      cardWeights[product.id] ||
+      product.sizes[Math.floor(product.sizes.length / 2)]
+    );
   };
 
-  // Handles Quick Add with Haptic Feedback and 1s Visual Confirmation
-  const handleQuickAdd = (product, currentWeight) => {
-    onQuickAdd(product, currentWeight);
-    if (navigator.vibrate) navigator.vibrate(10); // Haptic feedback on mobile
+  const getDisplayPrice = (product, weight) => {
+    return product?.prices?.[weight] || '₹0';
+  };
+
+  const handleWeightChange = (productId, weight, event) => {
+    event.stopPropagation();
+
+    setCardWeights((previous) => ({
+      ...previous,
+      [productId]: weight,
+    }));
+  };
+
+  const handleQuickAdd = (product, weight) => {
+    if (!product || !weight) return;
+
+    onQuickAdd(product, weight);
+
+    if (navigator.vibrate) {
+      navigator.vibrate(10);
+    }
+
     setAddedId(product.id);
-    setTimeout(() => setAddedId(null), 1000); // Reset after 1 second
+
+    setTimeout(() => {
+      setAddedId(null);
+    }, 1000);
+  };
+
+  const ProductCard = ({ product, mobile = false }) => {
+    const currentWeight = getCardWeight(product);
+    const displayPrice = getDisplayPrice(product, currentWeight);
+    const isAdded = addedId === product.id;
+
+    return (
+      <article
+        className={`
+          group
+          relative
+          overflow-hidden
+          bg-[#FFFDF7]
+          border border-[#E1D9C9]
+          transition-all
+          duration-300
+          hover:-translate-y-1
+          hover:border-[#C7A15A]/50
+          hover:shadow-[0_14px_35px_rgba(41,51,43,0.10)]
+          ${mobile ? 'rounded-xl' : 'rounded-[20px]'}
+        `}
+      >
+        {/* IMAGE */}
+
+        <button
+          type="button"
+          onClick={() => setSelectedProduct(product)}
+          className={`
+            relative
+            block
+            w-full
+            overflow-hidden
+            bg-[#EAE2D2]
+            text-left
+            focus:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-[#667A61]
+            ${mobile ? 'h-36' : 'h-48'}
+          `}
+        >
+          <img
+            src={product.image}
+            alt={`${product.titleEn} - Straightway Mill`}
+            className="
+              h-full
+              w-full
+              object-cover
+              object-center
+              transition-transform
+              duration-500
+              group-hover:scale-[1.04]
+            "
+          />
+
+          {/* Soft image overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#29332B]/25 via-transparent to-transparent" />
+
+          {/* Badge */}
+          {product.badge && (
+            <span
+              className="
+                absolute
+                left-2.5
+                top-2.5
+                rounded-md
+                bg-[#B86F52]
+                px-1.5
+                py-1
+                text-[8px]
+                font-bold
+                uppercase
+                tracking-wider
+                text-white
+                shadow-sm
+              "
+            >
+              {product.badge}
+            </span>
+          )}
+
+          {/* Desktop hover indicator */}
+          {!mobile && (
+            <span
+              className="
+                absolute
+                bottom-3
+                right-3
+                rounded-full
+                bg-[#FFFDF7]/90
+                px-2.5
+                py-1
+                text-[9px]
+                font-semibold
+                text-[#29332B]
+                opacity-0
+                backdrop-blur-sm
+                transition-opacity
+                duration-300
+                group-hover:opacity-100
+              "
+            >
+              View details
+            </span>
+          )}
+        </button>
+
+        {/* CONTENT */}
+
+        <div className={mobile ? 'p-2.5' : 'p-4'}>
+
+          {/* Product name */}
+
+          <button
+            type="button"
+            onClick={() => setSelectedProduct(product)}
+            className="block w-full text-left"
+          >
+            <h3
+              className={`
+                font-serif-heading
+                font-bold
+                leading-tight
+                text-[#29332B]
+                transition-colors
+                group-hover:text-[#667A61]
+                ${mobile ? 'text-xs line-clamp-1' : 'text-base'}
+              `}
+            >
+              {product.titleEn}
+            </h3>
+
+            {!mobile && product.titleMl && (
+              <p className="mt-0.5 text-xs font-medium text-[#667A61]">
+                {product.titleMl}
+              </p>
+            )}
+          </button>
+
+          {/* Description */}
+
+          {!mobile && (
+            <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[#5A635A]">
+              {product.desc}
+            </p>
+          )}
+
+          {/* PRICE + SIZE */}
+
+          <div
+            className={`
+              flex
+              items-end
+              justify-between
+              gap-2
+              border-t
+              border-[#E1D9C9]
+              ${mobile ? 'mt-2 pt-2' : 'mt-4 pt-3'}
+            `}
+          >
+            <div className="min-w-0">
+
+              <span className="mb-1 block text-[8px] font-bold uppercase tracking-wider text-[#8A8F87]">
+                Pack
+              </span>
+
+              <select
+                value={currentWeight || ''}
+                onChange={(event) =>
+                  handleWeightChange(
+                    product.id,
+                    event.target.value,
+                    event
+                  )
+                }
+                className="
+                  max-w-full
+                  cursor-pointer
+                  rounded-lg
+                  border
+                  border-[#E1D9C9]
+                  bg-[#EAE2D2]
+                  px-2
+                  py-1.5
+                  text-[9px]
+                  font-semibold
+                  text-[#29332B]
+                  outline-none
+                  transition-colors
+                  hover:border-[#667A61]
+                  focus:border-[#667A61]
+                  focus:ring-1
+                  focus:ring-[#667A61]/30
+                  sm:text-xs
+                "
+              >
+                {product.sizes?.map((weight) => (
+                  <option key={weight} value={weight}>
+                    {weight}
+                  </option>
+                ))}
+              </select>
+
+            </div>
+
+            <div className="shrink-0 text-right">
+
+              <span className="block text-[8px] uppercase tracking-wider text-[#8A8F87]">
+                Price
+              </span>
+
+              <span
+                className={`
+                  font-sans-body
+                  font-bold
+                  text-[#29332B]
+                  ${mobile ? 'text-sm' : 'text-xl'}
+                `}
+              >
+                {displayPrice}
+              </span>
+
+            </div>
+          </div>
+
+          {/* ACTION */}
+
+          {mobile ? (
+
+            <button
+              type="button"
+              onClick={() =>
+                handleQuickAdd(product, currentWeight)
+              }
+              className={`
+                mt-2
+                flex
+                h-8
+                w-full
+                items-center
+                justify-center
+                gap-1.5
+                rounded-full
+                text-[10px]
+                font-bold
+                transition-all
+                duration-200
+                active:scale-[0.96]
+                ${
+                  isAdded
+                    ? 'bg-[#29332B] text-white'
+                    : 'bg-[#667A61] text-white'
+                }
+              `}
+            >
+              {isAdded ? (
+                <>
+                  <Check className="h-3.5 w-3.5 text-[#C7A15A]" />
+                  Added
+                </>
+              ) : (
+                <>
+                  <Plus className="h-3.5 w-3.5" />
+                  Add
+                </>
+              )}
+            </button>
+
+          ) : (
+
+            <div className="mt-3 flex gap-2">
+
+              <button
+                type="button"
+                onClick={() => setSelectedProduct(product)}
+                className="
+                  flex
+                  flex-1
+                  items-center
+                  justify-center
+                  gap-1.5
+                  rounded-full
+                  border
+                  border-[#E1D9C9]
+                  bg-transparent
+                  px-3
+                  py-2
+                  text-xs
+                  font-semibold
+                  text-[#29332B]
+                  transition-all
+                  hover:border-[#667A61]
+                  hover:bg-[#EAE2D2]
+                "
+              >
+                <ShoppingBag className="h-3.5 w-3.5" />
+                Details
+              </button>
+
+              <button
+                type="button"
+                onClick={() =>
+                  handleQuickAdd(product, currentWeight)
+                }
+                className={`
+                  flex
+                  flex-1
+                  items-center
+                  justify-center
+                  gap-1.5
+                  rounded-full
+                  px-3
+                  py-2
+                  text-xs
+                  font-bold
+                  text-white
+                  shadow-sm
+                  transition-all
+                  active:scale-[0.98]
+                  ${
+                    isAdded
+                      ? 'bg-[#29332B]'
+                      : 'bg-[#667A61] hover:bg-[#52644E]'
+                  }
+                `}
+              >
+                {isAdded ? (
+                  <>
+                    <Check className="h-3.5 w-3.5 text-[#C7A15A]" />
+                    Added
+                  </>
+                ) : (
+                  <>
+                    <Plus className="h-3.5 w-3.5" />
+                    Quick Add
+                  </>
+                )}
+              </button>
+
+            </div>
+          )}
+        </div>
+      </article>
+    );
   };
 
   return (
-    <section id="products" className="bg-[#F7F3E8] py-12 md:py-16 lg:py-20 relative">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-8 space-y-8 md:space-y-10">
-        
-        <div className="text-center space-y-2 max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-3 text-[#B86F52]">
-            <span className="h-[1px] w-12 bg-[#B86F52]/40"></span>
-            <span className="font-serif-heading font-semibold text-xs sm:text-sm tracking-wider uppercase">{t?.products?.tag || "✦ OUR PRODUCTS & SERVICES ✦"}</span>
-            <span className="h-[1px] w-12 bg-[#B86F52]/40"></span>
-          </div>
-          <h2 className="font-serif-heading text-xl sm:text-3xl font-bold text-[#29332B] leading-tight">{t?.products?.heading || "Pure & Fresh Products"}</h2>
+    <>
+      <section
+        id="products"
+        className="
+          relative
+          overflow-hidden
+          bg-[#F7F3E8]
+          py-10
+          sm:py-12
+          lg:py-16
+        "
+      >
+
+        {/* BACKGROUND */}
+
+        <div className="pointer-events-none absolute inset-0">
+
+          <div
+            className="
+              absolute
+              -right-40
+              top-20
+              h-[400px]
+              w-[400px]
+              rounded-full
+              bg-[#667A61]/[0.035]
+              blur-3xl
+            "
+          />
+
+          <div
+            className="
+              absolute
+              -left-40
+              bottom-20
+              h-[350px]
+              w-[350px]
+              rounded-full
+              bg-[#B86F52]/[0.025]
+              blur-3xl
+            "
+          />
+
         </div>
 
-        {/* STICKY CATEGORY FILTER FOR MOBILE */}
-        <div className="sticky top-[70px] z-30 bg-[#F7F3E8]/95 backdrop-blur-sm py-2 -mx-4 px-4 sm:static sm:bg-transparent sm:py-0 sm:z-0">
-          <div className="flex items-center sm:justify-center gap-2 sm:gap-3 overflow-x-auto pb-2 sm:pb-0 sm:flex-wrap scrollbar-hide">
-            {categories.map((cat) => (
-              <button key={cat.id} onClick={() => setActiveCategory(cat.id)} className={`font-button text-[11px] sm:text-sm px-4 sm:px-5 py-2 sm:py-2.5 rounded-full transition-all duration-300 whitespace-nowrap shrink-0 ${activeCategory === cat.id ? 'bg-[#667A61] text-white shadow-md font-bold' : 'bg-[#EAE2D2] text-[#29332B] hover:bg-[#E1D9C9] border border-[#E1D9C9]'}`}>
-                {cat.label}
-              </button>
+        <div
+          className="
+            relative
+            mx-auto
+            max-w-[1280px]
+            px-4
+            sm:px-6
+            lg:px-10
+          "
+        >
+
+          {/* HEADER */}
+
+          <div className="mx-auto mb-6 max-w-2xl text-center sm:mb-8">
+
+            <div className="mb-2.5 flex items-center justify-center gap-3">
+
+              <span className="h-px w-8 bg-[#B86F52]/50 sm:w-12" />
+
+              <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#B86F52] sm:text-[10px]">
+                {t?.products?.tag || 'Our Products & Services'}
+              </span>
+
+              <span className="h-px w-8 bg-[#B86F52]/50 sm:w-12" />
+
+            </div>
+
+            <h2
+              className="
+                font-serif-heading
+                text-2xl
+                font-bold
+                leading-tight
+                tracking-tight
+                text-[#29332B]
+                sm:text-3xl
+                lg:text-4xl
+              "
+            >
+              {t?.products?.heading || 'Pure & Fresh Products'}
+            </h2>
+
+            <p className="mx-auto mt-2 max-w-lg text-xs leading-relaxed text-[#5A635A] sm:text-sm">
+              {lang === 'ml'
+                ? 'പരമ്പരാഗത രീതിയിൽ പുതുമയോടെ തയ്യാറാക്കിയ ഉൽപ്പന്നങ്ങൾ.'
+                : 'Freshly processed products made with traditional care and honest ingredients.'}
+            </p>
+
+          </div>
+
+          {/* CATEGORY NAV */}
+
+          <div className="mb-6 sm:mb-8">
+
+            <div
+              className="
+                flex
+                items-center
+                gap-2
+                overflow-x-auto
+                pb-2
+                scrollbar-hide
+                sm:flex-wrap
+                sm:justify-center
+              "
+            >
+
+              <div className="flex shrink-0 items-center text-[#8A8F87] sm:hidden">
+                <SlidersHorizontal className="h-3.5 w-3.5" />
+              </div>
+
+              {categories.map((category) => {
+                const active =
+                  activeCategory === category.id;
+
+                return (
+                  <button
+                    key={category.id}
+                    type="button"
+                    onClick={() =>
+                      setActiveCategory(category.id)
+                    }
+                    className={`
+                      shrink-0
+                      rounded-full
+                      px-3.5
+                      py-2
+                      text-[10px]
+                      font-semibold
+                      transition-all
+                      duration-200
+                      sm:px-4
+                      sm:py-2
+                      sm:text-xs
+                      ${
+                        active
+                          ? 'bg-[#667A61] text-white shadow-sm'
+                          : 'border border-[#E1D9C9] bg-[#EAE2D2] text-[#29332B] hover:border-[#667A61]/40'
+                      }
+                    `}
+                  >
+                    {category.label}
+                  </button>
+                );
+              })}
+
+            </div>
+
+          </div>
+
+          {/* MOBILE */}
+
+          <div className="grid grid-cols-2 gap-2.5 sm:hidden">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                mobile
+              />
             ))}
           </div>
+
+          {/* DESKTOP */}
+
+          <div
+            className="
+              hidden
+              sm:grid
+              sm:grid-cols-2
+              lg:grid-cols-3
+              xl:grid-cols-4
+              gap-5
+              lg:gap-6
+            "
+          >
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+              />
+            ))}
+          </div>
+
+          {/* EMPTY STATE */}
+
+          {filteredProducts.length === 0 && (
+            <div className="rounded-2xl border border-dashed border-[#DCD5C6] bg-[#EAE2D2]/40 py-12 text-center">
+
+              <ShoppingBag className="mx-auto mb-3 h-8 w-8 text-[#667A61]/60" />
+
+              <p className="font-serif-heading text-base font-bold text-[#29332B]">
+                {lang === 'ml'
+                  ? 'ഉൽപ്പന്നങ്ങൾ ലഭ്യമല്ല'
+                  : 'No products found'}
+              </p>
+
+              <p className="mt-1 text-xs text-[#5A635A]">
+                {lang === 'ml'
+                  ? 'മറ്റൊരു വിഭാഗം തിരഞ്ഞെടുക്കുക.'
+                  : 'Try selecting another category.'}
+              </p>
+
+            </div>
+          )}
+
+          {/* BOTTOM NOTE */}
+
+          <div className="mt-6 flex items-center justify-center gap-2 text-center sm:mt-8">
+
+            <span className="h-px w-6 bg-[#DCD5C6]" />
+
+            <p className="text-[9px] font-medium tracking-wide text-[#8A8F87] sm:text-[10px]">
+              {lang === 'ml'
+                ? 'പുതുതായി പൊടിച്ച് • ശുചിത്വത്തോടെ തയ്യാറാക്കി'
+                : 'Freshly milled • Carefully processed'}
+            </p>
+
+            <span className="h-px w-6 bg-[#DCD5C6]" />
+
+          </div>
+
         </div>
 
-        {/* Mobile 2-Column Grid */}
-        <div className="grid grid-cols-2 gap-3 sm:hidden">
-          {filteredProducts.map((product) => {
-            const currentWeight = getCardWeight(product.id) || product.sizes[Math.floor(product.sizes.length / 2)];
-            const displayPrice = product.prices?.[currentWeight] || '₹0';
-            const isAdded = addedId === product.id; // Check if this item was just added
+        {/* ORGANIC SECTION BLEND */}
 
-            return (
-              <div key={product.id} className="bg-[#FFFDF7] rounded-xl border border-[#E1D9C9] overflow-hidden shadow-premium-soft flex flex-col">
-                <div onClick={() => setSelectedProduct(product)} className="relative h-28 bg-[#EAE2D2] overflow-hidden">
-                  <img src={product.image} alt={`${product.titleEn} - Straightway Mill`} className="w-full h-full object-cover" />
-                  <div className="absolute top-2 left-2 -rotate-3 bg-[#B86F52] text-white text-[8px] font-button font-extrabold px-1.5 py-0.5 rounded-sm uppercase shadow-md whitespace-nowrap z-10">{product.badge}</div>
-                </div>
-                <div className="p-2.5 space-y-1.5 flex-grow flex flex-col justify-between">
-                  <div onClick={() => setSelectedProduct(product)}>
-                    <h3 className="font-serif-heading text-xs font-bold text-[#29332B] leading-tight line-clamp-1">{product.titleEn}</h3>
-                  </div>
-                  <div className="flex items-center justify-between gap-1">
-                    <select value={currentWeight} onChange={(e) => handleWeightChange(product.id, e.target.value, e)} className="bg-[#EAE2D2] border border-[#E1D9C9] rounded-md px-1.5 py-1 text-[9px] font-semibold text-[#29332B] focus:outline-none cursor-pointer">
-                      {product.sizes.map(w => <option key={w} value={w}>{w}</option>)}
-                    </select>
-                    <span className="font-sans-body text-xs font-bold text-[#29332B]">{displayPrice}</span>
-                  </div>
-                  
-                  {/* Smart Quick Add Button */}
-                  <button 
-                    onClick={() => handleQuickAdd(product, currentWeight)} 
-                    className={`w-full h-7 rounded-full flex items-center justify-center shrink-0 active:scale-90 transition-all duration-300 ${isAdded ? 'bg-[#29332B] text-white' : 'bg-[#667A61] text-white'}`}
-                  >
-                    {isAdded ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+        <div className="pointer-events-none absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+
+          <svg
+            className="relative block h-8 w-full sm:h-10"
+            viewBox="0 0 1200 80"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="
+                M0,45
+                C140,70 240,20 380,40
+                C520,60 600,72 740,40
+                C880,10 1010,65 1200,30
+                L1200,80
+                L0,80
+                Z
+              "
+              fill="#EAE2D2"
+            />
+          </svg>
+
         </div>
 
-        {/* Desktop Grid (Unchanged logic, just cleaner) */}
-        <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-          {filteredProducts.map((product) => {
-            const currentWeight = getCardWeight(product.id) || product.sizes[Math.floor(product.sizes.length / 2)];
-            const displayPrice = product.prices?.[currentWeight] || '₹0';
-            const isAdded = addedId === product.id;
+      </section>
 
-            return (
-              <div key={product.id} className="bg-[#FFFDF7] rounded-xl border border-[#E1D9C9] overflow-hidden shadow-premium-soft hover:shadow-premium-hover transition-all duration-300 group flex flex-col justify-between">
-                <div onClick={() => setSelectedProduct(product)} className="relative h-44 bg-[#EAE2D2] overflow-hidden cursor-pointer">
-                  <img src={product.image} alt={`${product.titleEn} - Straightway Mill`} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute top-2 left-2 -rotate-3 bg-[#B86F52] text-white text-[9px] font-button font-extrabold px-2 py-1 rounded-sm uppercase tracking-wide shadow-md whitespace-nowrap z-10">{product.badge}</div>
-                </div>
-                <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
-                  <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                    <h3 className="font-serif-heading text-base font-bold text-[#29332B] leading-snug">{product.titleEn}</h3>
-                    <p className="text-sm font-sans-body text-[#667A61] font-semibold mt-0.5">{product.titleMl}</p>
-                    <p className="text-xs text-[#5A635A] line-clamp-2 mt-1.5 leading-relaxed">{product.desc}</p>
-                  </div>
-                  
-                  <div className="pt-2 border-t border-[#E1D9C9] flex items-center justify-between gap-2 mt-2">
-                    <div className="flex flex-col gap-1">
-                      <span className="text-[10px] text-[#5A635A] uppercase tracking-wider">Pack Size</span>
-                      <select value={currentWeight} onChange={(e) => handleWeightChange(product.id, e.target.value, e)} className="bg-[#EAE2D2] border border-[#E1D9C9] rounded-lg px-3 py-1.5 text-xs font-semibold text-[#29332B] focus:outline-none cursor-pointer">
-                        {product.sizes.map(w => <option key={w} value={w}>{w}</option>)}
-                      </select>
-                    </div>
-                    <div className="text-right">
-                      <span className="font-sans-body text-xl font-bold text-[#29332B] block leading-none">{displayPrice}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2 mt-2">
-                     <button onClick={() => setSelectedProduct(product)} className="flex-1 font-button text-xs bg-transparent border border-[#E1D9C9] hover:bg-[#EAE2D2] text-[#29332B] px-4 py-2 rounded-full flex items-center justify-center gap-1.5 transition-colors">
-                        <ShoppingBag className="w-3.5 h-3.5" />
-                        <span>Details</span>
-                     </button>
-                     <button 
-                        onClick={() => handleQuickAdd(product, currentWeight)} 
-                        className={`flex-1 font-button text-xs transition-all duration-300 px-4 py-2 rounded-full flex items-center justify-center gap-1.5 shadow-sm ${isAdded ? 'bg-[#29332B] text-white' : 'bg-[#667A61] hover:bg-[#52644E] text-white'}`}
-                     >
-                        {isAdded ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                        <span>{isAdded ? 'Added!' : 'Quick Add'}</span>
-                     </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      {/* PRODUCT MODAL */}
 
       {selectedProduct && (
-        <ProductDetailModal product={selectedProduct} onClose={() => setSelectedProduct(null)} lang={lang} onQuickAdd={onQuickAdd}  />
+        <ProductDetailModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          lang={lang}
+          onQuickAdd={onQuickAdd}
+        />
       )}
-    </section>
+    </>
   );
 };
 

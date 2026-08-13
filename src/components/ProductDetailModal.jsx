@@ -1,129 +1,929 @@
-import React, { useState, useEffect } from 'react';
-import { X, CheckCircle, MessageCircle, Phone, ShieldCheck, Plus, Check } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  X,
+  CheckCircle,
+  MessageCircle,
+  Phone,
+  ShieldCheck,
+  Plus,
+  Check,
+  MapPin,
+} from 'lucide-react';
+
 import { translations } from '../translations';
 
-const ProductDetailModal = ({ product, onClose, lang, onQuickAdd }) => {
-  const defaultWeight = product.sizes ? product.sizes[Math.floor(product.sizes.length / 2)] : '500g';
-  const [selectedWeight, setSelectedWeight] = useState(defaultWeight);
-  const [isAdded, setIsAdded] = useState(false); // State for "Added!" animation
+const ProductDetailModal = ({
+  product,
+  onClose,
+  lang,
+  onQuickAdd,
+}) => {
   const t = translations[lang] || translations.en;
+  const isMalayalam = lang === 'ml';
 
+  const sizes = product?.sizes || [];
+  const defaultWeight =
+    sizes.length > 0
+      ? sizes[Math.floor(sizes.length / 2)]
+      : '500g';
+
+  const [selectedWeight, setSelectedWeight] =
+    useState(defaultWeight);
+
+  const [isAdded, setIsAdded] = useState(false);
+
+  /*
+   * Keep selected size synchronized if another
+   * product is opened without unmounting the modal.
+   */
   useEffect(() => {
+    if (!product) return;
+
+    const nextSizes = product.sizes || [];
+
+    const nextDefault =
+      nextSizes.length > 0
+        ? nextSizes[Math.floor(nextSizes.length / 2)]
+        : '500g';
+
+    setSelectedWeight(nextDefault);
+    setIsAdded(false);
+  }, [product]);
+
+  /*
+   * Lock page scrolling while modal is open.
+   */
+  useEffect(() => {
+    if (!product) return;
+
+    const previousOverflow =
+      document.body.style.overflow;
+
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = 'auto'; };
-  }, []);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [product]);
+
+  /*
+   * Escape key support.
+   */
+  useEffect(() => {
+    if (!product) return;
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener(
+      'keydown',
+      handleKeyDown
+    );
+
+    return () => {
+      window.removeEventListener(
+        'keydown',
+        handleKeyDown
+      );
+    };
+  }, [product, onClose]);
 
   if (!product) return null;
 
-  const title = `${product.titleEn} / ${product.titleMl}`;
-  const desc = product.desc;
-  const phoneUrl = `tel:+918714348348`;
-  const currentPrice = product.prices?.[selectedWeight] || '₹0';
+  const title = isMalayalam
+    ? product.titleMl || product.titleEn
+    : product.titleEn || product.titleMl;
 
+  const secondaryTitle = isMalayalam
+    ? product.titleEn
+    : product.titleMl;
+
+  const description =
+    product.desc ||
+    (isMalayalam
+      ? 'കരുളായി മില്ലിൽ പുതുതായി തയ്യാറാക്കുന്ന ഗുണമേന്മയുള്ള ഉൽപ്പന്നം.'
+      : 'Freshly prepared at our local mill with care and quality.');
+
+  const currentPrice =
+    product.prices?.[selectedWeight] || '₹0';
+
+  const phoneUrl = 'tel:+918714348348';
+
+  /*
+   * Product qualities
+   */
+  const qualityPoints = [
+    {
+      icon: CheckCircle,
+      label: isMalayalam
+        ? '100% ശുദ്ധി'
+        : '100% Pure',
+    },
+    {
+      icon: CheckCircle,
+      label: isMalayalam
+        ? 'മായമില്ല'
+        : 'No Fillers',
+    },
+    {
+      icon: CheckCircle,
+      label: isMalayalam
+        ? 'ശുചിത്വത്തോടെ തയ്യാറാക്കിയത്'
+        : 'Hygienically Prepared',
+    },
+    {
+      icon: ShieldCheck,
+      label: isMalayalam
+        ? 'സ്വാഭാവിക ഗുണം'
+        : 'Natural Quality',
+    },
+  ];
+
+  /*
+   * WhatsApp order
+   */
   const handleWhatsAppOrder = () => {
-    const text = encodeURIComponent(`Hello PKS Straightway Mill!\nI am interested in ordering:\n*Product:* ${product.titleEn} (${product.titleMl})\n*Selected Size:* ${selectedWeight}\n*Estimated Price:* ${currentPrice}\n*Quantity:* 1\nPlease let me know availability and price.`);
-    window.open(`https://wa.me/918714348348?text=${text}`, '_blank');
+    const message = [
+      'Hello PKS Straightway Mill!',
+      '',
+      'I am interested in ordering:',
+      `Product: ${product.titleEn || title}`,
+      `Selected Size: ${selectedWeight}`,
+      `Estimated Price: ${currentPrice}`,
+      'Quantity: 1',
+      '',
+      'Please let me know availability and final price.',
+    ].join('\n');
+
+    const encodedMessage =
+      encodeURIComponent(message);
+
+    window.open(
+      `https://wa.me/918714348348?text=${encodedMessage}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
+  /*
+   * Add product to order list
+   */
   const handleAddToCart = () => {
-    onQuickAdd(product, selectedWeight);
-    if (navigator.vibrate) navigator.vibrate(10); // Haptic feedback
+    if (typeof onQuickAdd === 'function') {
+      onQuickAdd(
+        product,
+        selectedWeight
+      );
+    }
+
+    if (
+      typeof navigator !== 'undefined' &&
+      navigator.vibrate
+    ) {
+      navigator.vibrate(10);
+    }
+
     setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 1500); // Reset after 1.5s
+
+    window.setTimeout(() => {
+      setIsAdded(false);
+    }, 1600);
   };
 
   return (
-    // Mobile: items-end (bottom), Desktop: items-center (middle)
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-      
-      <div className="bg-[#F7F3E8] rounded-t-[28px] sm:rounded-[24px] w-full sm:max-w-2xl border-t sm:border border-[#E1D9C9] shadow-2xl overflow-hidden relative max-h-[90vh] sm:max-h-[85vh] flex flex-col animate-slide-up sm:animate-fadeIn">
-        
-        {/* Mobile drag handle indicator */}
-        <div className="sm:hidden flex justify-center pt-3 pb-1 bg-[#FFFDF7]">
-          <div className="w-10 h-1.5 bg-[#E1D9C9] rounded-full"></div>
+    <div
+      className="
+        fixed
+        inset-0
+        z-[100]
+        flex
+        items-end
+        justify-center
+        bg-[#26302A]/65
+        p-0
+        backdrop-blur-sm
+        sm:items-center
+        sm:p-4
+      "
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="product-modal-title"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) {
+          onClose();
+        }
+      }}
+    >
+
+      {/* =========================================================
+          MODAL
+      ========================================================= */}
+
+      <div
+        className="
+          relative
+          flex
+          max-h-[94vh]
+          w-full
+          flex-col
+          overflow-hidden
+          rounded-t-[28px]
+          border
+          border-[#DCD5C6]
+          bg-[#F7F3E8]
+          shadow-[0_30px_80px_rgba(0,0,0,0.25)]
+          animate-slide-up
+          sm:max-w-[860px]
+          sm:rounded-[28px]
+          sm:max-h-[90vh]
+          sm:animate-fadeIn
+        "
+        onMouseDown={(event) => {
+          event.stopPropagation();
+        }}
+      >
+
+        {/* =======================================================
+            MOBILE HANDLE
+        ======================================================= */}
+
+        <div
+          className="
+            flex
+            justify-center
+            bg-[#F7F3E8]
+            pb-1
+            pt-3
+            sm:hidden
+          "
+        >
+          <div
+            className="
+              h-1.5
+              w-10
+              rounded-full
+              bg-[#D6CDBB]
+            "
+          />
         </div>
 
-        <button onClick={onClose} className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-[#FFFDF7] border border-[#E1D9C9] flex items-center justify-center text-[#29332B] hover:bg-[#667A61] hover:text-white transition-colors">
-          <X className="w-4 h-4" />
+        {/* =======================================================
+            CLOSE BUTTON
+        ======================================================= */}
+
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close product details"
+          className="
+            absolute
+            right-4
+            top-4
+            z-20
+            flex
+            h-9
+            w-9
+            items-center
+            justify-center
+            rounded-full
+            border
+            border-[#DCD5C6]
+            bg-[#F7F3E8]/90
+            text-[#26302A]
+            shadow-sm
+            backdrop-blur-md
+            transition-all
+            duration-200
+            hover:bg-[#667A61]
+            hover:text-white
+            sm:right-5
+            sm:top-5
+          "
+        >
+          <X className="h-4 w-4" />
         </button>
 
-        {/* Scrollable Content Area */}
-        <div className="p-4 sm:p-6 overflow-y-auto flex-grow">
-          <div className="text-left pr-8 mb-3">
-            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#B86F52]">PKS Straightway Mill • Vakeelppadi</span>
-            <h2 className="font-serif-heading text-xl sm:text-2xl md:text-3xl font-bold text-[#29332B] leading-tight mt-0.5">{title}</h2>
-          </div>
+        {/* =======================================================
+            SCROLLABLE CONTENT
+        ======================================================= */}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start mb-4">
-            <div className="rounded-2xl overflow-hidden border border-[#E1D9C9] shadow-sm bg-white h-40 sm:h-52 md:h-64 w-full">
-              <img src={product.image} alt={title} className="w-full h-full object-cover" />
+        <div
+          className="
+            flex-1
+            overflow-y-auto
+            overscroll-contain
+            px-4
+            pb-5
+            pt-3
+            sm:px-7
+            sm:pb-6
+            sm:pt-6
+          "
+        >
+
+          {/* =====================================================
+              PRODUCT HEADER
+          ===================================================== */}
+
+          <div
+            className="
+              mb-5
+              pr-12
+              text-left
+            "
+          >
+
+            <div
+              className="
+                mb-2
+                flex
+                items-center
+                gap-2
+              "
+            >
+              <span
+                className="
+                  h-px
+                  w-6
+                  bg-[#C9825B]
+                "
+              />
+
+              <span
+                className="
+                  font-sans-body
+                  text-[9px]
+                  font-bold
+                  uppercase
+                  tracking-[0.2em]
+                  text-[#C9825B]
+                  sm:text-[10px]
+                "
+              >
+                PKS Straightway · Karulai
+              </span>
             </div>
 
-            <div className="text-left">
-              <p className="font-sans-body text-xs sm:text-sm text-[#5A635A] leading-relaxed line-clamp-3">{desc}</p>
-              <div className="grid grid-cols-2 gap-x-3 gap-y-2 mt-3">
-                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-[#29332B]">
-                  <CheckCircle className="w-3.5 h-3.5 text-[#B86F52] shrink-0" />
-                  <span>{lang === 'ml' ? '100% ശുദ്ധി' : '100% Pure Quality'}</span>
+            <h2
+              id="product-modal-title"
+              className="
+                font-serif-heading
+                text-2xl
+                font-bold
+                leading-[1.05]
+                tracking-[-0.02em]
+                text-[#26302A]
+                sm:text-3xl
+              "
+            >
+              {title}
+            </h2>
+
+            {secondaryTitle && (
+              <p
+                className="
+                  mt-1.5
+                  font-sans-body
+                  text-[11px]
+                  text-[#7A817A]
+                  sm:text-xs
+                "
+              >
+                {secondaryTitle}
+              </p>
+            )}
+
+          </div>
+
+          {/* =====================================================
+              PRODUCT AREA
+          ===================================================== */}
+
+          <div
+            className="
+              grid
+              gap-5
+              md:grid-cols-[0.95fr_1.05fr]
+              md:gap-7
+            "
+          >
+
+            {/* ===================================================
+                IMAGE
+            =================================================== */}
+
+            <div>
+
+              <div
+                className="
+                  relative
+                  aspect-[4/3]
+                  overflow-hidden
+                  rounded-[20px]
+                  border
+                  border-[#DCD5C6]
+                  bg-white
+                  shadow-[0_12px_30px_rgba(38,48,42,0.08)]
+                "
+              >
+
+                <img
+                  src={product.image}
+                  alt={title}
+                  className="
+                    h-full
+                    w-full
+                    object-cover
+                  "
+                />
+
+                {/* Image bottom overlay */}
+
+                <div
+                  className="
+                    pointer-events-none
+                    absolute
+                    inset-x-0
+                    bottom-0
+                    h-24
+                    bg-gradient-to-t
+                    from-[#26302A]/30
+                    to-transparent
+                  "
+                />
+
+                {/* Local badge */}
+
+                <div
+                  className="
+                    absolute
+                    bottom-3
+                    left-3
+                    flex
+                    items-center
+                    gap-1.5
+                    rounded-full
+                    border
+                    border-white/20
+                    bg-[#26302A]/65
+                    px-3
+                    py-1.5
+                    text-white
+                    backdrop-blur-md
+                  "
+                >
+                  <MapPin
+                    className="
+                      h-3
+                      w-3
+                      text-[#E7D9B8]
+                    "
+                  />
+
+                  <span
+                    className="
+                      font-sans-body
+                      text-[9px]
+                      font-semibold
+                    "
+                  >
+                    Karulai Mill
+                  </span>
                 </div>
-                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-[#29332B]">
-                  <CheckCircle className="w-3.5 h-3.5 text-[#B86F52] shrink-0" />
-                  <span>{lang === 'ml' ? 'മായമില്ല' : 'No Fillers'}</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-[#29332B]">
-                  <CheckCircle className="w-3.5 h-3.5 text-[#B86F52] shrink-0" />
-                  <span>{lang === 'ml' ? 'ഹോട്ടെയർ ഡ്രയർ' : 'Hot-Air Dried'}</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-[#29332B]">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#B86F52] shrink-0" />
-                  <span>{lang === 'ml' ? 'സുഗന്ധം ഉറപ്പ്' : 'Natural Oils'}</span>
-                </div>
+
               </div>
+
             </div>
+
+            {/* ===================================================
+                PRODUCT INFORMATION
+            =================================================== */}
+
+            <div className="flex flex-col">
+
+              {/* Description */}
+
+              <p
+                className="
+                  font-sans-body
+                  text-xs
+                  leading-6
+                  text-[#5A635A]
+                  sm:text-sm
+                "
+              >
+                {description}
+              </p>
+
+              {/* =================================================
+                  QUALITY POINTS
+              ================================================= */}
+
+              <div
+                className="
+                  mt-4
+                  grid
+                  grid-cols-2
+                  gap-x-3
+                  gap-y-2.5
+                "
+              >
+
+                {qualityPoints.map(
+                  (item, index) => {
+                    const Icon = item.icon;
+
+                    return (
+                      <div
+                        key={`${item.label}-${index}`}
+                        className="
+                          flex
+                          items-center
+                          gap-2
+                        "
+                      >
+                        <Icon
+                          className="
+                            h-3.5
+                            w-3.5
+                            shrink-0
+                            text-[#667A61]
+                          "
+                          strokeWidth={1.8}
+                        />
+
+                        <span
+                          className="
+                            font-sans-body
+                            text-[10px]
+                            font-semibold
+                            leading-tight
+                            text-[#374139]
+                            sm:text-[11px]
+                          "
+                        >
+                          {item.label}
+                        </span>
+                      </div>
+                    );
+                  }
+                )}
+
+              </div>
+
+              {/* =================================================
+                  SIZE SELECTOR
+              ================================================= */}
+
+              <div
+                className="
+                  mt-5
+                  border-t
+                  border-[#DCD5C6]
+                  pt-4
+                "
+              >
+
+                <div
+                  className="
+                    mb-2.5
+                    flex
+                    items-center
+                    justify-between
+                  "
+                >
+                  <label
+                    className="
+                      font-sans-body
+                      text-[10px]
+                      font-bold
+                      uppercase
+                      tracking-[0.14em]
+                      text-[#26302A]
+                    "
+                  >
+                    {isMalayalam
+                      ? 'അളവ് തിരഞ്ഞെടുക്കുക'
+                      : 'Choose a size'}
+                  </label>
+
+                  <span
+                    className="
+                      font-sans-body
+                      text-[9px]
+                      text-[#7A817A]
+                    "
+                  >
+                    {sizes.length}{' '}
+                    {isMalayalam
+                      ? 'ഓപ്ഷനുകൾ'
+                      : 'options'}
+                  </span>
+                </div>
+
+                <div
+                  className="
+                    grid
+                    grid-cols-4
+                    gap-2
+                  "
+                >
+
+                  {sizes.map((weight) => {
+                    const selected =
+                      selectedWeight === weight;
+
+                    return (
+                      <button
+                        type="button"
+                        key={weight}
+                        onClick={() => {
+                          setSelectedWeight(weight);
+                          setIsAdded(false);
+                        }}
+                        aria-pressed={selected}
+                        className={`
+                          rounded-xl
+                          border
+                          px-2
+                          py-2.5
+                          font-sans-body
+                          text-[10px]
+                          font-semibold
+                          transition-all
+                          duration-200
+                          sm:text-xs
+                          ${
+                            selected
+                              ? `
+                                border-[#667A61]
+                                bg-[#667A61]
+                                text-white
+                                shadow-[0_5px_15px_rgba(102,122,97,0.20)]
+                              `
+                              : `
+                                border-[#DCD5C6]
+                                bg-[#FFFDF7]
+                                text-[#374139]
+                                hover:border-[#A8B5A0]
+                                hover:bg-[#EAE2D2]
+                              `
+                          }
+                        `}
+                      >
+                        {weight}
+                      </button>
+                    );
+                  })}
+
+                </div>
+
+              </div>
+
+              {/* =================================================
+                  PRICE
+              ================================================= */}
+
+              <div
+                className="
+                  mt-4
+                  flex
+                  items-center
+                  justify-between
+                  rounded-2xl
+                  border
+                  border-[#D6CDBB]
+                  bg-[#EAE2D2]
+                  px-4
+                  py-3
+                "
+              >
+
+                <div>
+
+                  <p
+                    className="
+                      font-sans-body
+                      text-[9px]
+                      font-bold
+                      uppercase
+                      tracking-[0.12em]
+                      text-[#6B726B]
+                    "
+                  >
+                    {isMalayalam
+                      ? 'തിരഞ്ഞെടുത്ത വില'
+                      : 'Selected price'}
+                  </p>
+
+                  <p
+                    className="
+                      mt-0.5
+                      font-sans-body
+                      text-[10px]
+                      text-[#7A817A]
+                    "
+                  >
+                    {selectedWeight}
+                  </p>
+
+                </div>
+
+                <span
+                  className="
+                    font-serif-heading
+                    text-2xl
+                    font-bold
+                    tracking-tight
+                    text-[#26302A]
+                    sm:text-3xl
+                  "
+                >
+                  {currentPrice}
+                </span>
+
+              </div>
+
+            </div>
+
           </div>
 
-          <div className="border-t border-[#E1D9C9] pt-4 text-left mb-4">
-            <label className="block text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[#29332B] mb-2">{lang === 'ml' ? 'അളവ്' : 'Available Pack Sizes'}</label>
-            <div className="grid grid-cols-4 gap-2 sm:gap-3">
-              {product.sizes.map((w) => (
-                <button key={w} onClick={() => setSelectedWeight(w)} className={`py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-button transition-all border ${selectedWeight === w ? 'bg-[#667A61] text-white border-[#667A61] shadow-sm sm:shadow-md' : 'bg-white text-[#29332B] border-[#E1D9C9] hover:bg-[#EAE2D2]'}`}>{w}</button>
-              ))}
-            </div>
-            
-            <div className="flex items-center justify-between bg-[#EAE2D2] p-3 rounded-xl border border-[#E1D9C9] mt-4">
-              <span className="text-xs sm:text-sm font-medium text-[#5A635A]">{lang === 'ml' ? 'മൊത്തം വില' : 'Estimated Price'}</span>
-              <div className="text-right">
-                <span className="font-sans-body text-xl sm:text-2xl font-bold text-[#29332B]">{currentPrice}</span>
-                <span className="text-[10px] sm:text-xs text-[#5A635A] ml-1">({selectedWeight})</span>
-              </div>
-            </div>
-          </div>
         </div>
 
-        {/* Sticky Footer Buttons (Now includes Add to Cart) */}
-        <div className="p-4 sm:p-6 bg-[#FFFDF7] border-t border-[#E1D9C9] flex-shrink-0 space-y-2">
-          
-          {/* Primary Action: Add to Order List */}
-          <button 
-            onClick={handleAddToCart} 
-            className={`w-full font-button text-sm py-3.5 px-5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md font-bold ${isAdded ? 'bg-[#29332B] text-white' : 'bg-[#667A61] hover:bg-[#52644E] text-white'}`}
+        {/* =========================================================
+            ACTION AREA
+        ========================================================= */}
+
+        <div
+          className="
+            shrink-0
+            border-t
+            border-[#DCD5C6]
+            bg-[#FFFDF7]
+            px-4
+            py-3
+            sm:px-7
+            sm:py-4
+          "
+        >
+
+          {/* Main CTA */}
+
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            className={`
+              flex
+              w-full
+              items-center
+              justify-center
+              gap-2
+              rounded-xl
+              px-5
+              py-3
+              font-sans-body
+              text-xs
+              font-bold
+              transition-all
+              duration-300
+              sm:py-3.5
+              sm:text-sm
+              ${
+                isAdded
+                  ? `
+                    bg-[#26302A]
+                    text-white
+                  `
+                  : `
+                    bg-[#667A61]
+                    text-white
+                    shadow-[0_8px_20px_rgba(102,122,97,0.18)]
+                    hover:-translate-y-0.5
+                    hover:bg-[#596D54]
+                    hover:shadow-[0_12px_25px_rgba(102,122,97,0.22)]
+                  `
+              }
+            `}
           >
-            {isAdded ? <Check className="w-4 h-4 text-[#C7A15A]" /> : <Plus className="w-4 h-4" />}
-            <span>{isAdded ? (lang === 'ml' ? 'ചേർത്തു!' : 'Added to List!') : (lang === 'ml' ? 'ഓർഡർ ലിസ്റ്റിലേക്ക് ചേർക്കുക' : 'Add to Order List')}</span>
+
+            {isAdded ? (
+              <Check
+                className="
+                  h-4
+                  w-4
+                  text-[#E7D9B8]
+                "
+              />
+            ) : (
+              <Plus className="h-4 w-4" />
+            )}
+
+            <span>
+              {isAdded
+                ? isMalayalam
+                  ? 'ഓർഡർ ലിസ്റ്റിലേക്ക് ചേർത്തു!'
+                  : 'Added to Order List!'
+                : isMalayalam
+                  ? 'ഓർഡർ ലിസ്റ്റിലേക്ക് ചേർക്കുക'
+                  : 'Add to Order List'}
+            </span>
+
           </button>
 
-          {/* Secondary Actions: Call and WhatsApp */}
-          <div className="flex gap-2">
-            <a href={phoneUrl} className="flex-1 font-button text-xs sm:text-sm bg-[#29332B] hover:bg-[#1a221d] text-white py-3 px-5 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm">
-              <Phone className="w-4 h-4 text-[#C7A15A]" />
-              <span>{lang === 'ml' ? 'വിളിക്കൂ' : 'Call'}</span>
+          {/* Secondary actions */}
+
+          <div
+            className="
+              mt-2
+              grid
+              grid-cols-2
+              gap-2
+            "
+          >
+
+            <a
+              href={phoneUrl}
+              className="
+                flex
+                items-center
+                justify-center
+                gap-2
+                rounded-xl
+                border
+                border-[#DCD5C6]
+                bg-[#26302A]
+                px-4
+                py-2.5
+                font-sans-body
+                text-xs
+                font-semibold
+                text-white
+                transition-all
+                duration-200
+                hover:bg-[#1D251F]
+              "
+            >
+              <Phone
+                className="
+                  h-3.5
+                  w-3.5
+                  text-[#E7D9B8]
+                "
+              />
+
+              <span>
+                {isMalayalam
+                  ? 'വിളിക്കൂ'
+                  : 'Call'}
+              </span>
             </a>
-            <button onClick={handleWhatsAppOrder} className="flex-1 font-button text-xs sm:text-sm bg-[#EAE2D2] hover:bg-[#E1D9C9] text-[#29332B] border border-[#E1D9C9] py-3 px-5 rounded-xl flex items-center justify-center gap-2 transition-colors">
-              <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              <span>{lang === 'ml' ? 'വാട്സ്ആപ്പ്' : 'WhatsApp'}</span>
+
+            <button
+              type="button"
+              onClick={handleWhatsAppOrder}
+              className="
+                flex
+                items-center
+                justify-center
+                gap-2
+                rounded-xl
+                border
+                border-[#DCD5C6]
+                bg-[#EAE2D2]
+                px-4
+                py-2.5
+                font-sans-body
+                text-xs
+                font-semibold
+                text-[#26302A]
+                transition-all
+                duration-200
+                hover:border-[#A8B5A0]
+                hover:bg-[#E1D9C9]
+              "
+            >
+              <MessageCircle
+                className="
+                  h-3.5
+                  w-3.5
+                  text-[#25D366]
+                "
+              />
+
+              <span>
+                {isMalayalam
+                  ? 'വാട്സ്ആപ്പ്'
+                  : 'WhatsApp'}
+              </span>
             </button>
+
           </div>
+
         </div>
+
       </div>
     </div>
   );

@@ -10,10 +10,10 @@ const Partner = ({ lang }) => {
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
         
         {/* Subtle Outer Card */}
-        <div className="bg-[#29332B] text-white rounded-[28px] p-8 md:p-12 border border-[#667A61] shadow-2xl relative overflow-hidden text-left">
+        <div className="bg-[#12351D] text-white rounded-[28px] p-8 md:p-12 border border-[#1D4F2B] shadow-2xl relative overflow-hidden text-left">
           
           {/* Subtle Background Pattern */}
-          <div className="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-[#667A61]/30 blur-3xl pointer-events-none" />
+          <div className="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-[#1D4F2B]/30 blur-3xl pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             
@@ -21,7 +21,7 @@ const Partner = ({ lang }) => {
             <div className="lg:col-span-8 space-y-5">
               
               <div className="flex items-center gap-3">
-                <span className="px-3 py-1 rounded-full bg-[#C7A15A] text-[#29332B] font-button text-[11px] font-bold uppercase tracking-wider">
+                <span className="px-3 py-1 rounded-full bg-[#C7A15A] text-[#12351D] font-button text-[11px] font-bold uppercase tracking-wider">
                   {t?.partner?.badge || "Educational Partner"}
                 </span>
                 <span className="text-xs text-[#C7A15A] font-semibold tracking-wider uppercase">
@@ -33,12 +33,12 @@ const Partner = ({ lang }) => {
                 <h3 className="font-serif-heading text-2xl sm:text-3xl md:text-4xl font-bold text-white">
                   {t?.partner?.title || "Empowering Local Youth with TideTalk Edu"}
                 </h3>
-                <p className="font-sans-body text-sm sm:text-base text-[#F7F3E8]/80 leading-relaxed max-w-2xl">
+                <p className="font-sans-body text-sm sm:text-base text-[#FFFDF8]/80 leading-relaxed max-w-2xl">
                   {t?.partner?.desc || "Straightway Mill is proud to partner with TideTalk Edu to support quality spoken English and confidence building programs for students in Karulai & Nilambur."}
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-6 pt-2 text-xs text-[#F7F3E8]/70">
+              <div className="flex flex-wrap items-center gap-6 pt-2 text-xs text-[#FFFDF8]/70">
                 <div className="flex items-center gap-2">
                   <GraduationCap className="w-4 h-4 text-[#C7A15A]" />
                   <span>{lang === 'ml' ? 'ഓൺലൈൻ സ്പോക്കൺ ഇംഗ്ലീഷ്' : 'Interactive Online Classes'}</span>
@@ -58,7 +58,7 @@ const Partner = ({ lang }) => {
               </div>
               <div>
                 <h4 className="font-serif-heading text-lg font-bold text-white">TideTalk Edu</h4>
-                <p className="text-xs text-[#F7F3E8]/70 mt-1">
+                <p className="text-xs text-[#FFFDF8]/70 mt-1">
                   {lang === 'ml' ? 'ആത്മവിശ്വാസത്തോടെ ഇംഗ്ലീഷ് സംസാരിക്കാൻ' : 'Speak English with Confidence'}
                 </p>
               </div>

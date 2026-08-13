@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, Calendar, MapPin, AlertCircle } from 'lucide-react';
+import { Clock, Calendar, MapPin, CheckCircle2, AlertCircle } from 'lucide-react';
 import { translations } from '../translations';
 
 const WorkingHoursSection = ({ lang }) => {
@@ -18,23 +18,23 @@ const WorkingHoursSection = ({ lang }) => {
   const isOpen = day !== 0 && timeInMinutes >= openTimeMinutes && timeInMinutes <= closeTimeMinutes;
 
   return (
-    <section id="working-hours" className="bg-[#F7F3E8] py-16 md:py-20 border-b border-[#E1D9C9] relative">
+    <section id="working-hours" className="bg-[#F6F1E7] py-16 md:py-20 border-b border-[#E8E2D6] relative">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
         
-        <div className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-10 border border-[#E1D9C9] shadow-premium-soft grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-left">
+        <div className="bg-white rounded-[28px] p-6 sm:p-10 border border-[#E8E2D6] shadow-premium-soft grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-left">
           
           {/* Left Title Column (6 cols) */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#667A61]/10 text-[#667A61] text-xs font-semibold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1D4F2B]/10 text-[#1D4F2B] text-xs font-semibold">
               <Clock className="w-3.5 h-3.5 text-[#C7A15A]" />
               <span>{t?.workingHours?.tag || "✦ STORE TIMINGS ✦"}</span>
             </div>
 
-            <h2 className="font-serif-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-[#29332B]">
+            <h2 className="font-serif-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-[#12351D]">
               {t?.workingHours?.heading || "Shop Working Hours"}
             </h2>
 
-            <p className="font-sans-body text-xs sm:text-sm text-[#5A635A] leading-relaxed">
+            <p className="font-sans-body text-xs sm:text-sm text-[#666666] leading-relaxed">
               {t?.workingHours?.subtitle || "Visit our shop located at Nilambur - Karulai Road, Vakkeelpadi."}
             </p>
 
@@ -47,11 +47,11 @@ const WorkingHoursSection = ({ lang }) => {
                     : 'bg-amber-100 text-amber-900 border border-amber-300'
                 }`}
               >
-                <span className={`w-2 h-2 rounded-full ${isOpen ? 'bg-emerald-600 motion-safe:animate-ping' : 'bg-amber-600'}`} />
+                <span className={`w-2 h-2 rounded-full ${isOpen ? 'bg-emerald-600 animate-ping' : 'bg-amber-600'}`} />
                 <span>{isOpen ? (t?.workingHours?.statusOpen || "Open Now") : (t?.workingHours?.statusClosed || "Closed Now")}</span>
               </span>
 
-              <span className="text-xs text-[#5A635A]">
+              <span className="text-xs text-[#666666]">
                 {isOpen
                   ? (lang === 'ml' ? 'ഇന്ന് വൈകിട്ട് 6:00 വരെ കട തുറന്നിരിക്കും' : 'Open until 6:00 PM today')
                   : (lang === 'ml' ? 'അടുത്ത പ്രവൃത്തിദിനം രാവിലെ 8:30 ന് ആരംഭിക്കുന്നു' : 'Reopens at 8:30 AM next working day')}
@@ -60,22 +60,22 @@ const WorkingHoursSection = ({ lang }) => {
           </div>
 
           {/* Right Hours Schedule Card (6 cols) */}
-          <div className="lg:col-span-6 bg-[#FFFDF7] p-6 rounded-2xl border border-[#E1D9C9] space-y-4">
+          <div className="lg:col-span-6 bg-[#FFFDF7] p-6 rounded-2xl border border-[#E8E2D6] space-y-4">
             
             {/* Weekdays */}
-            <div className="flex items-start justify-between pb-3 border-b border-[#E1D9C9]">
+            <div className="flex items-start justify-between pb-3 border-b border-[#E8E2D6]">
               <div className="flex items-center gap-3">
-                <Calendar className="w-5 h-5 text-[#667A61]" />
+                <Calendar className="w-5 h-5 text-[#1D4F2B]" />
                 <div>
-                  <span className="font-serif-heading text-sm font-bold text-[#29332B] block">
+                  <span className="font-serif-heading text-sm font-bold text-[#12351D] block">
                     {t?.workingHours?.days || "Monday – Saturday"}
                   </span>
-                  <span className="text-xs text-[#5A635A]">
+                  <span className="text-xs text-[#666666]">
                     {lang === 'ml' ? 'പ്രവൃത്തി ദിനങ്ങൾ' : 'Regular Business Days'}
                   </span>
                 </div>
               </div>
-              <span className="font-mono text-sm font-bold text-[#29332B] bg-[#F7F3E8] px-3 py-1 rounded-lg border border-[#E1D9C9]">
+              <span className="font-mono text-sm font-bold text-[#12351D] bg-[#F6F1E7] px-3 py-1 rounded-lg border border-[#E8E2D6]">
                 {t?.workingHours?.timing || "8:30 AM – 6:00 PM"}
               </span>
             </div>
@@ -85,10 +85,10 @@ const WorkingHoursSection = ({ lang }) => {
               <div className="flex items-center gap-3">
                 <AlertCircle className="w-5 h-5 text-[#C7A15A]" />
                 <div>
-                  <span className="font-serif-heading text-sm font-bold text-[#29332B] block">
+                  <span className="font-serif-heading text-sm font-bold text-[#12351D] block">
                     {lang === 'ml' ? 'ഞായറാഴ്ച' : 'Sunday'}
                   </span>
-                  <span className="text-xs text-[#5A635A]">
+                  <span className="text-xs text-[#666666]">
                     {lang === 'ml' ? 'അവധി (മുൻകൂട്ടി ബുക്ക് ചെയ്യാവുന്നതാണ്)' : 'Holiday / On-Demand Bulk Pickup'}
                   </span>
                 </div>
@@ -99,7 +99,7 @@ const WorkingHoursSection = ({ lang }) => {
             </div>
 
             {/* Address callout */}
-            <div className="pt-2 text-xs text-[#5A635A] flex items-center gap-2 border-t border-[#E1D9C9]">
+            <div className="pt-2 text-xs text-[#666666] flex items-center gap-2 border-t border-[#E8E2D6]">
               <MapPin className="w-4 h-4 text-[#C7A15A] shrink-0" />
               <span>{t?.contact?.addressText || "Pulliyil, Nilambur - Karulai Rd, Vakkeelpadi, Karulai"}</span>
             </div>
