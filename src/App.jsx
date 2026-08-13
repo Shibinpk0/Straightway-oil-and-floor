@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Analytics } from "@vercel/analytics/react";
+import SEO from './components/SEO';
+import LocalBusinessSchema from './components/LocalBusinessSchema';
 import Navbar from './components/Navbar';
 import AnnouncementBar from './components/AnnouncementBar';
 import Hero from './components/Hero';
@@ -90,6 +92,8 @@ function App() {
   return (
     <div className="min-h-screen bg-[#F7F3E8] font-sans-body selection:bg-[#667A61] selection:text-white flex flex-col justify-between overflow-x-hidden">
       <div>
+        <SEO lang={lang} />
+        <LocalBusinessSchema />
         <AnnouncementBar lang={lang} />
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} lang={lang} setLang={handleSetLang} />
         

@@ -1,5 +1,10 @@
 import React from 'react';
-import { Droplet, Sparkles, Flame, Users } from 'lucide-react';
+import {
+  Droplet,
+  Sparkles,
+  ShieldCheck,
+  Users,
+} from 'lucide-react';
 import { translations } from '../translations';
 
 const Features = ({ lang }) => {
@@ -8,62 +13,169 @@ const Features = ({ lang }) => {
   const features = [
     {
       icon: Droplet,
-      title: t?.whyChoose?.f1Title || t?.features?.f1Title || "Freshly Ground",
-      desc: t?.whyChoose?.f1Desc || t?.features?.f1Desc || "Every order is freshly processed for maximum freshness and natural aroma.",
+      title:
+        t?.features?.f1Title ||
+        'Freshly Milled',
+      desc:
+        t?.features?.f1Desc ||
+        'Processed fresh to preserve natural taste and aroma.',
     },
     {
       icon: Sparkles,
-      title: t?.whyChoose?.f2Title || t?.features?.f2Title || "Pure Ingredients",
-      desc: t?.whyChoose?.f2Desc || t?.features?.f2Desc || "100% natural spices and grains. Zero artificial colours, zero preservatives.",
+      title:
+        t?.features?.f2Title ||
+        'Pure Ingredients',
+      desc:
+        t?.features?.f2Desc ||
+        'Carefully selected grains, coconuts and spices.',
     },
     {
-      icon: Flame,
-      title: t?.whyChoose?.f3Title || t?.features?.f3Title || "Hygienic Processing",
-      desc: t?.whyChoose?.f3Desc || t?.features?.f3Desc || "Prepared using clean, safe, and modern hot-air drying & stone chakki methods.",
+      icon: ShieldCheck,
+      title:
+        t?.features?.f3Title ||
+        'Clean Processing',
+      desc:
+        t?.features?.f3Desc ||
+        'Prepared with careful attention to cleanliness and quality.',
     },
     {
       icon: Users,
-      title: t?.whyChoose?.f4Title || t?.features?.f4Title || "Trusted by Families",
-      desc: t?.whyChoose?.f4Desc || t?.features?.f4Desc || "Serving local families in Karulai & Vakkeelpadi with honesty and care.",
+      title:
+        t?.features?.f4Title ||
+        'Local & Trusted',
+      desc:
+        t?.features?.f4Desc ||
+        'Serving families around Karulai, Vakkeelpadi and Nilambur.',
     },
   ];
 
   return (
-    <section className="bg-[#F6F1E7] py-16 md:py-20 relative">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {features.map((item, idx) => {
-            const IconComponent = item.icon;
+    <section
+      aria-label="Why customers choose Straightway Mill"
+      className="
+        relative
+        border-b
+        border-[#DCD5C6]
+        bg-[#EAE2D2]
+        py-8
+        sm:py-10
+        lg:py-12
+      "
+    >
+      <div
+        className="
+          mx-auto
+          max-w-[1280px]
+          px-4
+          sm:px-6
+          lg:px-10
+        "
+      >
+        <div
+          className="
+            grid
+            grid-cols-2
+            gap-px
+            overflow-hidden
+            rounded-2xl
+            border
+            border-[#D8CFBD]
+            bg-[#D8CFBD]
+            lg:grid-cols-4
+          "
+        >
+          {features.map((item, index) => {
+            const Icon = item.icon;
+
             return (
-              <div
-                key={idx}
-                className="bg-white rounded-[20px] p-7 border border-[#E8E2D6] shadow-premium-soft hover:shadow-premium-hover transition-all duration-300 transform hover:-translate-y-1 text-left flex flex-col justify-between group"
+              <article
+                key={item.title}
+                className="
+                  group
+                  bg-[#F7F3E8]
+                  p-4
+                  transition-colors
+                  duration-300
+                  hover:bg-[#FFFDF7]
+                  sm:p-5
+                  lg:p-6
+                "
               >
-                <div className="space-y-4">
-                  {/* Icon */}
-                  <div className="w-13 h-13 rounded-2xl bg-[#FFFDF7] border border-[#E8E2D6] flex items-center justify-center text-[#1D4F2B] group-hover:bg-[#1D4F2B] group-hover:text-white transition-all duration-300">
-                    <IconComponent className="w-6 h-6 stroke-[1.75]" />
+                <div className="flex items-start gap-3">
+                  <div
+                    className="
+                      flex
+                      h-9
+                      w-9
+                      shrink-0
+                      items-center
+                      justify-center
+                      rounded-xl
+                      border
+                      border-[#D8CFBD]
+                      bg-[#EAE2D2]
+                      text-[#667A61]
+                      transition-all
+                      duration-300
+                      group-hover:border-[#667A61]/30
+                      group-hover:bg-[#667A61]
+                      group-hover:text-white
+                      sm:h-10
+                      sm:w-10
+                    "
+                  >
+                    <Icon
+                      className="h-4 w-4 sm:h-[18px] sm:w-[18px]"
+                      strokeWidth={1.7}
+                    />
                   </div>
 
-                  {/* Title */}
-                  <h3 className="font-serif-heading text-xl font-semibold text-[#12351D] tracking-tight">
-                    {item.title}
-                  </h3>
+                  <div className="min-w-0">
+                    <h3
+                      className="
+                        font-serif-heading
+                        text-xs
+                        font-bold
+                        leading-tight
+                        text-[#29332B]
+                        sm:text-sm
+                      "
+                    >
+                      {item.title}
+                    </h3>
 
-                  {/* Description */}
-                  <p className="font-sans-body text-xs sm:text-sm text-[#666666] leading-relaxed">
-                    {item.desc}
-                  </p>
+                    <p
+                      className="
+                        mt-1
+                        hidden
+                        text-[10px]
+                        leading-relaxed
+                        text-[#5A635A]
+                        sm:block
+                        sm:text-[11px]
+                      "
+                    >
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
 
-                {/* Accent line */}
-                <div className="mt-6 pt-4 border-t border-[#F6F1E7] flex items-center justify-between">
-                  <span className="text-[11px] font-mono text-[#C7A15A] font-semibold uppercase tracking-wider">
-                    0{idx + 1} / Guarantee
+                <div className="mt-4 flex items-center gap-2">
+                  <span className="h-px flex-1 bg-[#DCD5C6]" />
+
+                  <span
+                    className="
+                      font-mono
+                      text-[8px]
+                      font-semibold
+                      tracking-wider
+                      text-[#B86F52]
+                    "
+                  >
+                    0{index + 1}
                   </span>
-                  <span className="w-2 h-2 rounded-full bg-[#C7A15A] opacity-70 group-hover:scale-125 transition-transform" />
                 </div>
-              </div>
+              </article>
             );
           })}
         </div>

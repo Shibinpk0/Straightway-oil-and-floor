@@ -1,9 +1,9 @@
 import React from 'react';
 import {
   Sparkles,
-  Wheat,
-  HandHeart,
-  MapPin,
+  Leaf,
+  ShieldCheck,
+  HeartHandshake,
 } from 'lucide-react';
 
 import { translations } from '../translations';
@@ -16,41 +16,49 @@ const WhyChooseSection = ({ lang }) => {
     {
       icon: Sparkles,
       number: '01',
-      title: t?.whyChoose?.f1Title || 'Freshly Processed',
+      title:
+        t?.whyChoose?.f1Title ||
+        'Freshly Milled',
       desc:
         t?.whyChoose?.f1Desc ||
-        'Products are processed fresh with care instead of being stored for long periods.',
+        'Processed fresh for better aroma, texture and natural freshness.',
     },
     {
-      icon: Wheat,
+      icon: Leaf,
       number: '02',
-      title: t?.whyChoose?.f2Title || 'Traditional Milling',
+      title:
+        t?.whyChoose?.f2Title ||
+        'Carefully Selected',
       desc:
         t?.whyChoose?.f2Desc ||
-        'Traditional milling methods help preserve the natural character, aroma and taste of the ingredients.',
+        'Quality grains, spices and coconuts handled with care.',
     },
     {
-      icon: HandHeart,
+      icon: ShieldCheck,
       number: '03',
-      title: t?.whyChoose?.f3Title || 'Bring Your Own',
+      title:
+        t?.whyChoose?.f3Title ||
+        'Clean Processing',
       desc:
         t?.whyChoose?.f3Desc ||
-        'Bring your coconuts, grains or suitable ingredients and let our mill process them for you.',
+        'Hygienic milling and careful preparation from processing to packing.',
     },
     {
-      icon: MapPin,
+      icon: HeartHandshake,
       number: '04',
-      title: t?.whyChoose?.f4Title || 'Local & Personal',
+      title:
+        t?.whyChoose?.f4Title ||
+        'Local & Trusted',
       desc:
         t?.whyChoose?.f4Desc ||
-        'A local mill serving families, farmers and customers around Karulai and nearby areas.',
+        'Serving families around Karulai, Vakkeelpadi and Nilambur.',
     },
   ];
 
   return (
     <section
       id="why-choose"
-      aria-labelledby="why-choose-heading"
+      aria-labelledby="why-choose-title"
       className="
         relative
         overflow-hidden
@@ -60,7 +68,7 @@ const WhyChooseSection = ({ lang }) => {
     >
       {/* =====================================================
           TOP WAVE
-      ====================================================== */}
+      ===================================================== */}
 
       <div
         aria-hidden="true"
@@ -75,10 +83,10 @@ const WhyChooseSection = ({ lang }) => {
         <svg
           className="
             block
-            h-[34px]
+            h-[28px]
             w-full
-            sm:h-[48px]
-            md:h-[60px]
+            sm:h-[42px]
+            md:h-[52px]
           "
           viewBox="0 0 1200 100"
           preserveAspectRatio="none"
@@ -100,64 +108,81 @@ const WhyChooseSection = ({ lang }) => {
 
       {/* =====================================================
           CONTENT
-      ====================================================== */}
+      ===================================================== */}
 
       <div
         className="
           relative
           mx-auto
-          max-w-[1280px]
-          px-4
-          pb-14
-          pt-2
-          sm:px-6
+          max-w-[1180px]
+          px-5
+          pb-12
+          pt-1
+          sm:px-8
           sm:pb-16
-          sm:pt-4
-          md:px-8
-          lg:px-12
+          sm:pt-2
+          lg:px-10
+          lg:pb-20
         "
       >
-        {/* Header */}
+        {/* Heading */}
+        <div className="mx-auto max-w-2xl text-center">
 
-        <header className="mx-auto max-w-2xl text-center">
-          <div className="
-            mb-3
-            flex
-            items-center
-            justify-center
-            gap-3
-          ">
+          <div
+            className="
+              mb-2
+              flex
+              items-center
+              justify-center
+              gap-2.5
+              sm:mb-3
+              sm:gap-3
+            "
+          >
             <span
               aria-hidden="true"
-              className="h-px w-8 bg-[#B86F52]/70"
+              className="
+                h-px
+                w-6
+                bg-[#B86F52]/70
+                sm:w-8
+              "
             />
 
-            <span className="
-              font-sans-body
-              text-[9px]
-              font-bold
-              uppercase
-              tracking-[0.22em]
-              text-[#B86F52]
-              sm:text-[10px]
-            ">
-              {t?.whyChoose?.tag || 'Why Choose PKS'}
+            <span
+              className="
+                font-sans-body
+                text-[9px]
+                font-bold
+                uppercase
+                tracking-[0.18em]
+                text-[#B86F52]
+                sm:text-[10px]
+                sm:tracking-[0.22em]
+              "
+            >
+              {t?.whyChoose?.tag || 'Why Choose Straightway'}
             </span>
 
             <span
               aria-hidden="true"
-              className="h-px w-8 bg-[#B86F52]/70"
+              className="
+                h-px
+                w-6
+                bg-[#B86F52]/70
+                sm:w-8
+              "
             />
           </div>
 
           <h2
-            id="why-choose-heading"
+            id="why-choose-title"
             className="
               font-serif-heading
               text-[26px]
               font-bold
-              leading-[1.05]
-              tracking-tight
+              leading-[1.08]
+              tracking-[-0.02em]
               text-[#29332B]
               sm:text-3xl
               md:text-4xl
@@ -165,16 +190,30 @@ const WhyChooseSection = ({ lang }) => {
           >
             {isMalayalam ? (
               <>
-                ഞങ്ങളുടെ മില്ലിനെ
+                ഗുണമേന്മയും
                 <span className="text-[#667A61]">
-                  {' '}തിരഞ്ഞെടുക്കാനുള്ള കാരണങ്ങൾ
+                  {' '}കരുതലും
                 </span>
               </>
             ) : (
               <>
-                Why Choose
-                <span className="text-[#667A61]">
-                  {' '}PKS Straightway?
+                Purity & Care in
+                <span className="relative ml-2 inline-block text-[#667A61]">
+                  Every Batch
+
+                  <span
+                    aria-hidden="true"
+                    className="
+                      absolute
+                      -bottom-1
+                      left-0
+                      h-[2px]
+                      w-[65%]
+                      -rotate-2
+                      rounded-full
+                      bg-[#B86F52]
+                    "
+                  />
                 </span>
               </>
             )}
@@ -184,31 +223,34 @@ const WhyChooseSection = ({ lang }) => {
             className="
               mx-auto
               mt-3
-              max-w-xl
+              max-w-lg
+              font-sans-body
               text-xs
               leading-6
               text-[#5A635A]
               sm:text-sm
+              sm:leading-7
             "
           >
             {isMalayalam
-              ? 'പരമ്പരാഗത മില്ലിംഗ് രീതികളും പുതുമയും പ്രാദേശിക സേവനവും ഒരുമിച്ച്.'
-              : 'Traditional milling, fresh processing and personal local service — all from one neighbourhood mill.'}
+              ? 'പരമ്പരാഗത രീതികളും ശുചിത്വവും ഉറപ്പാക്കി ഓരോ ഉൽപ്പന്നവും ശ്രദ്ധയോടെ തയ്യാറാക്കുന്നു.'
+              : 'Traditional milling with careful handling, clean processing and attention to freshness.'}
           </p>
-        </header>
+        </div>
 
         {/* =================================================
             FEATURE GRID
-        ================================================== */}
+        ================================================= */}
 
         <div
           className="
             mx-auto
             mt-7
             grid
-            max-w-[980px]
+            max-w-[1050px]
             grid-cols-1
             gap-3
+            sm:mt-9
             sm:grid-cols-2
             sm:gap-4
             lg:grid-cols-4
@@ -227,40 +269,41 @@ const WhyChooseSection = ({ lang }) => {
                   rounded-2xl
                   border
                   border-[#D8CFBD]
-                  bg-[#F7F3E8]
+                  bg-[#F7F3E8]/80
                   p-4
-                  shadow-[0_5px_20px_rgba(41,51,43,0.04)]
+                  shadow-[0_5px_22px_rgba(41,51,43,0.035)]
+                  backdrop-blur-sm
                   transition-all
                   duration-300
                   hover:-translate-y-1
                   hover:border-[#667A61]/40
-                  hover:shadow-[0_12px_28px_rgba(41,51,43,0.08)]
+                  hover:bg-[#F7F3E8]
                   sm:p-5
                 "
               >
                 {/* Number */}
-
-                <span
+                <div
                   className="
                     absolute
                     right-4
                     top-4
                     font-mono
-                    text-[11px]
-                    font-bold
-                    text-[#C7A15A]/70
+                    text-[10px]
+                    font-semibold
+                    tracking-wider
+                    text-[#C7A15A]
+                    opacity-80
                   "
                 >
                   {feature.number}
-                </span>
+                </div>
 
                 {/* Icon */}
-
                 <div
                   className="
                     flex
-                    h-10
-                    w-10
+                    h-9
+                    w-9
                     items-center
                     justify-center
                     rounded-xl
@@ -270,144 +313,68 @@ const WhyChooseSection = ({ lang }) => {
                     duration-300
                     group-hover:bg-[#667A61]
                     group-hover:text-white
+                    sm:h-10
+                    sm:w-10
                   "
                 >
                   <Icon
-                    className="h-[18px] w-[18px]"
+                    className="h-[17px] w-[17px]"
                     strokeWidth={1.7}
                   />
                 </div>
 
                 {/* Text */}
+                <div className="mt-4">
+                  <h3
+                    className="
+                      font-serif-heading
+                      text-sm
+                      font-bold
+                      leading-tight
+                      text-[#29332B]
+                      sm:text-[15px]
+                    "
+                  >
+                    {feature.title}
+                  </h3>
 
-                <h3
-                  className="
-                    mt-4
-                    font-serif-heading
-                    text-sm
-                    font-bold
-                    leading-tight
-                    text-[#29332B]
-                    sm:text-base
-                  "
-                >
-                  {feature.title}
-                </h3>
-
-                <p
-                  className="
-                    mt-2
-                    text-[11px]
-                    leading-relaxed
-                    text-[#5A635A]
-                    sm:text-xs
-                  "
-                >
-                  {feature.desc}
-                </p>
+                  <p
+                    className="
+                      mt-2
+                      font-sans-body
+                      text-[10px]
+                      leading-5
+                      text-[#5A635A]
+                      sm:text-[11px]
+                      sm:leading-5
+                    "
+                  >
+                    {feature.desc}
+                  </p>
+                </div>
 
                 {/* Bottom accent */}
-
                 <div
                   aria-hidden="true"
                   className="
-                    absolute
-                    bottom-0
-                    left-0
-                    h-[2px]
-                    w-0
-                    bg-[#B86F52]
+                    mt-4
+                    h-px
+                    w-8
+                    bg-[#C7A15A]/70
                     transition-all
                     duration-300
-                    group-hover:w-full
+                    group-hover:w-14
                   "
                 />
               </article>
             );
           })}
         </div>
-
-        {/* =================================================
-            LOCAL SERVICE NOTE
-        ================================================== */}
-
-        <div
-          className="
-            mx-auto
-            mt-6
-            flex
-            max-w-[980px]
-            flex-col
-            items-center
-            justify-between
-            gap-3
-            rounded-2xl
-            border
-            border-[#D8CFBD]
-            bg-[#29332B]
-            px-5
-            py-4
-            text-center
-            sm:flex-row
-            sm:text-left
-          "
-        >
-          <div>
-            <p className="
-              font-serif-heading
-              text-sm
-              font-bold
-              text-white
-            ">
-              {isMalayalam
-                ? 'കരുളായിയിൽ നിന്ന് പ്രാദേശിക സേവനം'
-                : 'A local mill, close to home.'}
-            </p>
-
-            <p className="
-              mt-0.5
-              text-[10px]
-              leading-relaxed
-              text-white/65
-              sm:text-xs
-            ">
-              {isMalayalam
-                ? 'കരുളായി, വക്കീൽപ്പടി, മൂത്തേടം, എടക്കര, നിലമ്പൂർ ഭാഗങ്ങളിൽ സേവനം.'
-                : 'Serving Karulai, Vakkeelpadi, Moothedam, Edakkara and nearby Nilambur areas.'}
-            </p>
-          </div>
-
-          <a
-            href="#contact"
-            className="
-              inline-flex
-              shrink-0
-              items-center
-              justify-center
-              rounded-full
-              border
-              border-[#C7A15A]/40
-              bg-[#C7A15A]/10
-              px-4
-              py-2
-              text-[10px]
-              font-bold
-              text-[#E7D9B8]
-              transition-colors
-              hover:bg-[#C7A15A]/20
-              sm:text-xs
-            "
-          >
-            {isMalayalam
-              ? 'ബന്ധപ്പെടുക'
-              : 'Talk to the Mill'}
-          </a>
-        </div>
       </div>
 
       {/* =====================================================
           BOTTOM WAVE
-      ====================================================== */}
+      ===================================================== */}
 
       <div
         aria-hidden="true"
@@ -421,7 +388,12 @@ const WhyChooseSection = ({ lang }) => {
         "
       >
         <svg
-          className="block h-[24px] w-full sm:h-[34px]"
+          className="
+            block
+            h-[22px]
+            w-full
+            sm:h-[32px]
+          "
           viewBox="0 0 1200 80"
           preserveAspectRatio="none"
         >
