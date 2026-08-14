@@ -232,7 +232,7 @@ export const translations = {
       ourProducts: "Our Products",
       contactInfo: "Contact Info",
       rights: "© 2026 Straight Way Oil & Flour Mill. All Rights Reserved.",
-      madeWith: "Made with ❤️ for healthy living",
+      madeWith: "Made with for healthy living",
     },
     announcement: {
       text: "🚚 Free Home Delivery in Karulai & Vakkeelpadi for orders above ₹500!",
@@ -464,7 +464,7 @@ export const translations = {
       ourProducts: "ഉൽപ്പന്നങ്ങൾ",
       contactInfo: "ബന്ധപ്പെടാൻ",
       rights: "© 2026 സ്ട്രെയിറ്റ് വേ ഓയിൽ & ഫ്ലോർ മിൽ. ഓൾ റൈറ്റ്സ് റിസർവ്ഡ്.",
-      madeWith: "ആരോഗ്യമുള്ള ജീവിതത്തിനായി ❤️നിർമ്മിച്ചത്",
+      madeWith: "ആരോഗ്യമുള്ള ജീവിതത്തിനായി നിർമ്മിച്ചത്",
     },
     announcement: {
       text: "🚚 ₹500-ന് മുകളിലുള്ള ഓർഡറുകൾക്ക് കരുളായിയിലും വക്കീൽപ്പടിയിലും ഫ്രീ ഹോം ഡെലിവറി!",

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Analytics } from "@vercel/analytics/react";
 import SEO from './components/SEO';
 import LocalBusinessSchema from './components/LocalBusinessSchema';
-import Navbar from './components/Navbar';
 import AnnouncementBar from './components/AnnouncementBar';
+import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import WhyChooseSection from './components/WhyChooseSection';
 import PromoBanner from './components/PromoBanner';
@@ -94,7 +94,7 @@ function App() {
       <div>
         <SEO lang={lang} />
         <LocalBusinessSchema />
-        <AnnouncementBar lang={lang} />
+        
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} lang={lang} setLang={handleSetLang} />
         
         <Hero onExploreClick={() => scrollToSection('products')} onContactClick={() => scrollToSection('contact')} lang={lang} />

@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   X,
+  ArrowLeft,
   CheckCircle,
-  MessageCircle,
-  Phone,
   ShieldCheck,
   Plus,
   Check,
@@ -11,6 +10,8 @@ import {
 } from 'lucide-react';
 
 import { translations } from '../translations';
+
+const PRODUCT_HISTORY_KEY = 'straightway-product-detail';
 
 const ProductDetailModal = ({
   product,
@@ -22,10 +23,11 @@ const ProductDetailModal = ({
   const isMalayalam = lang === 'ml';
 
   const sizes = product?.sizes || [];
-  const defaultWeight =
-    sizes.length > 0
-      ? sizes[Math.floor(sizes.length / 2)]
-      : '500g';
+
+  const defaultWeight = useMemo(() => {
+    if (!sizes.length) return '500g';
+    return sizes[Math.floor(sizes.length / 2)];
+  }, [product]);
 
   const [selectedWeight, setSelectedWeight] =
     useState(defaultWeight);
@@ -33,48 +35,55 @@ const ProductDetailModal = ({
   const [isAdded, setIsAdded] = useState(false);
 
   /*
-   * Keep selected size synchronized if another
-   * product is opened without unmounting the modal.
+   * =========================================================
+   * RESET WHEN PRODUCT CHANGES
+   * =========================================================
    */
+
   useEffect(() => {
     if (!product) return;
 
-    const nextSizes = product.sizes || [];
-
-    const nextDefault =
-      nextSizes.length > 0
-        ? nextSizes[Math.floor(nextSizes.length / 2)]
-        : '500g';
-
-    setSelectedWeight(nextDefault);
+    setSelectedWeight(defaultWeight);
     setIsAdded(false);
-  }, [product]);
+  }, [product, defaultWeight]);
 
   /*
-   * Lock page scrolling while modal is open.
+   * =========================================================
+   * LOCK BODY SCROLL
+   * =========================================================
    */
+
   useEffect(() => {
     if (!product) return;
 
     const previousOverflow =
       document.body.style.overflow;
 
+    const previousOverscroll =
+      document.body.style.overscrollBehavior;
+
     document.body.style.overflow = 'hidden';
+    document.body.style.overscrollBehavior = 'none';
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.body.style.overscrollBehavior =
+        previousOverscroll;
     };
   }, [product]);
 
   /*
-   * Escape key support.
+   * =========================================================
+   * ESCAPE KEY
+   * =========================================================
    */
+
   useEffect(() => {
     if (!product) return;
 
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
-        onClose();
+        handleClose();
       }
     };
 
@@ -89,7 +98,41 @@ const ProductDetailModal = ({
         handleKeyDown
       );
     };
-  }, [product, onClose]);
+  }, [product]);
+
+  /*
+   * =========================================================
+   * CLOSE MODAL
+   *
+   * The important part:
+   *
+   * When the modal was opened through browser history,
+   * closing it goes BACK one history entry.
+   *
+   * This prevents the browser from leaving the website.
+   * =========================================================
+   */
+
+  const handleClose = () => {
+    if (!product) return;
+
+    const currentState = window.history.state;
+
+    if (
+      currentState?.straightwayProductDetail ===
+      PRODUCT_HISTORY_KEY
+    ) {
+      window.history.back();
+    } else {
+      onClose();
+    }
+  };
+
+  /*
+   * =========================================================
+   * PRODUCT INFORMATION
+   * =========================================================
+   */
 
   if (!product) return null;
 
@@ -110,11 +153,12 @@ const ProductDetailModal = ({
   const currentPrice =
     product.prices?.[selectedWeight] || '₹0';
 
-  const phoneUrl = 'tel:+918714348348';
-
   /*
-   * Product qualities
+   * =========================================================
+   * QUALITY POINTS
+   * =========================================================
    */
+
   const qualityPoints = [
     {
       icon: CheckCircle,
@@ -143,34 +187,11 @@ const ProductDetailModal = ({
   ];
 
   /*
-   * WhatsApp order
+   * =========================================================
+   * ADD TO ORDER LIST
+   * =========================================================
    */
-  const handleWhatsAppOrder = () => {
-    const message = [
-      'Hello PKS Straightway Mill!',
-      '',
-      'I am interested in ordering:',
-      `Product: ${product.titleEn || title}`,
-      `Selected Size: ${selectedWeight}`,
-      `Estimated Price: ${currentPrice}`,
-      'Quantity: 1',
-      '',
-      'Please let me know availability and final price.',
-    ].join('\n');
 
-    const encodedMessage =
-      encodeURIComponent(message);
-
-    window.open(
-      `https://wa.me/918714348348?text=${encodedMessage}`,
-      '_blank',
-      'noopener,noreferrer'
-    );
-  };
-
-  /*
-   * Add product to order list
-   */
   const handleAddToCart = () => {
     if (typeof onQuickAdd === 'function') {
       onQuickAdd(
@@ -198,13 +219,12 @@ const ProductDetailModal = ({
       className="
         fixed
         inset-0
-        z-[100]
+        z-[200]
         flex
         items-end
         justify-center
-        bg-[#26302A]/65
-        p-0
-        backdrop-blur-sm
+        bg-[#26302A]/70
+        backdrop-blur-[3px]
         sm:items-center
         sm:p-4
       "
@@ -212,33 +232,37 @@ const ProductDetailModal = ({
       aria-modal="true"
       aria-labelledby="product-modal-title"
       onMouseDown={(event) => {
-        if (event.target === event.currentTarget) {
-          onClose();
+        if (
+          event.target === event.currentTarget
+        ) {
+          handleClose();
         }
       }}
     >
 
-      {/* =========================================================
+      {/* =====================================================
           MODAL
-      ========================================================= */}
+      ===================================================== */}
 
       <div
         className="
           relative
           flex
-          max-h-[94vh]
+          h-[100dvh]
+          max-h-[100dvh]
           w-full
           flex-col
           overflow-hidden
-          rounded-t-[28px]
-          border
-          border-[#DCD5C6]
           bg-[#F7F3E8]
-          shadow-[0_30px_80px_rgba(0,0,0,0.25)]
+          shadow-[0_30px_80px_rgba(0,0,0,0.28)]
           animate-slide-up
-          sm:max-w-[860px]
+
+          sm:h-auto
+          sm:max-h-[92dvh]
+          sm:max-w-[900px]
           sm:rounded-[28px]
-          sm:max-h-[90vh]
+          sm:border
+          sm:border-[#DCD5C6]
           sm:animate-fadeIn
         "
         onMouseDown={(event) => {
@@ -246,93 +270,153 @@ const ProductDetailModal = ({
         }}
       >
 
-        {/* =======================================================
-            MOBILE HANDLE
-        ======================================================= */}
+        {/* ===================================================
+            MOBILE TOP BAR
+        =================================================== */}
 
         <div
           className="
+            sticky
+            top-0
+            z-30
             flex
-            justify-center
-            bg-[#F7F3E8]
-            pb-1
-            pt-3
-            sm:hidden
+            shrink-0
+            items-center
+            justify-between
+            border-b
+            border-[#DCD5C6]
+            bg-[#F7F3E8]/95
+            px-4
+            pb-3
+            pt-[max(12px,env(safe-area-inset-top))]
+            backdrop-blur-xl
+            sm:px-6
+            sm:py-4
           "
         >
-          <div
+
+          {/* Back */}
+
+          <button
+            type="button"
+            onClick={handleClose}
+            aria-label={
+              isMalayalam
+                ? 'തിരികെ പോകുക'
+                : 'Go back'
+            }
             className="
-              h-1.5
-              w-10
+              flex
+              h-10
+              items-center
+              gap-2
               rounded-full
-              bg-[#D6CDBB]
+              px-3
+              text-[#26302A]
+              transition-all
+              duration-200
+              hover:bg-[#EAE2D2]
+              active:scale-95
             "
-          />
+          >
+            <ArrowLeft className="h-5 w-5" />
+
+            <span
+              className="
+                font-sans-body
+                text-xs
+                font-semibold
+                sm:text-sm
+              "
+            >
+              {isMalayalam
+                ? 'തിരികെ'
+                : 'Back'}
+            </span>
+          </button>
+
+          {/* Product label */}
+
+          <span
+            className="
+              max-w-[45%]
+              truncate
+              font-sans-body
+              text-[10px]
+              font-semibold
+              uppercase
+              tracking-[0.12em]
+              text-[#8A8F87]
+            "
+          >
+            {isMalayalam
+              ? 'ഉൽപ്പന്ന വിശദാംശങ്ങൾ'
+              : 'Product Details'}
+          </span>
+
+          {/* Close */}
+
+          <button
+            type="button"
+            onClick={handleClose}
+            aria-label="Close product details"
+            className="
+              flex
+              h-10
+              w-10
+              shrink-0
+              items-center
+              justify-center
+              rounded-full
+              border
+              border-[#DCD5C6]
+              bg-[#FFFDF7]
+              text-[#26302A]
+              shadow-sm
+              transition-all
+              duration-200
+              hover:bg-[#667A61]
+              hover:text-white
+              active:scale-95
+            "
+          >
+            <X className="h-4 w-4" />
+          </button>
+
         </div>
 
-        {/* =======================================================
-            CLOSE BUTTON
-        ======================================================= */}
-
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close product details"
-          className="
-            absolute
-            right-4
-            top-4
-            z-20
-            flex
-            h-9
-            w-9
-            items-center
-            justify-center
-            rounded-full
-            border
-            border-[#DCD5C6]
-            bg-[#F7F3E8]/90
-            text-[#26302A]
-            shadow-sm
-            backdrop-blur-md
-            transition-all
-            duration-200
-            hover:bg-[#667A61]
-            hover:text-white
-            sm:right-5
-            sm:top-5
-          "
-        >
-          <X className="h-4 w-4" />
-        </button>
-
-        {/* =======================================================
+        {/* ===================================================
             SCROLLABLE CONTENT
-        ======================================================= */}
+        =================================================== */}
 
         <div
           className="
+            min-h-0
             flex-1
             overflow-y-auto
             overscroll-contain
             px-4
-            pb-5
-            pt-3
+            py-5
+            pb-6
+
             sm:px-7
-            sm:pb-6
-            sm:pt-6
+            sm:py-6
+            lg:px-8
           "
+          style={{
+            WebkitOverflowScrolling: 'touch',
+          }}
         >
 
-          {/* =====================================================
+          {/* =================================================
               PRODUCT HEADER
-          ===================================================== */}
+          ================================================= */}
 
           <div
             className="
               mb-5
-              pr-12
-              text-left
+              max-w-3xl
+              pr-1
             "
           >
 
@@ -360,7 +444,6 @@ const ProductDetailModal = ({
                   uppercase
                   tracking-[0.2em]
                   text-[#C9825B]
-                  sm:text-[10px]
                 "
               >
                 PKS Straightway · Karulai
@@ -371,12 +454,14 @@ const ProductDetailModal = ({
               id="product-modal-title"
               className="
                 font-serif-heading
-                text-2xl
+                text-[25px]
                 font-bold
-                leading-[1.05]
+                leading-[1.08]
                 tracking-[-0.02em]
                 text-[#26302A]
+
                 sm:text-3xl
+                lg:text-4xl
               "
             >
               {title}
@@ -398,22 +483,25 @@ const ProductDetailModal = ({
 
           </div>
 
-          {/* =====================================================
-              PRODUCT AREA
-          ===================================================== */}
+          {/* =================================================
+              PRODUCT GRID
+          ================================================= */}
 
           <div
             className="
               grid
               gap-5
+
               md:grid-cols-[0.95fr_1.05fr]
               md:gap-7
+
+              lg:gap-8
             "
           >
 
-            {/* ===================================================
+            {/* =================================================
                 IMAGE
-            =================================================== */}
+            ================================================= */}
 
             <div>
 
@@ -427,6 +515,9 @@ const ProductDetailModal = ({
                   border-[#DCD5C6]
                   bg-white
                   shadow-[0_12px_30px_rgba(38,48,42,0.08)]
+
+                  sm:aspect-[5/4]
+                  md:aspect-[4/3]
                 "
               >
 
@@ -440,8 +531,6 @@ const ProductDetailModal = ({
                   "
                 />
 
-                {/* Image bottom overlay */}
-
                 <div
                   className="
                     pointer-events-none
@@ -454,8 +543,6 @@ const ProductDetailModal = ({
                     to-transparent
                   "
                 />
-
-                {/* Local badge */}
 
                 <div
                   className="
@@ -498,9 +585,9 @@ const ProductDetailModal = ({
 
             </div>
 
-            {/* ===================================================
-                PRODUCT INFORMATION
-            =================================================== */}
+            {/* =================================================
+                INFORMATION
+            ================================================= */}
 
             <div className="flex flex-col">
 
@@ -512,14 +599,16 @@ const ProductDetailModal = ({
                   text-xs
                   leading-6
                   text-[#5A635A]
+
                   sm:text-sm
+                  sm:leading-6
                 "
               >
                 {description}
               </p>
 
               {/* =================================================
-                  QUALITY POINTS
+                  QUALITY
               ================================================= */}
 
               <div
@@ -528,7 +617,7 @@ const ProductDetailModal = ({
                   grid
                   grid-cols-2
                   gap-x-3
-                  gap-y-2.5
+                  gap-y-3
                 "
               >
 
@@ -541,10 +630,12 @@ const ProductDetailModal = ({
                         key={`${item.label}-${index}`}
                         className="
                           flex
+                          min-w-0
                           items-center
                           gap-2
                         "
                       >
+
                         <Icon
                           className="
                             h-3.5
@@ -562,11 +653,13 @@ const ProductDetailModal = ({
                             font-semibold
                             leading-tight
                             text-[#374139]
+
                             sm:text-[11px]
                           "
                         >
                           {item.label}
                         </span>
+
                       </div>
                     );
                   }
@@ -575,7 +668,7 @@ const ProductDetailModal = ({
               </div>
 
               {/* =================================================
-                  SIZE SELECTOR
+                  SIZE
               ================================================= */}
 
               <div
@@ -595,6 +688,7 @@ const ProductDetailModal = ({
                     justify-between
                   "
                 >
+
                   <label
                     className="
                       font-sans-body
@@ -622,13 +716,16 @@ const ProductDetailModal = ({
                       ? 'ഓപ്ഷനുകൾ'
                       : 'options'}
                   </span>
+
                 </div>
 
                 <div
                   className="
                     grid
-                    grid-cols-4
+                    grid-cols-2
                     gap-2
+
+                    sm:grid-cols-4
                   "
                 >
 
@@ -646,16 +743,19 @@ const ProductDetailModal = ({
                         }}
                         aria-pressed={selected}
                         className={`
+                          min-h-[42px]
                           rounded-xl
                           border
                           px-2
                           py-2.5
                           font-sans-body
-                          text-[10px]
+                          text-[11px]
                           font-semibold
                           transition-all
                           duration-200
+
                           sm:text-xs
+
                           ${
                             selected
                               ? `
@@ -732,14 +832,17 @@ const ProductDetailModal = ({
 
                 </div>
 
+                {/* NORMAL PRICE FONT */}
+
                 <span
                   className="
-                    font-serif-heading
-                    text-2xl
-                    font-bold
+                    font-sans-body
+                    text-xl
+                    font-semibold
                     tracking-tight
                     text-[#26302A]
-                    sm:text-3xl
+
+                    sm:text-2xl
                   "
                 >
                   {currentPrice}
@@ -753,30 +856,32 @@ const ProductDetailModal = ({
 
         </div>
 
-        {/* =========================================================
-            ACTION AREA
-        ========================================================= */}
+        {/* =====================================================
+            BOTTOM ACTION
+        ===================================================== */}
 
         <div
           className="
             shrink-0
             border-t
             border-[#DCD5C6]
-            bg-[#FFFDF7]
+            bg-[#FFFDF7]/95
             px-4
-            py-3
+            pb-[max(12px,env(safe-area-inset-bottom))]
+            pt-3
+            backdrop-blur-xl
+
             sm:px-7
             sm:py-4
           "
         >
-
-          {/* Main CTA */}
 
           <button
             type="button"
             onClick={handleAddToCart}
             className={`
               flex
+              min-h-[48px]
               w-full
               items-center
               justify-center
@@ -789,8 +894,9 @@ const ProductDetailModal = ({
               font-bold
               transition-all
               duration-300
-              sm:py-3.5
+
               sm:text-sm
+
               ${
                 isAdded
                   ? `
@@ -801,9 +907,7 @@ const ProductDetailModal = ({
                     bg-[#667A61]
                     text-white
                     shadow-[0_8px_20px_rgba(102,122,97,0.18)]
-                    hover:-translate-y-0.5
                     hover:bg-[#596D54]
-                    hover:shadow-[0_12px_25px_rgba(102,122,97,0.22)]
                   `
               }
             `}
@@ -832,95 +936,6 @@ const ProductDetailModal = ({
             </span>
 
           </button>
-
-          {/* Secondary actions */}
-
-          <div
-            className="
-              mt-2
-              grid
-              grid-cols-2
-              gap-2
-            "
-          >
-
-            <a
-              href={phoneUrl}
-              className="
-                flex
-                items-center
-                justify-center
-                gap-2
-                rounded-xl
-                border
-                border-[#DCD5C6]
-                bg-[#26302A]
-                px-4
-                py-2.5
-                font-sans-body
-                text-xs
-                font-semibold
-                text-white
-                transition-all
-                duration-200
-                hover:bg-[#1D251F]
-              "
-            >
-              <Phone
-                className="
-                  h-3.5
-                  w-3.5
-                  text-[#E7D9B8]
-                "
-              />
-
-              <span>
-                {isMalayalam
-                  ? 'വിളിക്കൂ'
-                  : 'Call'}
-              </span>
-            </a>
-
-            <button
-              type="button"
-              onClick={handleWhatsAppOrder}
-              className="
-                flex
-                items-center
-                justify-center
-                gap-2
-                rounded-xl
-                border
-                border-[#DCD5C6]
-                bg-[#EAE2D2]
-                px-4
-                py-2.5
-                font-sans-body
-                text-xs
-                font-semibold
-                text-[#26302A]
-                transition-all
-                duration-200
-                hover:border-[#A8B5A0]
-                hover:bg-[#E1D9C9]
-              "
-            >
-              <MessageCircle
-                className="
-                  h-3.5
-                  w-3.5
-                  text-[#25D366]
-                "
-              />
-
-              <span>
-                {isMalayalam
-                  ? 'വാട്സ്ആപ്പ്'
-                  : 'WhatsApp'}
-              </span>
-            </button>
-
-          </div>
 
         </div>
 

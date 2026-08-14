@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ShoppingBag,
   Plus,
@@ -10,6 +10,8 @@ import ProductDetailModal from './ProductDetailModal';
 import { productList } from '../data/productsData';
 import { translations } from '../translations';
 
+const PRODUCTS_MODAL_STATE = 'straightway-product-modal';
+
 const Products = ({ lang, onQuickAdd }) => {
   const t = translations[lang] || translations.en;
 
@@ -18,10 +20,16 @@ const Products = ({ lang, onQuickAdd }) => {
   const [cardWeights, setCardWeights] = useState({});
   const [addedId, setAddedId] = useState(null);
 
+  /*
+   * =========================================================
+   * CATEGORIES
+   * =========================================================
+   */
+
   const categories = [
     {
       id: 'all',
-      label: t?.products?.filterAll || 'All',
+      label: t?.products?.filterAll || 'All Products',
     },
     {
       id: 'oil',
@@ -45,27 +53,60 @@ const Products = ({ lang, onQuickAdd }) => {
     },
   ];
 
+  /*
+   * =========================================================
+   * FILTER PRODUCTS
+   * =========================================================
+   */
+
   const filteredProducts =
     activeCategory === 'all'
       ? productList
       : productList.filter(
-          (product) => product.category === activeCategory
+          (product) =>
+            product.category === activeCategory
         );
 
+  /*
+   * =========================================================
+   * CARD WEIGHT
+   * =========================================================
+   */
+
   const getCardWeight = (product) => {
-    if (!product?.sizes?.length) return null;
+    if (!product?.sizes?.length) {
+      return null;
+    }
 
     return (
       cardWeights[product.id] ||
-      product.sizes[Math.floor(product.sizes.length / 2)]
+      product.sizes[
+        Math.floor(product.sizes.length / 2)
+      ]
     );
   };
+
+  /*
+   * =========================================================
+   * PRICE
+   * =========================================================
+   */
 
   const getDisplayPrice = (product, weight) => {
     return product?.prices?.[weight] || '₹0';
   };
 
-  const handleWeightChange = (productId, weight, event) => {
+  /*
+   * =========================================================
+   * CHANGE CARD WEIGHT
+   * =========================================================
+   */
+
+  const handleWeightChange = (
+    productId,
+    weight,
+    event
+  ) => {
     event.stopPropagation();
 
     setCardWeights((previous) => ({
@@ -74,26 +115,183 @@ const Products = ({ lang, onQuickAdd }) => {
     }));
   };
 
+  /*
+   * =========================================================
+   * QUICK ADD
+   * =========================================================
+   */
+
   const handleQuickAdd = (product, weight) => {
     if (!product || !weight) return;
 
-    onQuickAdd(product, weight);
+    if (typeof onQuickAdd === 'function') {
+      onQuickAdd(product, weight);
+    }
 
-    if (navigator.vibrate) {
+    if (
+      typeof navigator !== 'undefined' &&
+      navigator.vibrate
+    ) {
       navigator.vibrate(10);
     }
 
     setAddedId(product.id);
 
-    setTimeout(() => {
+    window.setTimeout(() => {
       setAddedId(null);
     }, 1000);
   };
 
-  const ProductCard = ({ product, mobile = false }) => {
-    const currentWeight = getCardWeight(product);
-    const displayPrice = getDisplayPrice(product, currentWeight);
-    const isAdded = addedId === product.id;
+  /*
+   * =========================================================
+   * OPEN PRODUCT
+   *
+   * IMPORTANT:
+   * Push a browser history entry when the modal opens.
+   * This makes Android/iPhone browser Back close the modal
+   * instead of leaving the website.
+   * =========================================================
+   */
+
+  const openProduct = (product) => {
+    if (!product) return;
+
+    setSelectedProduct(product);
+
+    /*
+     * Prevent duplicate history entries.
+     */
+    if (
+      window.history.state?.straightwayProductModal
+    ) {
+      return;
+    }
+
+    window.history.pushState(
+      {
+        straightwayProductModal: true,
+        productId: product.id,
+      },
+      '',
+      window.location.href
+    );
+  };
+
+  /*
+   * =========================================================
+   * CLOSE PRODUCT
+   * =========================================================
+   */
+
+  const closeProduct = () => {
+    /*
+     * If modal was opened through browser history,
+     * go back one history entry.
+     *
+     * The popstate listener below will actually close
+     * the modal.
+     */
+    if (
+      window.history.state?.straightwayProductModal
+    ) {
+      window.history.back();
+      return;
+    }
+
+    setSelectedProduct(null);
+  };
+
+  /*
+   * =========================================================
+   * BROWSER BACK BUTTON
+   * =========================================================
+   *
+   * Android / iPhone browser back:
+   *
+   * Product page
+   *      ↓
+   * Product modal
+   *      ↓
+   * Browser Back
+   *      ↓
+   * Modal closes
+   *      ↓
+   * Product section remains
+   *
+   * =========================================================
+   */
+
+  useEffect(() => {
+    const handlePopState = () => {
+      /*
+       * Any popstate means the temporary modal history
+       * entry has been removed.
+       */
+      setSelectedProduct(null);
+    };
+
+    window.addEventListener(
+      'popstate',
+      handlePopState
+    );
+
+    return () => {
+      window.removeEventListener(
+        'popstate',
+        handlePopState
+      );
+    };
+  }, []);
+
+  /*
+   * =========================================================
+   * ESCAPE KEY
+   * =========================================================
+   */
+
+  useEffect(() => {
+    if (!selectedProduct) return;
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        closeProduct();
+      }
+    };
+
+    window.addEventListener(
+      'keydown',
+      handleKeyDown
+    );
+
+    return () => {
+      window.removeEventListener(
+        'keydown',
+        handleKeyDown
+      );
+    };
+  }, [selectedProduct]);
+
+  /*
+   * =========================================================
+   * PRODUCT CARD
+   * =========================================================
+   */
+
+  const ProductCard = ({
+    product,
+    mobile = false,
+  }) => {
+    const currentWeight =
+      getCardWeight(product);
+
+    const displayPrice =
+      getDisplayPrice(
+        product,
+        currentWeight
+      );
+
+    const isAdded =
+      addedId === product.id;
 
     return (
       <article
@@ -102,20 +300,30 @@ const Products = ({ lang, onQuickAdd }) => {
           relative
           overflow-hidden
           bg-[#FFFDF7]
-          border border-[#E1D9C9]
+          border
+          border-[#E1D9C9]
           transition-all
           duration-300
+
           hover:-translate-y-1
           hover:border-[#C7A15A]/50
           hover:shadow-[0_14px_35px_rgba(41,51,43,0.10)]
-          ${mobile ? 'rounded-xl' : 'rounded-[20px]'}
+
+          ${
+            mobile
+              ? 'rounded-xl'
+              : 'rounded-[20px]'
+          }
         `}
       >
+
         {/* IMAGE */}
 
         <button
           type="button"
-          onClick={() => setSelectedProduct(product)}
+          onClick={() =>
+            openProduct(product)
+          }
           className={`
             relative
             block
@@ -126,7 +334,12 @@ const Products = ({ lang, onQuickAdd }) => {
             focus:outline-none
             focus-visible:ring-2
             focus-visible:ring-[#667A61]
-            ${mobile ? 'h-36' : 'h-48'}
+
+            ${
+              mobile
+                ? 'h-36'
+                : 'h-48'
+            }
           `}
         >
           <img
@@ -143,10 +356,17 @@ const Products = ({ lang, onQuickAdd }) => {
             "
           />
 
-          {/* Soft image overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#29332B]/25 via-transparent to-transparent" />
+          <div
+            className="
+              absolute
+              inset-0
+              bg-gradient-to-t
+              from-[#29332B]/25
+              via-transparent
+              to-transparent
+            "
+          />
 
-          {/* Badge */}
           {product.badge && (
             <span
               className="
@@ -169,7 +389,6 @@ const Products = ({ lang, onQuickAdd }) => {
             </span>
           )}
 
-          {/* Desktop hover indicator */}
           {!mobile && (
             <span
               className="
@@ -197,14 +416,26 @@ const Products = ({ lang, onQuickAdd }) => {
 
         {/* CONTENT */}
 
-        <div className={mobile ? 'p-2.5' : 'p-4'}>
+        <div
+          className={
+            mobile
+              ? 'p-2.5'
+              : 'p-4'
+          }
+        >
 
-          {/* Product name */}
+          {/* PRODUCT NAME */}
 
           <button
             type="button"
-            onClick={() => setSelectedProduct(product)}
-            className="block w-full text-left"
+            onClick={() =>
+              openProduct(product)
+            }
+            className="
+              block
+              w-full
+              text-left
+            "
           >
             <h3
               className={`
@@ -214,23 +445,44 @@ const Products = ({ lang, onQuickAdd }) => {
                 text-[#29332B]
                 transition-colors
                 group-hover:text-[#667A61]
-                ${mobile ? 'text-xs line-clamp-1' : 'text-base'}
+
+                ${
+                  mobile
+                    ? 'text-xs line-clamp-1'
+                    : 'text-base'
+                }
               `}
             >
               {product.titleEn}
             </h3>
 
-            {!mobile && product.titleMl && (
-              <p className="mt-0.5 text-xs font-medium text-[#667A61]">
-                {product.titleMl}
-              </p>
-            )}
+            {!mobile &&
+              product.titleMl && (
+                <p
+                  className="
+                    mt-0.5
+                    text-xs
+                    font-medium
+                    text-[#667A61]
+                  "
+                >
+                  {product.titleMl}
+                </p>
+              )}
           </button>
 
-          {/* Description */}
+          {/* DESCRIPTION */}
 
           {!mobile && (
-            <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[#5A635A]">
+            <p
+              className="
+                mt-2
+                line-clamp-2
+                text-xs
+                leading-relaxed
+                text-[#5A635A]
+              "
+            >
               {product.desc}
             </p>
           )}
@@ -245,12 +497,28 @@ const Products = ({ lang, onQuickAdd }) => {
               gap-2
               border-t
               border-[#E1D9C9]
-              ${mobile ? 'mt-2 pt-2' : 'mt-4 pt-3'}
+
+              ${
+                mobile
+                  ? 'mt-2 pt-2'
+                  : 'mt-4 pt-3'
+              }
             `}
           >
+
             <div className="min-w-0">
 
-              <span className="mb-1 block text-[8px] font-bold uppercase tracking-wider text-[#8A8F87]">
+              <span
+                className="
+                  mb-1
+                  block
+                  text-[8px]
+                  font-bold
+                  uppercase
+                  tracking-wider
+                  text-[#8A8F87]
+                "
+              >
                 Pack
               </span>
 
@@ -284,43 +552,65 @@ const Products = ({ lang, onQuickAdd }) => {
                   sm:text-xs
                 "
               >
-                {product.sizes?.map((weight) => (
-                  <option key={weight} value={weight}>
-                    {weight}
-                  </option>
-                ))}
+                {product.sizes?.map(
+                  (weight) => (
+                    <option
+                      key={weight}
+                      value={weight}
+                    >
+                      {weight}
+                    </option>
+                  )
+                )}
               </select>
 
             </div>
 
             <div className="shrink-0 text-right">
 
-              <span className="block text-[8px] uppercase tracking-wider text-[#8A8F87]">
+              <span
+                className="
+                  block
+                  text-[8px]
+                  uppercase
+                  tracking-wider
+                  text-[#8A8F87]
+                "
+              >
                 Price
               </span>
 
+              {/* NORMAL PRICE FONT */}
               <span
                 className={`
                   font-sans-body
-                  font-bold
+                  font-semibold
                   text-[#29332B]
-                  ${mobile ? 'text-sm' : 'text-xl'}
+
+                  ${
+                    mobile
+                      ? 'text-sm'
+                      : 'text-lg'
+                  }
                 `}
               >
                 {displayPrice}
               </span>
 
             </div>
+
           </div>
 
           {/* ACTION */}
 
           {mobile ? (
-
             <button
               type="button"
               onClick={() =>
-                handleQuickAdd(product, currentWeight)
+                handleQuickAdd(
+                  product,
+                  currentWeight
+                )
               }
               className={`
                 mt-2
@@ -336,6 +626,7 @@ const Products = ({ lang, onQuickAdd }) => {
                 transition-all
                 duration-200
                 active:scale-[0.96]
+
                 ${
                   isAdded
                     ? 'bg-[#29332B] text-white'
@@ -345,24 +636,35 @@ const Products = ({ lang, onQuickAdd }) => {
             >
               {isAdded ? (
                 <>
-                  <Check className="h-3.5 w-3.5 text-[#C7A15A]" />
+                  <Check
+                    className="
+                      h-3.5
+                      w-3.5
+                      text-[#C7A15A]
+                    "
+                  />
                   Added
                 </>
               ) : (
                 <>
-                  <Plus className="h-3.5 w-3.5" />
+                  <Plus
+                    className="
+                      h-3.5
+                      w-3.5
+                    "
+                  />
                   Add
                 </>
               )}
             </button>
-
           ) : (
-
             <div className="mt-3 flex gap-2">
 
               <button
                 type="button"
-                onClick={() => setSelectedProduct(product)}
+                onClick={() =>
+                  openProduct(product)
+                }
                 className="
                   flex
                   flex-1
@@ -383,14 +685,23 @@ const Products = ({ lang, onQuickAdd }) => {
                   hover:bg-[#EAE2D2]
                 "
               >
-                <ShoppingBag className="h-3.5 w-3.5" />
+                <ShoppingBag
+                  className="
+                    h-3.5
+                    w-3.5
+                  "
+                />
+
                 Details
               </button>
 
               <button
                 type="button"
                 onClick={() =>
-                  handleQuickAdd(product, currentWeight)
+                  handleQuickAdd(
+                    product,
+                    currentWeight
+                  )
                 }
                 className={`
                   flex
@@ -407,6 +718,7 @@ const Products = ({ lang, onQuickAdd }) => {
                   shadow-sm
                   transition-all
                   active:scale-[0.98]
+
                   ${
                     isAdded
                       ? 'bg-[#29332B]'
@@ -416,12 +728,23 @@ const Products = ({ lang, onQuickAdd }) => {
               >
                 {isAdded ? (
                   <>
-                    <Check className="h-3.5 w-3.5 text-[#C7A15A]" />
+                    <Check
+                      className="
+                        h-3.5
+                        w-3.5
+                        text-[#C7A15A]
+                      "
+                    />
                     Added
                   </>
                 ) : (
                   <>
-                    <Plus className="h-3.5 w-3.5" />
+                    <Plus
+                      className="
+                        h-3.5
+                        w-3.5
+                      "
+                    />
                     Quick Add
                   </>
                 )}
@@ -429,10 +752,18 @@ const Products = ({ lang, onQuickAdd }) => {
 
             </div>
           )}
+
         </div>
+
       </article>
     );
   };
+
+  /*
+   * =========================================================
+   * RENDER
+   * =========================================================
+   */
 
   return (
     <>
@@ -450,8 +781,13 @@ const Products = ({ lang, onQuickAdd }) => {
 
         {/* BACKGROUND */}
 
-        <div className="pointer-events-none absolute inset-0">
-
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+          "
+        >
           <div
             className="
               absolute
@@ -477,7 +813,6 @@ const Products = ({ lang, onQuickAdd }) => {
               blur-3xl
             "
           />
-
         </div>
 
         <div
@@ -493,18 +828,56 @@ const Products = ({ lang, onQuickAdd }) => {
 
           {/* HEADER */}
 
-          <div className="mx-auto mb-6 max-w-2xl text-center sm:mb-8">
+          <div
+            className="
+              mx-auto
+              mb-6
+              max-w-2xl
+              text-center
+              sm:mb-8
+            "
+          >
 
-            <div className="mb-2.5 flex items-center justify-center gap-3">
+            <div
+              className="
+                mb-2.5
+                flex
+                items-center
+                justify-center
+                gap-3
+              "
+            >
+              <span
+                className="
+                  h-px
+                  w-8
+                  bg-[#B86F52]/50
+                  sm:w-12
+                "
+              />
 
-              <span className="h-px w-8 bg-[#B86F52]/50 sm:w-12" />
-
-              <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#B86F52] sm:text-[10px]">
-                {t?.products?.tag || 'Our Products & Services'}
+              <span
+                className="
+                  text-[9px]
+                  font-bold
+                  uppercase
+                  tracking-[0.2em]
+                  text-[#B86F52]
+                  sm:text-[10px]
+                "
+              >
+                {t?.products?.tag ||
+                  'Our Products & Services'}
               </span>
 
-              <span className="h-px w-8 bg-[#B86F52]/50 sm:w-12" />
-
+              <span
+                className="
+                  h-px
+                  w-8
+                  bg-[#B86F52]/50
+                  sm:w-12
+                "
+              />
             </div>
 
             <h2
@@ -519,10 +892,21 @@ const Products = ({ lang, onQuickAdd }) => {
                 lg:text-4xl
               "
             >
-              {t?.products?.heading || 'Pure & Fresh Products'}
+              {t?.products?.heading ||
+                'Pure & Fresh Products'}
             </h2>
 
-            <p className="mx-auto mt-2 max-w-lg text-xs leading-relaxed text-[#5A635A] sm:text-sm">
+            <p
+              className="
+                mx-auto
+                mt-2
+                max-w-lg
+                text-xs
+                leading-relaxed
+                text-[#5A635A]
+                sm:text-sm
+              "
+            >
               {lang === 'ml'
                 ? 'പരമ്പരാഗത രീതിയിൽ പുതുമയോടെ തയ്യാറാക്കിയ ഉൽപ്പന്നങ്ങൾ.'
                 : 'Freshly processed products made with traditional care and honest ingredients.'}
@@ -547,44 +931,63 @@ const Products = ({ lang, onQuickAdd }) => {
               "
             >
 
-              <div className="flex shrink-0 items-center text-[#8A8F87] sm:hidden">
-                <SlidersHorizontal className="h-3.5 w-3.5" />
+              <div
+                className="
+                  flex
+                  shrink-0
+                  items-center
+                  text-[#8A8F87]
+                  sm:hidden
+                "
+              >
+                <SlidersHorizontal
+                  className="
+                    h-3.5
+                    w-3.5
+                  "
+                />
               </div>
 
-              {categories.map((category) => {
-                const active =
-                  activeCategory === category.id;
+              {categories.map(
+                (category) => {
+                  const active =
+                    activeCategory ===
+                    category.id;
 
-                return (
-                  <button
-                    key={category.id}
-                    type="button"
-                    onClick={() =>
-                      setActiveCategory(category.id)
-                    }
-                    className={`
-                      shrink-0
-                      rounded-full
-                      px-3.5
-                      py-2
-                      text-[10px]
-                      font-semibold
-                      transition-all
-                      duration-200
-                      sm:px-4
-                      sm:py-2
-                      sm:text-xs
-                      ${
-                        active
-                          ? 'bg-[#667A61] text-white shadow-sm'
-                          : 'border border-[#E1D9C9] bg-[#EAE2D2] text-[#29332B] hover:border-[#667A61]/40'
+                  return (
+                    <button
+                      key={category.id}
+                      type="button"
+                      onClick={() =>
+                        setActiveCategory(
+                          category.id
+                        )
                       }
-                    `}
-                  >
-                    {category.label}
-                  </button>
-                );
-              })}
+                      className={`
+                        shrink-0
+                        rounded-full
+                        px-3.5
+                        py-2
+                        text-[10px]
+                        font-semibold
+                        transition-all
+                        duration-200
+                        sm:px-4
+                        sm:py-2
+                        sm:text-xs
+
+                        ${
+                          active
+                            ? 'bg-[#667A61] text-white shadow-sm'
+                            : 'border border-[#E1D9C9] bg-[#EAE2D2] text-[#29332B] hover:border-[#667A61]/40'
+                        }
+                      `}
+                    >
+                      {category.label}
+                    </button>
+                  );
+                }
+              )}
 
             </div>
 
@@ -592,14 +995,23 @@ const Products = ({ lang, onQuickAdd }) => {
 
           {/* MOBILE */}
 
-          <div className="grid grid-cols-2 gap-2.5 sm:hidden">
-            {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                mobile
-              />
-            ))}
+          <div
+            className="
+              grid
+              grid-cols-2
+              gap-2.5
+              sm:hidden
+            "
+          >
+            {filteredProducts.map(
+              (product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  mobile
+                />
+              )
+            )}
           </div>
 
           {/* DESKTOP */}
@@ -615,60 +1027,134 @@ const Products = ({ lang, onQuickAdd }) => {
               lg:gap-6
             "
           >
-            {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-              />
-            ))}
+            {filteredProducts.map(
+              (product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                />
+              )
+            )}
           </div>
 
-          {/* EMPTY STATE */}
+          {/* EMPTY */}
 
           {filteredProducts.length === 0 && (
-            <div className="rounded-2xl border border-dashed border-[#DCD5C6] bg-[#EAE2D2]/40 py-12 text-center">
+            <div
+              className="
+                rounded-2xl
+                border
+                border-dashed
+                border-[#DCD5C6]
+                bg-[#EAE2D2]/40
+                py-12
+                text-center
+              "
+            >
+              <ShoppingBag
+                className="
+                  mx-auto
+                  mb-3
+                  h-8
+                  w-8
+                  text-[#667A61]/60
+                "
+              />
 
-              <ShoppingBag className="mx-auto mb-3 h-8 w-8 text-[#667A61]/60" />
-
-              <p className="font-serif-heading text-base font-bold text-[#29332B]">
+              <p
+                className="
+                  font-serif-heading
+                  text-base
+                  font-bold
+                  text-[#29332B]
+                "
+              >
                 {lang === 'ml'
                   ? 'ഉൽപ്പന്നങ്ങൾ ലഭ്യമല്ല'
                   : 'No products found'}
               </p>
 
-              <p className="mt-1 text-xs text-[#5A635A]">
+              <p
+                className="
+                  mt-1
+                  text-xs
+                  text-[#5A635A]
+                "
+              >
                 {lang === 'ml'
                   ? 'മറ്റൊരു വിഭാഗം തിരഞ്ഞെടുക്കുക.'
                   : 'Try selecting another category.'}
               </p>
-
             </div>
           )}
 
           {/* BOTTOM NOTE */}
 
-          <div className="mt-6 flex items-center justify-center gap-2 text-center sm:mt-8">
+          <div
+            className="
+              mt-6
+              flex
+              items-center
+              justify-center
+              gap-2
+              text-center
+              sm:mt-8
+            "
+          >
+            <span
+              className="
+                h-px
+                w-6
+                bg-[#DCD5C6]
+              "
+            />
 
-            <span className="h-px w-6 bg-[#DCD5C6]" />
-
-            <p className="text-[9px] font-medium tracking-wide text-[#8A8F87] sm:text-[10px]">
+            <p
+              className="
+                text-[9px]
+                font-medium
+                tracking-wide
+                text-[#8A8F87]
+                sm:text-[10px]
+              "
+            >
               {lang === 'ml'
                 ? 'പുതുതായി പൊടിച്ച് • ശുചിത്വത്തോടെ തയ്യാറാക്കി'
                 : 'Freshly milled • Carefully processed'}
             </p>
 
-            <span className="h-px w-6 bg-[#DCD5C6]" />
-
+            <span
+              className="
+                h-px
+                w-6
+                bg-[#DCD5C6]
+              "
+            />
           </div>
 
         </div>
 
-        {/* ORGANIC SECTION BLEND */}
+        {/* BOTTOM BLEND */}
 
-        <div className="pointer-events-none absolute bottom-0 left-0 w-full overflow-hidden leading-none">
-
+        <div
+          className="
+            pointer-events-none
+            absolute
+            bottom-0
+            left-0
+            w-full
+            overflow-hidden
+            leading-none
+          "
+        >
           <svg
-            className="relative block h-8 w-full sm:h-10"
+            className="
+              relative
+              block
+              h-8
+              w-full
+              sm:h-10
+            "
             viewBox="0 0 1200 80"
             preserveAspectRatio="none"
           >
@@ -685,17 +1171,18 @@ const Products = ({ lang, onQuickAdd }) => {
               fill="#EAE2D2"
             />
           </svg>
-
         </div>
 
       </section>
 
-      {/* PRODUCT MODAL */}
+      {/* =====================================================
+          PRODUCT DETAIL MODAL
+          ===================================================== */}
 
       {selectedProduct && (
         <ProductDetailModal
           product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
+          onClose={closeProduct}
           lang={lang}
           onQuickAdd={onQuickAdd}
         />
