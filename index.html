@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
 
     <!-- =====================================================
-         BASIC
+         BASIC SEO
     ====================================================== -->
 
     <meta
@@ -27,6 +27,11 @@
       content="Straight Way Oil & Flour Mill"
     />
 
+    <meta
+      name="format-detection"
+      content="telephone=yes"
+    />
+
     <!-- =====================================================
          FAVICON
     ====================================================== -->
@@ -45,6 +50,7 @@
 
     <!-- =====================================================
          CANONICAL
+         Keep this domain until the .in migration.
     ====================================================== -->
 
     <link
@@ -66,7 +72,7 @@
 
     <meta
       name="description"
-      content="Straight Way Oil & Flour Mill in Karulai, Nilambur offers fresh flour, spice powders, coconut oil and custom grinding services with local home delivery."
+      content="Straight Way Oil & Flour Mill in Karulai, Nilambur offers fresh flour, coconut oil, spice powders, flour grinding, spice grinding and custom grinding services for homes and businesses."
     />
 
     <!-- =====================================================
@@ -80,7 +86,7 @@
 
     <meta
       property="og:site_name"
-      content="Straightway"
+      content="Straight Way Oil & Flour Mill"
     />
 
     <meta
@@ -90,7 +96,7 @@
 
     <meta
       property="og:description"
-      content="Fresh flour, spice powders, coconut oil and custom grinding services from Straight Way Oil & Flour Mill in Karulai, Nilambur."
+      content="Fresh flour, coconut oil, spice powders and custom grinding services from Straight Way Oil & Flour Mill in Karulai, Nilambur."
     />
 
     <meta
@@ -129,7 +135,7 @@
 
     <meta
       name="twitter:description"
-      content="Fresh flour, spice powders, coconut oil and custom grinding services in Karulai, Nilambur."
+      content="Fresh flour, coconut oil, spice powders and custom grinding services in Karulai, Nilambur."
     />
 
     <meta
@@ -158,7 +164,7 @@
     />
 
     <!-- =====================================================
-         WEBSITE / SITE NAME
+         WEBSITE SCHEMA
     ====================================================== -->
 
     <script type="application/ld+json">
@@ -167,20 +173,26 @@
         "@type": "WebSite",
         "@id": "https://straightway.zyrox.site/#website",
 
-        "name": "Straightway",
+        "name": "Straight Way Oil & Flour Mill",
 
         "alternateName": [
-          "Straight Way Oil & Flour Mill",
+          "Straightway",
           "Straightway Mill",
           "PKS Straightway Mill"
         ],
 
-        "url": "https://straightway.zyrox.site/"
+        "url": "https://straightway.zyrox.site/",
+
+        "inLanguage": "en-IN",
+
+        "publisher": {
+          "@id": "https://straightway.zyrox.site/#business"
+        }
       }
     </script>
 
     <!-- =====================================================
-         LOCAL BUSINESS
+         LOCAL BUSINESS SCHEMA
     ====================================================== -->
 
     <script type="application/ld+json">
@@ -207,11 +219,13 @@
           "https://straightway.zyrox.site/logo.png"
         ],
 
-        "description": "Straight Way Oil & Flour Mill in Karulai, Nilambur provides freshly ground flour, spice powders, coconut oil and custom milling services.",
+        "description": "Straight Way Oil & Flour Mill in Karulai, Nilambur provides freshly ground flour, spice powders, coconut oil, flour grinding, spice grinding and custom grinding services.",
 
         "telephone": "+918714348348",
 
         "priceRange": "₹₹",
+
+        "currenciesAccepted": "INR",
 
         "address": {
           "@type": "PostalAddress",
@@ -276,19 +290,16 @@
         ]
       }
     </script>
-
   </head>
 
   <body
     class="bg-[#F7F3E8] text-[#29332B] antialiased selection:bg-[#667A61] selection:text-white"
   >
-
     <div id="root"></div>
 
     <script
       type="module"
       src="/src/main.jsx"
     ></script>
-
   </body>
 </html>
