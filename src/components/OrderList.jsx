@@ -10,7 +10,7 @@ const OrderList = ({ cart, removeFromCart, updateQty, lang }) => {
   if (cart.length === 0 && !isOpen) return null;
 
   const handleSendWhatsApp = () => {
-    let message = `Hello PKS Straightway Mill!\nI would like to order the following items:\n\n`;
+    let message = `Hello Straightway Mill!\nI would like to order the following items:\n\n`;
     
     cart.forEach((item, index) => {
       message += `${index + 1}. ${item.title} (${item.selectedWeight}) - ${item.currentPrice} x ${item.qty}\n`;

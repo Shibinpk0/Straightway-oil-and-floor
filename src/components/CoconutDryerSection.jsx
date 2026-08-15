@@ -5,7 +5,7 @@ import { translations } from '../translations';
 
 const CoconutDryerSection = ({ lang }) => {
   const t = translations[lang] || translations.en;
-  const whatsappUrl = `https://wa.me/918714348348?text=${encodeURIComponent('Hello PKS Straightway Mill! I want to enquire about Coconut Drying & Oil Extraction service.')}`;
+  const whatsappUrl = `https://wa.me/918714348348?text=${encodeURIComponent('Hello Straightway Mill! I want to enquire about Coconut Drying & Oil Extraction service.')}`;
   const phoneUrl = `tel:+918714348348`;
 
   return (
@@ -54,11 +54,11 @@ const CoconutDryerSection = ({ lang }) => {
 
             <div className="lg:col-span-5 relative mt-4 lg:mt-0">
               <div className="rounded-2xl overflow-hidden border border-[#E1D9C9] shadow-2xl relative group">
-                <img src={realMillImg} alt="PKS Straightway Mill Coconut Dryer Facility Vakeelppadi" className="w-full h-56 sm:h-80 object-cover object-center group-hover:scale-105 transition-transform duration-500" />
+                <img src={realMillImg} alt="Straightway Mill Coconut Dryer Facility Vakeelppadi" className="w-full h-56 sm:h-80 object-cover object-center group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                 <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-md p-3 sm:p-4 border-t border-[#C7A15A]/50 text-left">
                   <span className="text-[9px] sm:text-[10px] font-mono text-[#C7A15A] font-bold uppercase">HYGIENIC COCONUT DRYER FACILITY</span>
-                  <p className="font-serif-heading text-xs sm:text-sm font-bold text-white mt-0.5">PKS Straightway Mill • Vakeelppadi - Karulai</p>
+                  <p className="font-serif-heading text-xs sm:text-sm font-bold text-white mt-0.5">Straightway Mill • Vakeelppadi - Karulai</p>
                 </div>
               </div>
             </div>

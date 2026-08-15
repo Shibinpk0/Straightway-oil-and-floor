@@ -64,7 +64,7 @@ const ContactSection = ({ lang }) => {
     setIsSending(true);
 
     const whatsappMessage = isMalayalam
-      ? `നമസ്കാരം PKS Straightway Mill!
+      ? `നമസ്കാരം Straightway Mill!
 
 പേര്: ${name}
 ഫോൺ: ${phone}
@@ -73,7 +73,7 @@ const ContactSection = ({ lang }) => {
 ${message}
 
 നന്ദി.`
-      : `Hello PKS Straightway Mill!
+      : `Hello Straightway Mill!
 
 Name: ${name}
 Phone: ${phone}
@@ -107,8 +107,8 @@ Thank you.`;
 
   const handleQuickWhatsApp = () => {
     const message = isMalayalam
-      ? 'നമസ്കാരം PKS Straightway Mill! ഒരു ഉൽപ്പന്നത്തെക്കുറിച്ച് അന്വേഷിക്കാനാണ്.'
-      : 'Hello PKS Straightway Mill! I would like to enquire about your products.';
+      ? 'നമസ്കാരം Straightway Mill! ഒരു ഉൽപ്പന്നത്തെക്കുറിച്ച് അന്വേഷിക്കാനാണ്.'
+      : 'Hello Straightway Mill! I would like to enquire about your products.';
 
     openWhatsApp(message);
   };

@@ -99,7 +99,7 @@ const BulkOrdersSection = ({ lang }) => {
       : '';
 
     const text = encodeURIComponent(
-      `Hello PKS Straightway Mill!
+      `Hello  Straightway Mill!
 
 I want a bulk wholesale quote:
 
@@ -419,7 +419,7 @@ Please confirm availability and final pricing.`
 
                 <a
                   href={phoneUrl}
-                  aria-label="Call PKS Straightway Mill"
+                  aria-label="Call  Straightway Mill"
                   className="flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 text-white transition-colors hover:bg-white/10"
                 >
                   <Phone className="h-4 w-4 text-[#C7A15A]" />

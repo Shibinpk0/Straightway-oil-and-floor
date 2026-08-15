@@ -3,7 +3,7 @@ import { MessageCircle, Phone } from 'lucide-react';
 
 const WhatsAppFloat = () => {
   const whatsappMessage =
-    'Hello PKS Straightway Mill! I would like to place an order or enquire about your pure coconut oil and freshly ground products.';
+    'Hello Straightway Mill! I would like to place an order or enquire about your pure coconut oil and freshly ground products.';
 
   const whatsappUrl = `https://wa.me/918714348348?text=${encodeURIComponent(
     whatsappMessage
@@ -34,8 +34,8 @@ const WhatsAppFloat = () => {
         -------------------------------------------------- */}
         <a
           href={phoneUrl}
-          aria-label="Call PKS Straightway Mill"
-          title="Call PKS Straightway Mill"
+          aria-label="Call Straightway Mill"
+          title="Call Straightway Mill"
           className="
             group
             flex
@@ -167,7 +167,7 @@ const WhatsAppFloat = () => {
           {/* Call */}
           <a
             href={phoneUrl}
-            aria-label="Call PKS Straightway Mill"
+            aria-label="Call Straightway Mill"
             className="
               flex
               flex-1

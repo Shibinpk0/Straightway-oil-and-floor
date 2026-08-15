@@ -55,7 +55,7 @@ const FaqSection = ({ lang }) => {
   const whatsappUrl =
     'https://wa.me/918714348348?text=' +
     encodeURIComponent(
-      'Hello PKS Straightway Mill! I have a question.'
+      'Hello Straightway Mill! I have a question.'
     );
 
   return (

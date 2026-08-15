@@ -5,14 +5,14 @@ const LocalBusinessSchema = () => {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
 
-    name: 'PKS Straightway Mill',
+    name: 'Straightway Mill',
 
     description:
       'Local mill offering coconut oil extraction, flour grinding, spice grinding, custom grinding and coconut drying services in Karulai, Kerala.',
 
     telephone: '+918714348348',
 
-    url: 'https://YOUR-DOMAIN.in/',
+    url: 'https://straightway.zyrox.site/',
 
     image: 'https://YOUR-DOMAIN.in/og-image.jpg',
 

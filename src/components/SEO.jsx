@@ -11,12 +11,12 @@ const SEO = ({
   const isMalayalam = lang === 'ml';
 
   const defaultTitle = isMalayalam
-    ? 'PKS Straightway Mill | കരുളായി മിൽ'
-    : 'PKS Straightway Mill | Coconut Oil, Flour & Spice Grinding in Karulai';
+    ? 'Straightway Mill | കരുളായി മിൽ'
+    : 'Straightway Mill | Coconut Oil, Flour & Spice Grinding in Karulai';
 
   const defaultDescription = isMalayalam
-    ? 'കരുളായിയിലെ PKS Straightway Mill-ൽ ചക്ക് ആട്ടിയ വെളിച്ചെണ്ണ, മാവ്, മസാലപ്പൊടികൾ, കസ്റ്റം ഗ്രൈൻഡിംഗ്, തേങ്ങ ഡ്രൈയിംഗ് സേവനങ്ങൾ ലഭ്യമാണ്.'
-    : 'PKS Straightway Mill in Karulai offers fresh coconut oil, stone-ground flour, spice powders, custom grinding and hot-air coconut drying services.';
+    ? 'കരുളായിയിലെ Straightway Mill-ൽ ചക്ക് ആട്ടിയ വെളിച്ചെണ്ണ, മാവ്, മസാലപ്പൊടികൾ, കസ്റ്റം ഗ്രൈൻഡിംഗ്, തേങ്ങ ഡ്രൈയിംഗ് സേവനങ്ങൾ ലഭ്യമാണ്.'
+    : 'Straightway Mill in Karulai offers fresh coconut oil, stone-ground flour, spice powders, custom grinding and hot-air coconut drying services.';
 
   const finalTitle = title || defaultTitle;
   const finalDescription = description || defaultDescription;

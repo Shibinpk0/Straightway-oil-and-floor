@@ -60,7 +60,7 @@ const HowToOrderSection = ({ lang }) => {
 
   const whatsappUrl =
     `https://wa.me/918714348348?text=${encodeURIComponent(
-      'Hello PKS Straightway Mill! I want to order freshly processed products.'
+      'Hello Straightway Mill! I want to order freshly processed products.'
     )}`;
 
   return (

@@ -19,8 +19,8 @@ const GallerySection = ({ lang }) => {
     {
       id: 1,
       src: realMillImg,
-      title: 'PKS Straightway Mill Storefront',
-      titleMl: 'PKS സ്ട്രെയിറ്റ് വേ മിൽ ഫ്രണ്ട് കാഴ്ച',
+      title: 'Straightway Mill Storefront',
+      titleMl: 'സ്ട്രെയിറ്റ് വേ മിൽ ഫ്രണ്ട് കാഴ്ച',
       category: 'Storefront',
       desc: 'Vakeelppadi - Karulai shopfront with signage and products board.',
       descMl: 'വക്കീൽപ്പടി - കരുളായി മിൽ സൈൻ ബോർഡും പ്രധാന ബോർഡും.',
